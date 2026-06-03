@@ -10,37 +10,47 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
           {/* Logo & Info column */}
           <div className="lg:col-span-2">
-            <Link href="#home" className="flex items-center gap-2.5 mb-3.5">
-              <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center border border-white/10 bg-white flex-shrink-0">
-                <img 
-                  src="/logo.jpg" 
-                  alt="GlobalPact SustainX Logo" 
-                  className="w-full h-full object-cover scale-[1.05]" 
-                />
-              </div>
-              <div>
-                <div className="font-syne text-[17px] font-bold text-white tracking-tight leading-none">
-                  GlobalPact <span className="text-brand-gl">SustainX</span>
-                </div>
-                <div className="text-[10px] text-white/35 mt-1">
-                  Centre of Excellence
-                </div>
+            <Link href="#home" className="inline-flex items-center gap-[12px] mb-3.5">
+              <img 
+                src="/logo.jpg" 
+                alt="GlobalPact SustainX Logo" 
+                className="h-[48px] w-auto object-contain flex-shrink-0" 
+              />
+              <div className="font-syne text-[17px] font-bold text-white tracking-tight leading-none">
+                GlobalPact <span className="text-brand-gl">SustainX</span>
               </div>
             </Link>
             <p className="text-[13px] leading-relaxed text-white/55 max-w-[320px] mb-4">
-              Powering the Global Energy Transition through AI-powered training, ESG intelligence, and industry collaboration. Strategy · PMC · Turnkey · Capacity Building.
+              GlobalPact SustainX is an AI-powered sustainability ecosystem focused on Renewable Energy, ESG Intelligence, Strategic Advisory, Project Management, EPC Solutions, and Capacity Building. We empower organizations, professionals, and future leaders to accelerate the global energy transition through innovation, intelligence, and collaboration.
             </p>
-            <div className="text-[12px] text-white/35 mb-4 leading-normal">
-              <a href="mailto:sustainx@globalpactholdings.in" className="text-brand-gl hover:underline block">
-                sustainx@globalpactholdings.in
-              </a>
-              <div className="mt-1">
-                <a href="https://www.globalpactholdings.in" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gl transition-colors">
+            <div className="text-[12px] text-white/45 mb-4 space-y-2.5 max-w-[320px]">
+              <div className="flex gap-2">
+                <span className="shrink-0 text-white/35">📍</span>
+                <span>
+                  B-101/102, Grenville, Near Lokhandwala Club, Lokhandwala Complex, Andheri West, Mumbai – 400053
+                </span>
+              </div>
+              <div className="flex gap-2 items-center">
+                <span className="shrink-0 text-white/35">📞</span>
+                <a href="tel:+912240167394" className="hover:text-brand-gl transition-all">
+                  +91-22-40167394
+                </a>
+              </div>
+              <div className="flex gap-2 items-center">
+                <span className="shrink-0 text-white/35">📧</span>
+                <a href="mailto:sustainx@globalpactholdings.in" className="text-brand-gl hover:underline break-all">
+                  sustainx@globalpactholdings.in
+                </a>
+              </div>
+              <div className="flex gap-2 items-center">
+                <span className="shrink-0 text-white/35">🌐</span>
+                <a 
+                  href="https://www.globalpactholdings.in" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-brand-gl transition-colors"
+                >
                   www.globalpactholdings.in
-                </a>{" "}
-                ·{" "}
-                <a href="https://www.schoonenergy.com" target="_blank" rel="noopener noreferrer" className="hover:text-brand-gl transition-colors">
-                  www.schoonenergy.com
                 </a>
               </div>
             </div>

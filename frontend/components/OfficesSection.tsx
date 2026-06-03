@@ -12,14 +12,10 @@ const offices = [
       <>
         B-101/102, Grenville, Near Lokhandwala Club
         <br />
-        Andheri West, Mumbai – 400053
+        Lokhandwala Complex, Andheri West, Mumbai – 400053
         <br />
-        <a href="tel:+917042050024" className="hover:underline">
-          +91 7042050024
-        </a>{" "}
-        ·{" "}
-        <a href="tel:+919821213141" className="hover:underline">
-          +91 9821213141
+        <a href="tel:+912240167394" className="hover:underline">
+          +91-22-40167394
         </a>
         <br />
         <a href="mailto:sustainx@globalpactholdings.in" className="text-brand-g hover:underline">

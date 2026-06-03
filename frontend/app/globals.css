@@ -110,3 +110,96 @@ body {
 .anim-5 {
   animation: fadeUp .7s .42s ease both;
 }
+
+/* CUSTOM LOGIN PAGE ANIMATIONS */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes sweep {
+  0% { transform: translateX(-110%) skewX(-15deg); }
+  35% { transform: translateX(110%) skewX(-15deg); }
+  100% { transform: translateX(110%) skewX(-15deg); }
+}
+@keyframes energyDash {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+@keyframes pulseGlow {
+  0% { transform: scale(0.95); opacity: 0.6; }
+  50% { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(0.95); opacity: 0; }
+}
+@keyframes floatSustain {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  50% { transform: translateY(-16px) translateX(6px); }
+}
+@keyframes floatParticle {
+  0% { transform: translateY(110vh) translateX(0px) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.4; }
+  90% { opacity: 0.4; }
+  100% { transform: translateY(-10vh) translateX(30px) rotate(360deg); opacity: 0; }
+}
+
+.animated-gradient-bg {
+  background-size: 200% 200%;
+  animation: gradientBG 15s ease infinite;
+}
+.energy-flow-line {
+  stroke-dasharray: 6 4;
+  animation: energyDash 1.2s linear infinite;
+}
+.globe-network-line {
+  stroke-dasharray: 5 5;
+  animation: energyDash 2.5s linear infinite;
+}
+.animate-sweep-effect {
+  animation: sweep 4s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
+.pulse-glow-effect {
+  animation: pulseGlow 2.2s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
+}
+.float-sustain-effect {
+  animation: floatSustain 9s ease-in-out infinite;
+}
+.float-sustain-delay-1 {
+  animation: floatSustain 11s ease-in-out 2s infinite;
+}
+.float-sustain-delay-2 {
+  animation: floatSustain 13s ease-in-out 4s infinite;
+}
+.float-sustain-delay-3 {
+  animation: floatSustain 10s ease-in-out 6s infinite;
+}
+
+/* Floating background particles */
+.bg-drift-particle {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  animation: floatParticle 22s linear infinite;
+}
+
+/* REDESIGN SPECIFIC ANIMATIONS */
+@keyframes cloudDrift {
+  0%, 100% { transform: translateX(0px); }
+  50% { transform: translateX(18px); }
+}
+@keyframes batteryCharge {
+  0% { transform: scaleY(0.15); }
+  85% { transform: scaleY(1); }
+  100% { transform: scaleY(1); }
+}
+.animate-cloud-slow {
+  animation: cloudDrift 18s ease-in-out infinite;
+}
+.animate-cloud-fast {
+  animation: cloudDrift 14s ease-in-out 3s infinite;
+}
+.animate-battery-fill {
+  transform-origin: bottom;
+  animation: batteryCharge 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+

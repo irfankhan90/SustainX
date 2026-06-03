@@ -31,6 +31,15 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
         type={showPassword ? "text" : "password"}
         className={className}
         style={{ paddingRight: "40px" }}
+        leftIcon={
+          <svg
+            viewBox="0 0 24 24"
+            className="w-[18px] h-[18px] fill-none stroke-current stroke-[2] stroke-linecap-round stroke-linejoin-round"
+          >
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+        }
         {...props}
       />
       <button

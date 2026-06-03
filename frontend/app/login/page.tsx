@@ -70,8 +70,8 @@ export default function LoginPage() {
 
   return (
     <AuthLayout
-      title="Welcome back"
-      subtitle="Sign in to manage your sustainability assets and energy projects."
+      title="Powering the Global Energy Transition"
+      subtitle="Sign in to continue."
     >
       {isSuccess ? (
         <div className="bg-brand-gxl/50 border border-brand-gl/40 p-6 rounded-2xl flex flex-col items-center text-center animate-fadeUp">
@@ -114,20 +114,29 @@ export default function LoginPage() {
             error={emailError}
             disabled={isLoading}
             required
+            leftIcon={
+              <svg
+                viewBox="0 0 24 24"
+                className="w-[18px] h-[18px] fill-none stroke-current stroke-[2] stroke-linecap-round stroke-linejoin-round"
+              >
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+              </svg>
+            }
           />
 
           <div className="flex flex-col gap-1 w-full">
             <PasswordInput
               id="password"
               label="Password"
-              placeholder="••••••••"
+              placeholder="••••••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               error={passwordError}
               disabled={isLoading}
               required
             />
-            <div className="flex items-center justify-between mt-1 text-[13px]">
+            <div className="flex items-center justify-between mt-1.5 text-[13px]">
               <label className="flex items-center gap-2 text-t-2 select-none cursor-pointer">
                 <input
                   type="checkbox"
@@ -136,7 +145,7 @@ export default function LoginPage() {
                   disabled={isLoading}
                   className="w-4 h-4 rounded border-bdr-DEFAULT text-brand-g focus:ring-brand-gl cursor-pointer"
                 />
-                <span>Remember me</span>
+                <span className="text-[13px] text-t-2 font-medium">Remember me</span>
               </label>
               <Link
                 href="/forgot-password"
@@ -147,8 +156,27 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <AuthButton isLoading={isLoading} className="mt-2">
-            Sign In
+          <AuthButton 
+            isLoading={isLoading} 
+            className="mt-2 bg-gradient-to-r from-[#009B72] to-[#12D396] hover:from-[#008960] hover:to-[#0FBF87] border-0"
+          >
+            <div className="w-full flex items-center justify-between px-1">
+              <svg
+                viewBox="0 0 24 24"
+                className="w-[18px] h-[18px] fill-none stroke-current stroke-[2] stroke-linecap-round stroke-linejoin-round opacity-80"
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+              <span className="font-sans font-semibold text-[15px] tracking-wide">Sign In</span>
+              <svg
+                viewBox="0 0 24 24"
+                className="w-[18px] h-[18px] fill-none stroke-current stroke-[2] stroke-linecap-round stroke-linejoin-round"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </div>
           </AuthButton>
 
           <div className="flex items-center gap-3 my-3">

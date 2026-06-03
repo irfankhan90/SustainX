@@ -17,9 +17,13 @@ export const AuthButton: React.FC<AuthButtonProps> = ({
     <button
       type="submit"
       disabled={disabled || isLoading}
-      className={`w-full h-11 relative flex items-center justify-center gap-2 rounded-lg font-semibold text-[15px] text-white bg-brand-g shadow-[0_4px_14px_rgba(29,158,117,0.25)] hover:bg-brand-gd active:scale-[0.98] transition-all duration-200 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed disabled:active:scale-100 ${className}`}
+      className={`w-full h-11 relative overflow-hidden flex items-center justify-center gap-2 rounded-lg font-semibold text-[15px] text-white bg-brand-g shadow-[0_4px_14px_rgba(29,158,117,0.25)] hover:bg-brand-gd hover:-translate-y-[1px] hover:shadow-[0_6px_20px_rgba(29,158,117,0.35)] active:scale-[0.98] transition-all duration-200 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed disabled:active:scale-100 ${className}`}
       {...props}
     >
+      {/* Energy Sweep Animation Overlay */}
+      {!isLoading && (
+        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-sweep-effect pointer-events-none" />
+      )}
       {isLoading ? (
         <svg
           className="animate-spin h-5 w-5 text-white"

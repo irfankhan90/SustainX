@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GlobalPact SustainX — Empowering the Global Energy Transition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g:#1D9E75;--gl:#5DCAA5;--gll:#9FE1CB;--gxl:#E1F5EE;--gd:#0F6E56;--gxd:#085041;
+  --gold:#C9A84C;--gold-l:#F0D080;
+  --bg:#F8FAF9;--bg2:#FFFFFF;--bg3:#EEF4F1;
+  --ink:#0B1612;--ink2:#1C2E27;--ink3:#0A1628;
+  --t:#0B1612;--t2:#3A5549;--t3:#6B8C80;--t4:#A8C4BA;
+  --bdr:#D0E8DE;--bdr2:#B5D9CB;
+  --sh:0 2px 8px rgba(11,22,18,.07),0 1px 2px rgba(11,22,18,.04);
+  --sh2:0 8px 32px rgba(11,22,18,.10),0 2px 8px rgba(11,22,18,.05);
+  --r:10px;--rl:18px;--rxl:28px;
+  --fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--t);font-family:var(--fb);line-height:1.7;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{display:block;max-width:100%}
+button{cursor:pointer;font-family:var(--fb)}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg3)}
+::-webkit-scrollbar-thumb{background:var(--gll);border-radius:3px}
+.container{max-width:1120px;margin:0 auto;padding:0 28px}
+.section{padding:96px 0}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:.7}}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.anim-1{animation:fadeUp .7s ease both}
+.anim-2{animation:fadeUp .7s .12s ease both}
+.anim-3{animation:fadeUp .7s .22s ease both}
+.anim-4{animation:fadeUp .7s .32s ease both}
+.anim-5{animation:fadeUp .7s .42s ease both}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:var(--r);font-weight:500;font-family:var(--fb);cursor:pointer;transition:all .22s ease;border:none;white-space:nowrap}
+.btn-primary{background:var(--g);color:#fff;padding:13px 28px;font-size:15px;box-shadow:0 4px 14px rgba(29,158,117,.25)}
+.btn-primary:hover{background:var(--gd);transform:translateY(-2px);box-shadow:0 8px 24px rgba(29,158,117,.35)}
+.btn-outline{background:transparent;color:var(--t2);border:1.5px solid var(--bdr2);padding:12px 24px;font-size:15px}
+.btn-outline:hover{border-color:var(--g);color:var(--g);background:var(--gxl)}
+.btn-lg{padding:16px 36px;font-size:17px;border-radius:12px}
+.btn-white{background:#fff;color:var(--gd);padding:14px 30px;font-size:15px;font-weight:600;box-shadow:var(--sh2)}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(11,22,18,.15)}
+.btn-white-outline{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.4);padding:13px 26px;font-size:15px}
+.btn-white-outline:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.7)}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border:1px solid var(--bdr2);border-radius:100px;font-size:12px;font-weight:600;color:var(--gd);background:var(--gxl);letter-spacing:.04em;text-transform:uppercase}
+.chip-dot{width:6px;height:6px;border-radius:50%;background:var(--g);animation:pulse 2s ease-in-out infinite}
+.section-tag{display:inline-block;padding:4px 14px;background:var(--gxl);color:var(--gd);border-radius:100px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}
+.section-h{font-family:var(--fh);font-size:clamp(28px,3.5vw,44px);font-weight:800;line-height:1.1;letter-spacing:-.025em;color:var(--t);margin-bottom:14px}
+.section-sub{font-size:17px;color:var(--t2);font-weight:300;line-height:1.65;max-width:540px;margin:0 auto}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:66px;display:flex;align-items:center;background:rgba(248,250,249,.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--bdr);transition:box-shadow .3s}
+nav.scrolled{box-shadow:var(--sh)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1120px;margin:0 auto;padding:0 28px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo-mark{width:36px;height:36px;background:var(--g);border-radius:9px;display:flex;align-items:center;justify-content:center}
+.nav-logo-mark svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.nav-brand{font-family:var(--fh);font-size:17px;font-weight:700;color:var(--t);letter-spacing:-.01em}
+.nav-brand span{color:var(--g)}
+.nav-sub{font-size:10px;color:var(--t3);letter-spacing:.03em;margin-top:-2px}
+.nav-links{display:flex;align-items:center;gap:24px;list-style:none}
+.nav-links a{color:var(--t2);font-size:14px;transition:color .2s}
+.nav-links a:hover{color:var(--g)}
+.nav-cta{display:flex;align-items:center;gap:10px}
+.nav-toggle{display:none;flex-direction:column;gap:5px;padding:8px;cursor:pointer}
+.nav-toggle span{width:22px;height:2px;background:var(--t);border-radius:2px}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:100px 0 60px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;pointer-events:none;z-index:0}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--bdr) 1px,transparent 1px),linear-gradient(90deg,var(--bdr) 1px,transparent 1px);background-size:56px 56px;opacity:.5}
+.hero-orb{position:absolute;border-radius:50%}
+.hero-orb-1{width:500px;height:500px;background:radial-gradient(circle,rgba(29,158,117,.12) 0%,transparent 70%);top:-100px;right:-80px}
+.hero-orb-2{width:350px;height:350px;background:radial-gradient(circle,rgba(29,158,117,.08) 0%,transparent 70%);bottom:80px;left:-60px}
+.hero-content{position:relative;z-index:1;max-width:680px}
+.hero-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero-visual{position:relative;z-index:1}
+.hero-card-stack{position:relative;height:420px}
+.hero-card{position:absolute;background:#fff;border:1px solid var(--bdr);border-radius:20px;padding:24px;box-shadow:var(--sh2)}
+.hero-card-main{width:280px;top:20px;left:20px;animation:float 6s ease-in-out infinite}
+.hero-card-2{width:210px;bottom:40px;right:0;animation:float 6s 2s ease-in-out infinite}
+.hero-card-3{width:190px;top:0;right:30px;animation:float 6s 4s ease-in-out infinite}
+.stat-pill{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--gxl);border-radius:10px;margin-bottom:10px}
+.stat-pill:last-child{margin-bottom:0}
+.stat-icon{width:32px;height:32px;background:var(--g);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stat-icon svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.stat-val{font-family:var(--fh);font-size:17px;font-weight:700;color:var(--gd);line-height:1}
+.stat-label{font-size:11px;color:var(--t3);margin-top:1px}
+.mini-chart{display:flex;align-items:flex-end;gap:5px;height:44px;margin-top:10px}
+.bar{border-radius:4px 4px 0 0;background:var(--gll)}
+.bar.active{background:var(--g)}
+.hero h1{font-family:var(--fh);font-size:clamp(38px,4.5vw,62px);font-weight:800;line-height:1.07;letter-spacing:-.03em;color:var(--t);margin:20px 0 22px}
+.hero h1 .accent{color:var(--g)}
+.hero h1 .line2{display:block}
+.hero-sub{font-size:17px;color:var(--t2);line-height:1.68;font-weight:300;max-width:500px;margin-bottom:36px}
+.hero-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:48px}
+.hero-trust{display:flex;align-items:center;gap:14px}
+.trust-avatars{display:flex}
+.trust-avatar{width:32px;height:32px;border-radius:50%;border:2px solid #fff;margin-left:-8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff}
+.trust-avatar:first-child{margin-left:0}
+.trust-text{font-size:13px;color:var(--t3)}
+.trust-text strong{color:var(--t);font-weight:500}
+
+/* MARQUEE */
+.marquee-section{padding:22px 0;border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);background:#fff;overflow:hidden}
+.marquee-label{text-align:center;font-size:11px;color:var(--t3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+.marquee-wrap{overflow:hidden}
+.marquee-track{display:flex;gap:48px;white-space:nowrap;animation:marquee 32s linear infinite;align-items:center}
+.marquee-item{display:flex;align-items:center;gap:10px;font-family:var(--fh);font-size:12px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.06em}
+.marquee-sep{color:var(--gll)}
+
+/* ABOUT / PROBLEM */
+.problem{background:#fff;padding:80px 0}
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.bridge-card{background:var(--bg3);border:1px solid var(--bdr);border-radius:20px;padding:32px;position:relative;overflow:hidden}
+.bridge-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--g),var(--gl))}
+.compare-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.compare-col{background:#fff;border:1px solid var(--bdr);border-radius:12px;padding:14px}
+.compare-col.highlight{border-color:var(--g);background:var(--gxl)}
+.compare-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--t3);margin-bottom:8px}
+.compare-label.green{color:var(--gd)}
+.compare-item{font-size:12px;color:var(--t2);padding:3px 0;display:flex;align-items:flex-start;gap:6px}
+.compare-item::before{content:'→';color:var(--gl);font-size:11px;flex-shrink:0;margin-top:1px}
+.compare-item.bad::before{content:'✗';color:#E24B4A}
+.problem-list{list-style:none}
+.problem-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--bdr)}
+.problem-item:last-child{border-bottom:none}
+.problem-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.problem-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.problem-text h4{font-family:var(--fh);font-size:15px;font-weight:700;color:var(--t);margin-bottom:3px}
+.problem-text p{font-size:14px;color:var(--t3);line-height:1.55}
+
+/* PILLARS */
+.pillars{background:var(--ink3);color:#fff;padding:80px 0}
+.pillars-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1);border-radius:20px;overflow:hidden;margin-top:48px}
+.pillar-card{background:var(--ink3);padding:32px 24px;text-align:center;transition:background .25s}
+.pillar-card:hover{background:rgba(29,158,117,.15)}
+.pillar-icon{width:52px;height:52px;border-radius:14px;background:rgba(29,158,117,.15);border:1px solid rgba(93,202,165,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+.pillar-icon svg{width:24px;height:24px;fill:none;stroke:var(--gl);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pillar-name{font-family:var(--fh);font-size:17px;font-weight:700;color:#fff;margin-bottom:6px}
+.pillar-tagline{font-size:12px;color:var(--gl);font-weight:500;margin-bottom:10px}
+.pillar-desc{font-size:13px;color:rgba(255,255,255,.5);line-height:1.6}
+
+/* FEATURES */
+.features-header{text-align:center;margin-bottom:56px}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--bdr);border:1px solid var(--bdr);border-radius:var(--rl);overflow:hidden}
+.feature-card{background:#fff;padding:36px 30px;transition:background .25s}
+.feature-card:hover{background:var(--gxl)}
+.feature-icon-wrap{width:48px;height:48px;background:var(--gxl);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;transition:background .25s}
+.feature-card:hover .feature-icon-wrap{background:var(--g)}
+.feature-icon-wrap svg{width:22px;height:22px;fill:none;stroke:var(--g);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:stroke .25s}
+.feature-card:hover .feature-icon-wrap svg{stroke:#fff}
+.feature-title{font-family:var(--fh);font-size:17px;font-weight:700;color:var(--t);margin-bottom:8px}
+.feature-desc{font-size:14px;color:var(--t3);line-height:1.6}
+.feature-tag{display:inline-block;margin-top:14px;padding:3px 10px;background:var(--gxl);color:var(--gd);border-radius:6px;font-size:11px;font-weight:600}
+
+/* TRAINING */
+.training{background:#fff}
+.training-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.course-tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.course-tab{padding:7px 16px;border:1px solid var(--bdr2);border-radius:8px;font-size:13px;cursor:pointer;transition:all .2s;font-family:var(--fb);background:transparent;color:var(--t2)}
+.course-tab.active,.course-tab:hover{background:var(--g);color:#fff;border-color:var(--g)}
+.course-list{display:flex;flex-direction:column;gap:8px}
+.course-card{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--bg3);border:1px solid var(--bdr);border-radius:12px;cursor:pointer;transition:all .22s}
+.course-card:hover,.course-card.active{background:#fff;border-color:var(--g);box-shadow:var(--sh)}
+.course-num{width:36px;height:36px;background:var(--gxl);border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:12px;font-weight:700;color:var(--gd);flex-shrink:0}
+.course-card.active .course-num{background:var(--g);color:#fff}
+.course-info{flex:1}
+.course-name{font-size:13px;font-weight:500;color:var(--t);margin-bottom:2px}
+.course-meta{font-size:11px;color:var(--t3)}
+.course-arrow{color:var(--t4);transition:all .2s}
+.course-card:hover .course-arrow,.course-card.active .course-arrow{color:var(--g)}
+.course-detail{background:var(--bg3);border:1px solid var(--bdr);border-radius:20px;padding:28px;position:sticky;top:90px}
+.cd-badge{display:inline-block;padding:4px 12px;background:var(--g);color:#fff;border-radius:6px;font-size:11px;font-weight:600;margin-bottom:14px}
+.cd-title{font-family:var(--fh);font-size:19px;font-weight:700;color:var(--t);margin-bottom:8px}
+.cd-duration{font-size:13px;color:var(--t3);margin-bottom:18px;display:flex;align-items:center;gap:6px}
+.cd-duration svg{width:14px;height:14px;stroke:var(--t3);fill:none;stroke-width:2}
+.cd-modules{list-style:none;margin-bottom:20px}
+.cd-module{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--bdr);font-size:13px;color:var(--t2)}
+.cd-module:last-child{border-bottom:none}
+.cd-module-dot{width:6px;height:6px;border-radius:50%;background:var(--gl);flex-shrink:0}
+.cd-outcome{background:#fff;border:1px solid var(--bdr2);border-radius:10px;padding:14px;font-size:13px;color:var(--t2);line-height:1.55}
+.cd-outcome strong{color:var(--g);font-weight:600}
+.delivery-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.d-badge{padding:4px 10px;border:1px solid var(--bdr2);border-radius:6px;font-size:11px;color:var(--t3)}
+
+/* AI SECTION */
+.ai-section{background:var(--ink2);color:#fff;overflow:hidden;position:relative}
+.ai-bg{position:absolute;inset:0;pointer-events:none}
+.ai-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(29,158,117,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(29,158,117,.07) 1px,transparent 1px);background-size:44px 44px}
+.ai-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(29,158,117,.12) 0%,transparent 65%)}
+.ai-content{position:relative;z-index:1}
+.ai-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.ai-flow{display:flex;flex-direction:column;gap:10px}
+.ai-step{display:flex;align-items:center;gap:14px;padding:14px 18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:12px;transition:all .25s}
+.ai-step:hover{background:rgba(29,158,117,.15);border-color:rgba(93,202,165,.3)}
+.ai-step-num{width:30px;height:30px;border-radius:8px;background:var(--g);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.ai-step-title{font-size:13px;font-weight:500;color:#fff;margin-bottom:2px}
+.ai-step-desc{font-size:11px;color:rgba(255,255,255,.45)}
+.ai-arrow{text-align:center;color:rgba(29,158,117,.5);font-size:16px;line-height:1}
+.ai-head{font-family:var(--fh);font-size:clamp(26px,3vw,40px);font-weight:800;line-height:1.1;letter-spacing:-.025em;color:#fff;margin:16px 0 18px}
+.ai-head .acc{color:var(--gl)}
+.ai-sub{font-size:15px;color:rgba(255,255,255,.55);font-weight:300;line-height:1.65;margin-bottom:28px}
+.ai-features{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px}
+.ai-feat{padding:12px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:10px}
+.ai-feat-title{font-size:12px;font-weight:500;color:#fff;margin-bottom:3px;display:flex;align-items:center;gap:6px}
+.ai-feat-title svg{width:13px;height:13px;fill:none;stroke:var(--gl);stroke-width:2}
+.ai-feat-desc{font-size:11px;color:rgba(255,255,255,.4)}
+
+/* STATS */
+.stats-section{background:var(--g);color:#fff;padding:56px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.15)}
+.stat-box{background:var(--g);padding:32px 24px;text-align:center}
+.stat-number{font-family:var(--fh);font-size:42px;font-weight:800;color:#fff;line-height:1;margin-bottom:6px}
+.stat-number span{color:var(--gll)}
+.stat-desc{font-size:14px;color:rgba(255,255,255,.8)}
+.stat-sub{font-size:12px;color:rgba(255,255,255,.5);margin-top:2px}
+
+/* ADVISORY */
+.advisory{background:var(--bg3)}
+.advisory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:48px}
+.advisor-card{background:#fff;border:1px solid var(--bdr);border-radius:14px;padding:18px;transition:all .25s}
+.advisor-card:hover{box-shadow:var(--sh2);transform:translateY(-2px)}
+.advisor-name{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--t);margin-bottom:3px}
+.advisor-org{font-size:12px;color:var(--g);font-weight:500}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.plan{background:#fff;border:1.5px solid var(--bdr);border-radius:var(--rl);padding:26px 22px;transition:all .25s;position:relative}
+.plan:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
+.plan.popular{border-color:var(--g);border-width:2px}
+.plan-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--g);color:#fff;padding:4px 16px;border-radius:100px;font-size:11px;font-weight:600;white-space:nowrap}
+.plan-name{font-family:var(--fh);font-size:16px;font-weight:700;color:var(--t);margin-bottom:3px}
+.plan-desc{font-size:12px;color:var(--t3);margin-bottom:18px}
+.plan-price{font-family:var(--fh);font-size:30px;font-weight:800;color:var(--t);line-height:1;margin-bottom:4px}
+.plan-price span{font-size:13px;font-weight:400;color:var(--t3)}
+.plan-price sub{font-size:15px;font-weight:600;vertical-align:top;margin-top:5px;display:inline-block}
+.plan-divider{height:1px;background:var(--bdr);margin:18px 0}
+.plan-features{list-style:none;margin-bottom:22px}
+.plan-feature{display:flex;align-items:flex-start;gap:9px;padding:5px 0;font-size:13px;color:var(--t2)}
+.plan-feature svg{width:15px;height:15px;fill:none;stroke:var(--g);stroke-width:2.5;flex-shrink:0;margin-top:3px}
+.plan-feature.no svg{stroke:var(--t4)}
+.plan-feature.no{color:var(--t4)}
+.plan-btn{width:100%;padding:11px;border-radius:var(--r);font-size:14px;font-weight:500;font-family:var(--fb);cursor:pointer;transition:all .2s;border:1.5px solid var(--bdr2);background:transparent;color:var(--t2)}
+.plan-btn:hover{border-color:var(--g);color:var(--g);background:var(--gxl)}
+.plan.popular .plan-btn{background:var(--g);color:#fff;border-color:var(--g)}
+.plan.popular .plan-btn:hover{background:var(--gd)}
+
+/* TESTIMONIALS */
+.testimonials{background:#fff}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.testi-card{background:var(--bg3);border:1px solid var(--bdr);border-radius:var(--rl);padding:28px;transition:all .25s}
+.testi-card:hover{background:#fff;box-shadow:var(--sh2);transform:translateY(-2px)}
+.testi-stars{color:var(--g);font-size:15px;margin-bottom:14px;letter-spacing:2px}
+.testi-text{font-size:14px;color:var(--t2);line-height:1.65;font-weight:300;margin-bottom:18px}
+.testi-author{display:flex;align-items:center;gap:12px}
+.testi-avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.testi-name{font-size:13px;font-weight:500;color:var(--t)}
+.testi-role{font-size:11px;color:var(--t3)}
+
+/* LEADERSHIP */
+.team{background:var(--bg3)}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.team-card{background:#fff;border:1px solid var(--bdr);border-radius:var(--rl);padding:28px;text-align:center;transition:all .25s}
+.team-card:hover{box-shadow:var(--sh2);transform:translateY(-2px)}
+.team-avatar{width:68px;height:68px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:20px;font-weight:800;color:#fff;margin:0 auto 14px}
+.team-name{font-family:var(--fh);font-size:16px;font-weight:700;color:var(--t);margin-bottom:4px}
+.team-title{font-size:13px;color:var(--g);font-weight:500;margin-bottom:10px}
+.team-bio{font-size:13px;color:var(--t3);line-height:1.55}
+
+/* DELIVERY */
+.delivery{background:#fff}
+.delivery-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:40px}
+.delivery-card{background:var(--gxl);border:1px solid var(--bdr2);border-radius:14px;padding:20px 14px;text-align:center}
+.delivery-icon{width:44px;height:44px;background:var(--g);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+.delivery-icon svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.delivery-title{font-family:var(--fh);font-size:13px;font-weight:700;color:var(--gd);margin-bottom:4px}
+.delivery-desc{font-size:11px;color:var(--t3)}
+
+/* GLOBAL */
+.global{background:var(--bg3)}
+.offices-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.office-card{background:#fff;border:1px solid var(--bdr);border-radius:var(--rl);padding:28px;position:relative;overflow:hidden}
+.office-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--g)}
+.office-flag{font-size:30px;margin-bottom:12px}
+.office-country{font-family:var(--fh);font-size:16px;font-weight:700;color:var(--t);margin-bottom:3px}
+.office-role{font-size:11px;color:var(--g);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.office-desc{font-size:13px;color:var(--t3);line-height:1.55}
+.office-contact{margin-top:12px;font-size:12px;color:var(--t2);line-height:1.7}
+.office-contact a{color:var(--g)}
+
+/* CTA */
+.cta-section{background:var(--ink2);padding:96px 0;position:relative;overflow:hidden}
+.cta-bg-orb{position:absolute;border-radius:50%;pointer-events:none}
+.cta-bg-orb-1{width:500px;height:500px;background:radial-gradient(circle,rgba(29,158,117,.18) 0%,transparent 65%);top:-150px;left:-100px}
+.cta-bg-orb-2{width:400px;height:400px;background:radial-gradient(circle,rgba(29,158,117,.12) 0%,transparent 65%);bottom:-100px;right:-80px}
+.cta-inner{position:relative;z-index:1;text-align:center}
+.cta-h{font-family:var(--fh);font-size:clamp(30px,4vw,52px);font-weight:800;line-height:1.1;letter-spacing:-.03em;color:#fff;margin-bottom:18px}
+.cta-h .acc{color:var(--gl)}
+.cta-sub{font-size:16px;color:rgba(255,255,255,.55);font-weight:300;max-width:480px;margin:0 auto 32px;line-height:1.65}
+.cta-actions{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.cta-trust{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:28px;flex-wrap:wrap}
+.cta-trust-item{display:flex;align-items:center;gap:7px;font-size:12px;color:rgba(255,255,255,.45)}
+.cta-trust-item svg{width:13px;height:13px;fill:none;stroke:var(--gl);stroke-width:2}
+
+/* FOOTER */
+footer{background:var(--ink);color:rgba(255,255,255,.55);padding:56px 0 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.footer-logo-mark{width:34px;height:34px;background:var(--g);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.footer-logo-mark svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.footer-logo-text{font-family:var(--fh);font-size:17px;font-weight:700;color:#fff}
+.footer-logo-text span{color:var(--gl)}
+.footer-logo-sub{font-size:10px;color:rgba(255,255,255,.35);margin-top:-2px}
+.footer-tagline{font-size:13px;line-height:1.6;max-width:240px;margin-bottom:18px}
+.footer-social{display:flex;gap:8px}
+.social-btn{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:13px;color:rgba(255,255,255,.45);transition:all .2s;cursor:pointer}
+.social-btn:hover{background:var(--g);color:#fff}
+.footer-col-title{font-size:11px;font-weight:600;color:#fff;text-transform:uppercase;letter-spacing:.09em;margin-bottom:16px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:9px}
+.footer-links a{font-size:13px;color:rgba(255,255,255,.45);transition:color .2s}
+.footer-links a:hover{color:var(--gl)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);flex-wrap:wrap;gap:12px}
+.footer-copy{font-size:12px}
+.footer-bottom-links{display:flex;gap:20px}
+.footer-bottom-links a{font-size:12px;color:rgba(255,255,255,.3);transition:color .2s}
+.footer-bottom-links a:hover{color:var(--gl)}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .hero-layout,.problem-grid,.training-layout,.ai-layout{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  .features-grid,.pricing-grid{grid-template-columns:1fr 1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .testi-grid,.team-grid,.offices-grid{grid-template-columns:1fr 1fr}
+  .pillars-grid{grid-template-columns:1fr 1fr}
+  .advisory-grid{grid-template-columns:1fr 1fr}
+  .delivery-grid{grid-template-columns:repeat(3,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .nav-links,.nav-cta{display:none}
+  .nav-toggle{display:flex}
+}
+@media(max-width:600px){
+  .features-grid,.pricing-grid,.testi-grid,.team-grid,.offices-grid,.pillars-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .advisory-grid{grid-template-columns:1fr 1fr}
+  .delivery-grid{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .ai-features{grid-template-columns:1fr}
+  .section{padding:64px 0}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <div>
+        <div class="nav-brand">GlobalPact <span>SustainX</span></div>
+        <div class="nav-sub">Centre of Excellence</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#features">Platform</a></li>
+      <li><a href="#training">Programs</a></li>
+      <li><a href="#ai">AI</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-outline" style="padding:8px 18px;font-size:14px">Sign in</a>
+      <a href="#" class="btn btn-primary" style="padding:9px 18px;font-size:14px">Get started free</a>
+    </div>
+    <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <div class="hero-grid"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+  </div>
+  <div class="container">
+    <div class="hero-layout">
+      <div class="hero-content">
+        <div class="chip anim-1"><span class="chip-dot"></span> 2026 Training Programs Now Open</div>
+        <h1 class="anim-2">Empowering the <span class="accent">Global Energy</span><span class="line2">Transition.</span></h1>
+        <p class="hero-sub anim-3">GlobalPact SustainX is the AI-powered training & collaboration platform for clean energy — offering certified programs in Solar, Wind, EV, ESG, and Climate Finance. Strategy · Project Management · Turnkey Solutions · Capacity Building.</p>
+        <div class="hero-actions anim-4">
+          <a href="#training" class="btn btn-primary btn-lg">Explore Programs</a>
+          <a href="#about" class="btn btn-outline btn-lg">Our Approach</a>
+        </div>
+        <div class="hero-trust anim-5">
+          <div class="trust-avatars">
+            <div class="trust-avatar" style="background:#1D9E75">GM</div>
+            <div class="trust-avatar" style="background:#0F6E56">IIT</div>
+            <div class="trust-avatar" style="background:#085041">KOC</div>
+            <div class="trust-avatar" style="background:#5DCAA5;color:#0F6E56">HK</div>
+          </div>
+          <div class="trust-text">Trusted by <strong>GM, IIT Kanpur, KOC Kuwait</strong> & more</div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card-stack">
+          <div class="hero-card hero-card-main">
+            <div style="font-size:11px;color:var(--t3);margin-bottom:12px;font-weight:500;text-transform:uppercase;letter-spacing:.05em">Platform Overview</div>
+            <div class="stat-pill">
+              <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+              <div><div class="stat-val">10 Programs</div><div class="stat-label">A1–A5 + B1–B5 Tracks</div></div>
+            </div>
+            <div class="stat-pill">
+              <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+              <div><div class="stat-val">50+ Years</div><div class="stat-label">Combined team expertise</div></div>
+            </div>
+            <div class="stat-pill">
+              <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+              <div><div class="stat-val">3 Global Hubs</div><div class="stat-label">India · USA · Middle East</div></div>
+            </div>
+            <div class="mini-chart">
+              <div class="bar" style="height:30%;width:18px"></div>
+              <div class="bar" style="height:50%;width:18px"></div>
+              <div class="bar" style="height:40%;width:18px"></div>
+              <div class="bar active" style="height:80%;width:18px"></div>
+              <div class="bar active" style="height:95%;width:18px"></div>
+              <div class="bar active" style="height:100%;width:18px"></div>
+            </div>
+          </div>
+          <div class="hero-card hero-card-2">
+            <div style="font-size:11px;color:var(--t3);margin-bottom:6px;font-weight:500">AI ESG Score</div>
+            <div style="font-family:var(--fh);font-size:28px;font-weight:800;color:var(--g)">87<span style="font-size:13px;color:var(--t3)">/100</span></div>
+            <div style="background:var(--gxl);border-radius:4px;height:4px;margin-top:8px"><div style="background:var(--g);width:87%;height:100%;border-radius:4px"></div></div>
+            <div style="font-size:10px;color:var(--t3);margin-top:5px">↑ 12% this quarter</div>
+            <div style="font-size:10px;color:var(--t3)">CO₂ reduced: 2,450t</div>
+          </div>
+          <div class="hero-card hero-card-3">
+            <div style="font-size:10px;color:var(--t3);margin-bottom:5px;font-weight:500">A1 Completion</div>
+            <div style="font-family:var(--fh);font-size:22px;font-weight:800;color:var(--t)">94%</div>
+            <div style="background:var(--gxl);border-radius:4px;height:4px;margin-top:6px"><div style="background:var(--g);width:94%;height:100%;border-radius:4px"></div></div>
+            <div style="font-size:10px;color:var(--t3);margin-top:4px">Certificate Ready</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE — Real clients from documents -->
+<div class="marquee-section">
+  <div class="marquee-label">Trusted by professionals from</div>
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item">Adani Green Energy <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">Mahindra IT Centre <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">Fujitsu India <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">General Motors USA <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">Hyundai Kia USA <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">IIT Kanpur <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">KOC Kuwait <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">Tennessee Tech USA <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">Switch Mobility <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">Taibah University <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">Schoon Energy <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">Universal Studios <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">Shapoorji Pallonji <span class="marquee-sep">✦</span></div>
+      <!-- duplicate for seamless loop -->
+      <div class="marquee-item">Adani Green Energy <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">Mahindra IT Centre <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">Fujitsu India <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">General Motors USA <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">Hyundai Kia USA <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">IIT Kanpur <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">KOC Kuwait <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">Tennessee Tech USA <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">Switch Mobility <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">Taibah University <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">Schoon Energy <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">Universal Studios <span class="marquee-sep">✦</span></div>
+      <div class="marquee-item">Shapoorji Pallonji <span class="marquee-sep">✦</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT / PROBLEM -->
+<section class="problem" id="about">
+  <div class="container">
+    <div class="problem-grid">
+      <div>
+        <div class="section-tag">The execution gap</div>
+        <h2 class="section-h" style="text-align:left;max-width:480px;margin-bottom:14px">Bridging Global Visions with Ground Realities</h2>
+        <p style="font-size:15px;color:var(--t2);font-weight:300;line-height:1.65;margin-bottom:28px">The world is racing toward Net-Zero — but execution on the ground is lagging. SustainX bridges this gap through structured training, AI-enabled platforms, and hands-on industry collaboration.</p>
+        <ul class="problem-list">
+          <li class="problem-item">
+            <div class="problem-icon" style="background:#FEF3E2"><svg viewBox="0 0 24 24" style="stroke:#B45309"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+            <div class="problem-text"><h4>Scale & Speed</h4><p>Gigaprojects require military-grade precision and complex supply chain logistics that outpace traditional advisory firms.</p></div>
+          </li>
+          <li class="problem-item">
+            <div class="problem-icon" style="background:#FEE2E2"><svg viewBox="0 0 24 24" style="stroke:#DC2626"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div class="problem-text"><h4>Environmental Extremes</h4><p>High solar irradiation coupled with dust soiling, heat degradation, and grid intermittency demands specialized skills.</p></div>
+          </li>
+          <li class="problem-item">
+            <div class="problem-icon" style="background:var(--gxl)"><svg viewBox="0 0 24 24" style="stroke:var(--gd)"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+            <div class="problem-text"><h4>Human Capital Shortage</h4><p>An urgent, critical shortage of localized technical skills necessary to build and maintain next-generation energy assets.</p></div>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <div class="bridge-card">
+          <div style="font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:18px">Traditional Advisory vs GlobalPact SustainX</div>
+          <div class="compare-row">
+            <div class="compare-col">
+              <div class="compare-label">Traditional</div>
+              <div class="compare-item bad">Paper-based roadmaps & theory</div>
+              <div class="compare-item bad">Surface-level ESG greenwashing</div>
+              <div class="compare-item bad">Imported talent, no local transfer</div>
+              <div class="compare-item bad">Retrospective classroom training</div>
+            </div>
+            <div class="compare-col highlight">
+              <div class="compare-label green">GlobalPact SustainX</div>
+              <div class="compare-item">Execute (PMC) & build capacity</div>
+              <div class="compare-item">True asset optimization & resilience</div>
+              <div class="compare-item">International standards + local knowledge</div>
+              <div class="compare-item">AI + VR workforce readiness</div>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid var(--bdr);border-radius:12px;padding:14px;margin-top:8px">
+            <div style="font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">The GlobalPact Synthesis</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <div style="font-size:12px;color:var(--t2)">📐 <strong>Strategy</strong> — De-risks Capital</div>
+              <div style="font-size:12px;color:var(--t2)">📋 <strong>Project Mgmt</strong> — Accelerates Timeline</div>
+              <div style="font-size:12px;color:var(--t2)">🔧 <strong>Turnkey Solutions</strong> — Guarantees Execution</div>
+              <div style="font-size:12px;color:var(--t2)">🎓 <strong>Capacity Building</strong> — Sustains Operation</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 PILLARS -->
+<section class="pillars">
+  <div class="container">
+    <div style="text-align:center">
+      <div class="chip" style="background:rgba(29,158,117,.15);border-color:rgba(93,202,165,.3);color:var(--gl)"><span class="chip-dot" style="background:var(--gl)"></span>Our 4 Core Pillars</div>
+      <h2 class="section-h" style="color:#fff;margin-top:14px">Individually, each pillar solves a challenge.<br><span style="color:var(--gl)">Integrated, they guarantee asset maximization.</span></h2>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <div class="pillar-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <div class="pillar-name">Strategy</div>
+        <div class="pillar-tagline">Blueprinting the future</div>
+        <div class="pillar-desc">Macro-planning, feasibility mapping, and grid integration design. De-risks the capital.</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <div class="pillar-name">Project Management</div>
+        <div class="pillar-tagline">Orchestrating execution</div>
+        <div class="pillar-desc">Capital deployment, timeline enforcement, and multi-stakeholder alignment. Accelerates the timeline.</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <div class="pillar-name">Turnkey Solutions</div>
+        <div class="pillar-tagline">Delivering ready-to-operate assets</div>
+        <div class="pillar-desc">End-to-end design, construction, and physical handover. Guarantees the execution.</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+        <div class="pillar-name">Capacity Building</div>
+        <div class="pillar-tagline">Sustaining the legacy</div>
+        <div class="pillar-desc">Workforce upskilling, operational readiness, and community impact. Sustains the operation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="features-header">
+      <div class="section-tag">Platform Features</div>
+      <h2 class="section-h">Everything your team needs to lead the energy transition</h2>
+      <p class="section-sub">From certified programs to AI-powered ESG dashboards — one platform for the entire clean energy journey.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon-wrap"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+        <div class="feature-title">10 Certified Programs</div>
+        <div class="feature-desc">Certificate & Diploma programs (A1–A5) plus 5 Executive Intensive programs (B1–B5) covering every career stage — from engineers to CXOs.</div>
+        <div class="feature-tag">Part A + Part B tracks</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
+        <div class="feature-title">AI-Powered Analytics</div>
+        <div class="feature-desc">Predictive analytics, ESG monitoring, smart recommendations, and automated sustainability reports powered by OpenAI & TensorFlow.</div>
+        <div class="feature-tag">Real-time AI insights</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <div class="feature-title">Hybrid Learning</div>
+        <div class="feature-desc">Online modules combined with in-person workshops, simulation labs using PVsyst & HOMER, and global industry expert masterclasses.</div>
+        <div class="feature-tag">Online + In-person</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="feature-title">Industry Certificates</div>
+        <div class="feature-desc">Industry-recognised credentials that enhance professional standing, accelerate career advancement, and open doors to global networks.</div>
+        <div class="feature-tag">GlobalPact certified</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <div class="feature-title">ESG Dashboard</div>
+        <div class="feature-desc">Track CO₂ reduction, Scope 1–3 emissions, energy saved, and waste managed in real-time with interactive charts and AI-generated alerts.</div>
+        <div class="feature-tag">Scope 1–3 tracking</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="feature-title">Corporate Collaboration</div>
+        <div class="feature-desc">Multi-seat enterprise accounts, team progress tracking, custom training programs aligned with Vision 2030 and India Net-Zero targets.</div>
+        <div class="feature-tag">Enterprise-ready</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERY MODEL -->
+<section class="section delivery">
+  <div class="container">
+    <div style="text-align:center">
+      <div class="section-tag">Delivery Model</div>
+      <h2 class="section-h">Applied learning ecosystem for real-world execution</h2>
+      <p class="section-sub">Theory + Practical Application + Industry Reality = Applied Competency & Accelerated Career Advancement</p>
+    </div>
+    <div class="delivery-grid">
+      <div class="delivery-card">
+        <div class="delivery-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg></div>
+        <div class="delivery-title">Hybrid Learning</div>
+        <div class="delivery-desc">Online + In-person workshops for maximum flexibility</div>
+      </div>
+      <div class="delivery-card">
+        <div class="delivery-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+        <div class="delivery-title">Industry Experts</div>
+        <div class="delivery-desc">Global case studies led by sector leaders from GM, IIT, KOC</div>
+      </div>
+      <div class="delivery-card">
+        <div class="delivery-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 2v20M17 2v20M2 12h20"/></svg></div>
+        <div class="delivery-title">Simulation Tools</div>
+        <div class="delivery-desc">PVsyst, HOMER, and digital lab environments</div>
+      </div>
+      <div class="delivery-card">
+        <div class="delivery-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <div class="delivery-title">Capstone Projects</div>
+        <div class="delivery-desc">End-to-End project execution from design to commissioning</div>
+      </div>
+      <div class="delivery-card">
+        <div class="delivery-icon"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+        <div class="delivery-title">Industry Integration</div>
+        <div class="delivery-desc">Live internships and project opportunities with global partners</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRAINING PROGRAMS -->
+<section class="section training" id="training">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px">
+      <div class="section-tag">Training Programs — 2026 Edition</div>
+      <h2 class="section-h">Map your path in the clean energy ecosystem</h2>
+      <p class="section-sub">5 Certificate & Diploma programs + 5 Executive Intensives. Designed for every career stage — engineers to C-suite.</p>
+    </div>
+    <div class="training-layout">
+      <div>
+        <div class="course-tabs">
+          <button class="course-tab active" onclick="filterCourses('all',this)">All Programs</button>
+          <button class="course-tab" onclick="filterCourses('cert',this)">Part A — Cert/Diploma</button>
+          <button class="course-tab" onclick="filterCourses('exec',this)">Part B — Executive</button>
+        </div>
+        <div class="course-list" id="courseList">
+          <div class="course-card active" data-type="cert" onclick="showCourse(0,this)">
+            <div class="course-num">A1</div>
+            <div class="course-info"><div class="course-name">Certificate in Renewable Energy Fundamentals</div><div class="course-meta">6–8 weeks · Hybrid · Early-career engineers & graduates</div></div>
+            <svg class="course-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
+          <div class="course-card" data-type="cert" onclick="showCourse(1,this)">
+            <div class="course-num">A2</div>
+            <div class="course-info"><div class="course-name">Advanced Certificate in Solar & Wind Engineering</div><div class="course-meta">8–10 weeks · Hybrid · Engineers & technical consultants</div></div>
+            <svg class="course-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
+          <div class="course-card" data-type="cert" onclick="showCourse(2,this)">
+            <div class="course-num">A3</div>
+            <div class="course-info"><div class="course-name">Diploma in RE Project Management</div><div class="course-meta">3–6 months · Hybrid · Project managers & consultants</div></div>
+            <svg class="course-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
+          <div class="course-card" data-type="cert" onclick="showCourse(3,this)">
+            <div class="course-num">A4</div>
+            <div class="course-info"><div class="course-name">Executive Program in Sustainability Leadership</div><div class="course-meta">6–8 weeks · Executive sessions · CXOs & policymakers</div></div>
+            <svg class="course-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
+          <div class="course-card" data-type="cert" onclick="showCourse(4,this)">
+            <div class="course-num">A5</div>
+            <div class="course-info"><div class="course-name">Diploma in Emerging Technologies in RE</div><div class="course-meta">3–4 months · Research workshops · R&D specialists</div></div>
+            <svg class="course-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
+          <div class="course-card" data-type="exec" onclick="showCourse(5,this)">
+            <div class="course-num" style="font-size:11px">B1</div>
+            <div class="course-info"><div class="course-name">Global Energy Policies & Geopolitics</div><div class="course-meta">4 days · Hybrid intensive · Senior executives & government</div></div>
+            <svg class="course-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
+          <div class="course-card" data-type="exec" onclick="showCourse(6,this)">
+            <div class="course-num" style="font-size:11px">B2</div>
+            <div class="course-info"><div class="course-name">Carbon Footprint & Climate Risk</div><div class="course-meta">3 days · Hybrid intensive · Sustainability executives</div></div>
+            <svg class="course-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
+          <div class="course-card" data-type="exec" onclick="showCourse(7,this)">
+            <div class="course-num" style="font-size:11px">B3</div>
+            <div class="course-info"><div class="course-name">Sustainable Finance & Green Bonds</div><div class="course-meta">3 days · Hybrid intensive · Financial leaders & investors</div></div>
+            <svg class="course-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
+          <div class="course-card" data-type="exec" onclick="showCourse(8,this)">
+            <div class="course-num" style="font-size:11px">B4</div>
+            <div class="course-info"><div class="course-name">Corporate Sustainability Leadership</div><div class="course-meta">5 days · Hybrid intensive · C-Suite executives</div></div>
+            <svg class="course-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
+          <div class="course-card" data-type="exec" onclick="showCourse(9,this)">
+            <div class="course-num" style="font-size:11px">B5</div>
+            <div class="course-info"><div class="course-name">Climate Diplomacy & International Collaboration</div><div class="course-meta">4 days · Hybrid intensive · Diplomats & govt officials</div></div>
+            <svg class="course-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
+        </div>
+      </div>
+      <div id="courseDetail" class="course-detail">
+        <div class="cd-badge" id="cdBadge">Certificate of Completion</div>
+        <div class="cd-title" id="cdTitle">A1 — Certificate in Renewable Energy Fundamentals</div>
+        <div class="cd-duration" id="cdDuration">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          6–8 weeks · Hybrid · Early-career professionals
+        </div>
+        <ul class="cd-modules" id="cdModules">
+          <li class="cd-module"><span class="cd-module-dot"></span>Introduction to Renewable Energy Ecosystems</li>
+          <li class="cd-module"><span class="cd-module-dot"></span>Solar Energy Systems (Photovoltaic & Thermal)</li>
+          <li class="cd-module"><span class="cd-module-dot"></span>Wind Energy Technologies</li>
+          <li class="cd-module"><span class="cd-module-dot"></span>Energy Storage Systems (Batteries, Hydrogen)</li>
+          <li class="cd-module"><span class="cd-module-dot"></span>Fundamentals of Grid Integration</li>
+          <li class="cd-module"><span class="cd-module-dot"></span>Policy & Regulatory Landscape</li>
+        </ul>
+        <div class="cd-outcome" id="cdOutcome"><strong>Outcome:</strong> Demonstrate a comprehensive understanding of core renewable energy technologies, evaluate basic project feasibility using industry-standard criteria, and interpret global and regional energy policies.</div>
+        <div class="delivery-badges">
+          <span class="d-badge">🎓 Certificate of Completion</span>
+          <span class="d-badge">🔬 Simulation labs</span>
+          <span class="d-badge">🌐 Hybrid delivery</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI SECTION -->
+<section class="section ai-section" id="ai">
+  <div class="ai-bg"><div class="ai-grid"></div><div class="ai-glow"></div></div>
+  <div class="container ai-content">
+    <div class="ai-layout">
+      <div>
+        <div class="ai-flow">
+          <div class="ai-step"><div class="ai-step-num">1</div><div><div class="ai-step-title">Data Collection</div><div class="ai-step-desc">User inputs · Sensor data · External APIs · Sustainability inputs</div></div></div>
+          <div class="ai-arrow">↓</div>
+          <div class="ai-step"><div class="ai-step-num">2</div><div><div class="ai-step-title">Data Processing</div><div class="ai-step-desc">Data cleaning · Validation · Transformation · Storage</div></div></div>
+          <div class="ai-arrow">↓</div>
+          <div class="ai-step"><div class="ai-step-num">3</div><div><div class="ai-step-title">AI Analytics Engine</div><div class="ai-step-desc">Predictive analytics · Pattern recognition · Smart recommendations</div></div></div>
+          <div class="ai-arrow">↓</div>
+          <div class="ai-step"><div class="ai-step-num">4</div><div><div class="ai-step-title">Insights & Predictions</div><div class="ai-step-desc">ESG monitoring · Performance predictions · Risk detection</div></div></div>
+          <div class="ai-arrow">↓</div>
+          <div class="ai-step"><div class="ai-step-num">5</div><div><div class="ai-step-title">Dashboard Visualization</div><div class="ai-step-desc">Real-time analytics · Interactive charts · KPI monitoring · AI reports</div></div></div>
+          <div class="ai-arrow">↓</div>
+          <div class="ai-step"><div class="ai-step-num">6</div><div><div class="ai-step-title">Automated Reporting</div><div class="ai-step-desc">AI-generated reports · Notifications · Performance summary · Alerts</div></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="chip" style="background:rgba(29,158,117,.15);border-color:rgba(93,202,165,.3);color:var(--gl)"><span class="chip-dot" style="background:var(--gl)"></span>AI Framework</div>
+        <h2 class="ai-head">AI-powered <span class="acc">sustainability</span> intelligence</h2>
+        <p class="ai-sub">Our AI framework — built on Python, TensorFlow, and OpenAI API — transforms raw sustainability data into actionable predictions, ESG insights, and automated reports.</p>
+        <div class="ai-features">
+          <div class="ai-feat"><div class="ai-feat-title"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Predictive Analytics</div><div class="ai-feat-desc">Forecast energy trends & ESG risks before they happen</div></div>
+          <div class="ai-feat"><div class="ai-feat-title"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4"/></svg>Smart Recommendations</div><div class="ai-feat-desc">AI-suggested learning paths & sustainability actions</div></div>
+          <div class="ai-feat"><div class="ai-feat-title"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Auto ESG Reports</div><div class="ai-feat-desc">AI-generated PDF reports — Scope 1, 2 & 3 emissions</div></div>
+          <div class="ai-feat"><div class="ai-feat-title"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Real-time Monitoring</div><div class="ai-feat-desc">Live KPI, CO₂, energy saved & waste managed tracking</div></div>
+        </div>
+        <div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:20px">Tech stack: Python · TensorFlow · OpenAI API · React.js · Node.js · MongoDB · AWS</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a href="#" class="btn btn-white">See AI Dashboard</a>
+          <a href="#" class="btn btn-white-outline">Technical Docs</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS — Real numbers from documents -->
+<div class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-box"><div class="stat-number">50<span>+</span></div><div class="stat-desc">Years combined expertise</div><div class="stat-sub">Engineering & sustainability leadership</div></div>
+      <div class="stat-box"><div class="stat-number">6.25<span>MW</span></div><div class="stat-desc">Solar projects delivered</div><div class="stat-sub">Adani Green Energy, Rajasthan</div></div>
+      <div class="stat-box"><div class="stat-number">10</div><div class="stat-desc">Training programs</div><div class="stat-sub">Certificate + Executive tracks</div></div>
+      <div class="stat-box"><div class="stat-number">3</div><div class="stat-desc">Global hubs</div><div class="stat-sub">India · USA · Middle East (Qatar)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px">
+      <div class="section-tag">Pricing</div>
+      <h2 class="section-h">Simple, transparent pricing</h2>
+      <p class="section-sub">Start free. Scale with your team. Enterprise plans for large corporate organizations across India and the Middle East.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="plan">
+        <div class="plan-name">Free</div>
+        <div class="plan-desc">Try before you commit</div>
+        <div class="plan-price">₹<sub>0</sub><span>/month</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li class="plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>1 course access</li>
+          <li class="plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Basic dashboard</li>
+          <li class="plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Community forum</li>
+          <li class="plan-feature no"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Certificate</li>
+          <li class="plan-feature no"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>AI insights</li>
+        </ul>
+        <button class="plan-btn">Get Started Free</button>
+      </div>
+      <div class="plan">
+        <div class="plan-name">Basic</div>
+        <div class="plan-desc">For individual professionals</div>
+        <div class="plan-price">₹<sub>2,999</sub><span>/month</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li class="plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>3 courses access</li>
+          <li class="plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Analytics dashboard</li>
+          <li class="plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Certificate of Completion</li>
+          <li class="plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Email support</li>
+          <li class="plan-feature no"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>AI insights</li>
+        </ul>
+        <button class="plan-btn">Get Basic</button>
+      </div>
+      <div class="plan popular">
+        <div class="plan-badge">Most Popular</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-desc">For serious professionals</div>
+        <div class="plan-price">₹<sub>7,999</sub><span>/month</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li class="plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>All 10 programs</li>
+          <li class="plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>AI insights & ESG reports</li>
+          <li class="plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>ESG tracking dashboard</li>
+          <li class="plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Priority support</li>
+          <li class="plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Certificate + LinkedIn badge</li>
+        </ul>
+        <button class="plan-btn">Get Pro</button>
+      </div>
+      <div class="plan">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-desc">For corporate teams</div>
+        <div class="plan-price" style="font-size:20px">Custom<span> pricing</span></div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li class="plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Unlimited users</li>
+          <li class="plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Custom training programs</li>
+          <li class="plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Dedicated account manager</li>
+          <li class="plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Full API access</li>
+          <li class="plan-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>SLA + onboarding support</li>
+        </ul>
+        <button class="plan-btn">Contact Sales</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px">
+      <div class="section-tag">Testimonials</div>
+      <h2 class="section-h">What professionals say about SustainX</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"The Diploma in RE Project Management completely changed how I approach large-scale energy projects. The capstone simulation was real-world level. Best career investment I've made."</p>
+        <div class="testi-author"><div class="testi-avatar" style="background:#1D9E75">AK</div><div><div class="testi-name">Arjun Kapoor</div><div class="testi-role">Project Manager, Adani Green Energy, Rajasthan</div></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"The B4 Corporate Sustainability Leadership program gave our C-suite the clarity to integrate renewables at scale. The AI ESG dashboard insights are genuinely impressive and actionable."</p>
+        <div class="testi-author"><div class="testi-avatar" style="background:#0F6E56">SA</div><div><div class="testi-name">Sara Al-Rashidi</div><div class="testi-role">Head of ESG, Energy Corp, Saudi Arabia</div></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"As an engineer needing both technical depth and policy understanding, SustainX was perfect. A2 Solar & Wind Engineering with PVsyst simulation labs is genuinely world-class."</p>
+        <div class="testi-author"><div class="testi-avatar" style="background:#085041">RM</div><div><div class="testi-name">Rohit Mehta</div><div class="testi-role">Solar Design Engineer, Mumbai</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP — Real names from documents -->
+<section class="section team" id="team">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px">
+      <div class="section-tag">Executive Management</div>
+      <h2 class="section-h">Led by global energy & technology experts</h2>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar" style="background:#0B1612">US</div>
+        <div class="team-name">Mr. Umar Siddiqui</div>
+        <div class="team-title">Managing Director</div>
+        <p class="team-bio">Global Entrepreneur & Social Reformist. Managed Fortune 500 software teams. Board member at Singapore's Global Source Media & Technology Investments. Founder of Anti-Corruption Academy & Idea of India Foundation. Promoter of WorldHub City, Navi Mumbai.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:#1D9E75">SA</div>
+        <div class="team-name">Dr. Saad Alam</div>
+        <div class="team-title">President</div>
+        <p class="team-bio">Strategist at AI, Renewable Energy & EV intersection. PhD from USA. 10+ years at Chrysler, Ford & GM leading AI-enabled EV infrastructure. Founded CARET at AMU. Advisor to Fortune 500s & Government bodies on energy economics and workforce readiness beyond 2030.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:#0F6E56">MM</div>
+        <div class="team-name">Dr. M.A. Mufazzal</div>
+        <div class="team-title">Chief Consultant</div>
+        <p class="team-bio">PhD in Corporate Communication. Specializes in strategies aligning with UN SDGs 7 and 13. Speaker at the United Nations General Assembly (2014) on global citizenship and sustainable development. Advisor to Anti-Corruption Academy & Idea of India Foundation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADVISORY BOARD — Real names from documents -->
+<section class="section advisory">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:8px">
+      <div class="section-tag">Global Advisory Board</div>
+      <h2 class="section-h">Supported by industry pioneers worldwide</h2>
+      <p class="section-sub">Our advisory board brings together global leaders from automotive, energy, academia, and policy sectors.</p>
+    </div>
+    <div class="advisory-grid">
+      <div class="advisor-card"><div class="advisor-name">Reji Kumar Pillai</div><div class="advisor-org">President, India Smart Grid Forum · Chairman, Global Smart Energy Federation</div></div>
+      <div class="advisor-card"><div class="advisor-name">Prof. Somitra Sanadhya</div><div class="advisor-org">Wadhwani School of AI, IIT Kanpur</div></div>
+      <div class="advisor-card"><div class="advisor-name">Dr. Ali T Alouani</div><div class="advisor-org">Tennessee Tech University, USA</div></div>
+      <div class="advisor-card"><div class="advisor-name">Simon Kehimkar</div><div class="advisor-org">Manager, General Motors, USA</div></div>
+      <div class="advisor-card"><div class="advisor-name">Dr. Aqueel Ahmad</div><div class="advisor-org">Manager, Switch Mobility</div></div>
+      <div class="advisor-card"><div class="advisor-name">Ali Al Duaij</div><div class="advisor-org">Manager, KOC, Kuwait</div></div>
+      <div class="advisor-card"><div class="advisor-name">Dr. Samir Al-Shariff</div><div class="advisor-org">Taibah University, Saudi Arabia</div></div>
+      <div class="advisor-card"><div class="advisor-name">Dr. Rakan Chabaan</div><div class="advisor-org">Senior Manager, Hyundai Kia, USA</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GLOBAL PRESENCE — Real addresses from documents -->
+<section class="section global" id="contact">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:8px">
+      <div class="section-tag">Global Presence</div>
+      <h2 class="section-h">International standards. Local expertise.</h2>
+      <p class="section-sub">Three strategic hubs delivering localized solutions with global reach.</p>
+    </div>
+    <div class="offices-grid">
+      <div class="office-card">
+        <div class="office-flag">🇮🇳</div>
+        <div class="office-country">India — Technical Engine</div>
+        <div class="office-role">Mumbai Headquarters</div>
+        <p class="office-desc">Access to top-tier technical talent and highly cost-efficient backend engineering support. Driving Pan-India, Maharashtra and South Asia projects including EPC and Solar Finance.</p>
+        <div class="office-contact">
+          B-101/102, Grenville, Near Lokhandwala Club<br>
+          Andheri West, Mumbai – 400053<br>
+          <a href="tel:+917042050024">+91 7042050024</a> · <a href="tel:+919821213141">+91 9821213141</a><br>
+          <a href="mailto:sustainx@globalpactholdings.in">sustainx@globalpactholdings.in</a>
+        </div>
+      </div>
+      <div class="office-card">
+        <div class="office-flag">🇺🇸</div>
+        <div class="office-country">USA — Innovation Hub</div>
+        <div class="office-role">Canton, Michigan</div>
+        <p class="office-desc">Access to emerging clean technologies, advanced AI research, and innovation ecosystems. Connecting with Fortune 500 automotive and energy companies.</p>
+        <div class="office-contact">
+          GlobalPact Alphanso<br>
+          Canton, MI 48187, USA<br>
+          <a href="mailto:sustainx@globalpactholdings.in">sustainx@globalpactholdings.in</a>
+        </div>
+      </div>
+      <div class="office-card">
+        <div class="office-flag">🇶🇦</div>
+        <div class="office-country">Middle East — Frontline</div>
+        <div class="office-role">Global Deployment Hub, Doha</div>
+        <p class="office-desc">Rapid deployment with deep regulatory understanding and context-aware execution across GCC — Saudi Arabia, UAE, Qatar, Kuwait. Supporting Vision 2030 energy targets.</p>
+        <div class="office-contact">
+          PO Box 96296, Doha, Qatar<br>
+          <a href="tel:+97470004441">+974 7000 4441</a> · <a href="tel:+97470807710">+974 7080 7710</a><br>
+          <a href="mailto:sustainx@globalpactholdings.in">sustainx@globalpactholdings.in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-bg-orb cta-bg-orb-1"></div>
+  <div class="cta-bg-orb cta-bg-orb-2"></div>
+  <div class="container cta-inner">
+    <div class="chip" style="background:rgba(29,158,117,.15);border-color:rgba(93,202,165,.3);color:var(--gl);margin-bottom:20px"><span class="chip-dot" style="background:var(--gl)"></span>2026 Programs Open · India & Middle East</div>
+    <h2 class="cta-h">Turn Global Ambition into<br><span class="acc">On-the-Ground Reality.</span></h2>
+    <p class="cta-sub">Partner with GlobalPact SustainX to build the next generation of clean energy leaders. Start free today.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn btn-white btn-lg">Start Free — No Credit Card</a>
+      <a href="mailto:sustainx@globalpactholdings.in" class="btn btn-white-outline btn-lg">Contact Us</a>
+    </div>
+    <div class="cta-trust">
+      <div class="cta-trust-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Industry-recognised credentials</div>
+      <div class="cta-trust-item"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Trusted by Fortune 500s & Governments</div>
+      <div class="cta-trust-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Hybrid online & in-person delivery</div>
+      <div class="cta-trust-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>3 global hubs — India, USA, Middle East</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER — Real info from documents -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <div class="footer-logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <div><div class="footer-logo-text">GlobalPact <span>SustainX</span></div><div class="footer-logo-sub">Centre of Excellence</div></div>
+        </div>
+        <p class="footer-tagline">Powering the Global Energy Transition through AI-powered training, ESG intelligence, and industry collaboration. Strategy · PMC · Turnkey · Capacity Building.</p>
+        <div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:14px">
+          <a href="mailto:sustainx@globalpactholdings.in" style="color:var(--gl)">sustainx@globalpactholdings.in</a><br>
+          <a href="https://www.globalpactholdings.in" style="color:rgba(255,255,255,.35)">www.globalpactholdings.in</a> · <a href="https://www.schoonenergy.com" style="color:rgba(255,255,255,.35)">www.schoonenergy.com</a>
+        </div>
+        <div class="footer-social">
+          <a href="https://www.linkedin.com/company/globalpactsustainx/" class="social-btn">in</a>
+          <div class="social-btn">f</div>
+          <div class="social-btn">𝕏</div>
+          <div class="social-btn">▶</div>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Platform</div>
+        <ul class="footer-links">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#training">Training Programs</a></li>
+          <li><a href="#ai">AI Platform</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#">Dashboard Demo</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Programs</div>
+        <ul class="footer-links">
+          <li><a href="#">A1 — Renewable Energy</a></li>
+          <li><a href="#">A2 — Solar & Wind Eng.</a></li>
+          <li><a href="#">A3 — RE Project Mgmt</a></li>
+          <li><a href="#">A4 — Sustainability Leadership</a></li>
+          <li><a href="#">Executive Intensives (B1–B5)</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#team">Leadership</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#">GlobalPact Holdings</a></li>
+          <li><a href="#">Schoon Energy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 GlobalPact SustainX. All rights reserved. A group entity of GlobalPact International Holdings.</div>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const courseData=[
+  {badge:"Certificate of Completion",title:"A1 — Certificate in Renewable Energy Fundamentals",duration:"6–8 weeks · Hybrid · Early-career professionals, engineers & graduates",modules:["Introduction to Renewable Energy Ecosystems","Solar Energy Systems (Photovoltaic & Thermal)","Wind Energy Technologies","Energy Storage Systems (Batteries, Hydrogen)","Fundamentals of Grid Integration","Policy & Regulatory Landscape"],outcome:"Demonstrate a comprehensive understanding of core renewable energy technologies, evaluate basic project feasibility using industry-standard criteria, and interpret global and regional energy policies and their implications."},
+  {badge:"Advanced Certificate",title:"A2 — Advanced Certificate in Solar & Wind Project Engineering",duration:"8–10 weeks · Hybrid + hands-on lab sessions · Engineers & technical consultants, project designers",modules:["Solar PV System Design & Simulation (PVsyst)","Wind Resource Assessment & Turbine Selection","Site Feasibility & Environmental Impact Analysis","SCADA & Remote Monitoring Systems","Grid Interconnection & Load Management"],outcome:"Design utility-scale and rooftop solar energy systems, conduct comprehensive wind energy feasibility studies, and optimise system performance using industry-standard software (PVsyst, HOMER)."},
+  {badge:"Professional Diploma",title:"A3 — Diploma in Renewable Energy Project Management",duration:"3–6 months · Hybrid + capstone project · Project managers, consultants & mid-level professionals",modules:["Project Lifecycle in Renewable Energy","Financial Modelling & Investment Analysis","Risk Assessment & Mitigation Strategies","Procurement & Contract Management (EPC)","ESG (Environmental, Social, Governance) Compliance"],outcome:"Manage large-scale renewable energy projects from inception to commissioning, align deliverables with ESG and sustainability goals, and handle budgets, timelines, and stakeholder expectations effectively."},
+  {badge:"Executive Certificate",title:"A4 — Executive Program in Energy Transition & Sustainability Leadership",duration:"6–8 weeks · Flexible / modular · CXOs, senior executives & policymakers",modules:["Global Energy Transition Trends","Corporate Sustainability & Net-Zero Strategies","Climate Risk & Carbon Markets","Sustainable Finance & Green Bonds","Digital Transformation in Energy (AI, IoT, Smart Grids)"],outcome:"Lead organisational energy transition strategies with confidence, integrate sustainability into core business models, and make data-driven, future-ready decisions on energy investments."},
+  {badge:"Professional Diploma",title:"A5 — Diploma in Emerging Technologies in Renewable Energy",duration:"3–4 months · Hybrid + research-focused workshops · Advanced professionals & R&D specialists",modules:["Green Hydrogen & Fuel Cell Technologies","Offshore Wind & Floating Solar Systems","Energy Storage Innovations","Smart Grids & Microgrid Architecture","Carbon Capture, Utilisation & Storage (CCUS)"],outcome:"Evaluate next-generation energy technologies for commercial viability, identify innovation opportunities across the renewable energy value chain, and contribute to R&D strategy and emerging technology roadmaps."},
+  {badge:"Executive Intensive",title:"B1 — Global Energy Policies & Geopolitics",duration:"4 days · Hybrid · Senior executives in energy, policy & government",modules:["Global Energy Geopolitics: Major Players & Market Dynamics","International Climate Agreements (Paris Agreement, COP frameworks)","Energy Security & the Fossil-to-Renewables Transition","Global Energy Diversification Trends","Impact of Geopolitical Events on Energy Pricing & Policy"],outcome:"Analyse how geopolitical events shape energy policies and markets, evaluate the impact of global energy policies on corporate and national strategies, and forecast energy transition trajectories."},
+  {badge:"Executive Intensive",title:"B2 — Carbon Footprint, Offsetting & Climate Risk",duration:"3 days · Hybrid · Sustainability executives, corporate leaders & climate strategists",modules:["Carbon Footprint Measurement: Tools & Methodologies","Carbon Offsetting & Global Carbon Markets","Net-Zero Transition: Corporate Decarbonisation Strategies","Sustainability Finance: Reporting, Bonds & ESG Investments","Climate Risks & Opportunities: Future-Proofing Your Organisation"],outcome:"Calculate, reduce, and offset carbon footprints across sectors. Navigate carbon trading and offset credits. Lead corporate and national strategies toward Net-Zero targets."},
+  {badge:"Executive Intensive",title:"B3 — Sustainable Finance, Carbon Markets & Green Bonds",duration:"3 days · Hybrid · Financial executives, investors, policymakers & ESG professionals",modules:["Sustainable Finance Landscape: ESG Frameworks & Investment Decisions","Green Bonds, Climate Bonds & Sustainable Investing Mechanisms","Carbon Markets & Trading: Economics & Implications","Regulatory Landscape for Climate Finance (EU Taxonomy, TCFD)","Building Financial Resilience: Insurance, Bonds & Carbon Hedging"],outcome:"Leverage sustainable finance to fund renewable energy projects, lead investment decisions in green bonds and carbon markets, and develop a sustainability-focused financial strategy aligned with global standards."},
+  {badge:"Executive Intensive",title:"B4 — Corporate Sustainability & Energy Transition Leadership",duration:"5 days · Hybrid · C-suite executives, heads of sustainability & energy management leaders",modules:["Energy Transition Frameworks: Drivers & Global Trends","Integrating Renewables: Solar, Wind & Storage at Scale","Strategic Leadership for Net-Zero & Corporate Responsibility","Energy Efficiency, Smart Grids & Innovation Implementation","Policy & Regulatory Navigation for Corporate Strategies"],outcome:"Lead corporate energy transitions with clear, measurable strategies, integrate renewable energy solutions into corporate infrastructure, and drive innovation while maintaining economic and regulatory compliance."},
+  {badge:"Executive Intensive",title:"B5 — Climate Diplomacy & International Collaboration for Renewable Energy",duration:"4 days · Hybrid · Diplomats, government officials & international organisations",modules:["Climate Diplomacy & Renewable Energy Policy Intersections","Energy Cooperation & Trade Agreements (Case Studies)","Climate Finance & Development Aid for Emerging Markets","International Policy Influence & Advocacy Campaigns","Regulatory Harmonisation Across National Frameworks"],outcome:"Navigate international energy policies and multilateral agreements, foster cross-border energy collaboration for large-scale renewable projects, and influence global energy diplomacy to advance renewable energy adoption."}
+];
+
+function showCourse(idx,el){
+  document.querySelectorAll('.course-card').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  const d=courseData[idx];
+  document.getElementById('cdBadge').textContent=d.badge;
+  document.getElementById('cdTitle').textContent=d.title;
+  document.getElementById('cdDuration').innerHTML=`<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${d.duration}`;
+  document.getElementById('cdModules').innerHTML=d.modules.map(m=>`<li class="cd-module"><span class="cd-module-dot"></span>${m}</li>`).join('');
+  document.getElementById('cdOutcome').innerHTML=`<strong>Outcome:</strong> ${d.outcome}`;
+}
+
+function filterCourses(type,btn){
+  document.querySelectorAll('.course-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.course-card').forEach(c=>{
+    c.style.display=(type==='all'||c.dataset.type===type)?'flex':'none';
+  });
+}
+
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>20);
+});
+</script>
+</body>
+</html>

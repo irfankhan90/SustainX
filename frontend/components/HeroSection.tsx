@@ -145,7 +145,7 @@ export const HeroSection: React.FC = () => {
             </div>
             
             {/* Trusted indicators */}
-            <div className="anim-5 flex items-center gap-4">
+            <div className="anim-5 hidden lg:flex items-center gap-4">
               <div className="flex">
                 <div className="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-bold text-white bg-brand-g select-none">
                   GP
@@ -167,8 +167,8 @@ export const HeroSection: React.FC = () => {
           </div>
 
           {/* RIGHT COLUMN: 3D ROTATING GLOBE & ORBITAL NODES */}
-          <div className="lg:col-span-6 w-full flex items-center justify-center overflow-visible mt-12 lg:mt-0">
-            <div className="relative w-full max-w-[290px] xs:max-w-[340px] sm:max-w-[440px] lg:max-w-[500px] aspect-square mx-auto flex items-center justify-center select-none scale-[0.8] xs:scale-[0.9] sm:scale-100 origin-center transition-all duration-300">
+          <div className="lg:col-span-6 w-full flex flex-col items-center justify-center overflow-visible mt-12 lg:mt-0">
+            <div className="relative w-full max-w-[270px] xs:max-w-[320px] sm:max-w-[400px] md:max-w-[440px] lg:max-w-[500px] aspect-square mx-auto flex items-center justify-center select-none scale-[0.7] xs:scale-[0.8] sm:scale-[0.9] md:scale-100 origin-center transition-all duration-300">
               
               {/* Outer Glow Ring back layer */}
               <div className="absolute w-[360px] h-[360px] rounded-full bg-emerald-500/5 border border-brand-g/10 animate-pulse-slow" />
@@ -419,6 +419,27 @@ export const HeroSection: React.FC = () => {
                 )}
               </div>
 
+            </div>
+
+            {/* Trusted indicators (Mobile-only, stacked below Globe) */}
+            <div className="anim-5 flex lg:hidden items-center gap-4 mt-10 px-4 justify-center">
+              <div className="flex shrink-0">
+                <div className="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-bold text-white bg-brand-g select-none">
+                  GP
+                </div>
+                <div className="w-8 h-8 rounded-full border-2 border-white -ml-2 flex items-center justify-center text-[10px] font-bold text-white bg-brand-gd select-none">
+                  IIT
+                </div>
+                <div className="w-8 h-8 rounded-full border-2 border-white -ml-2 flex items-center justify-center text-[10px] font-bold text-white bg-brand-gxd select-none">
+                  KOC
+                </div>
+                <div className="w-8 h-8 rounded-full border-2 border-white -ml-2 flex items-center justify-center text-[10px] font-bold text-brand-gd bg-[#5DCAA5] select-none">
+                  SE
+                </div>
+              </div>
+              <div className="text-[12.5px] text-t-3 font-medium text-left">
+                Integrated with leaders: <strong className="text-t-DEFAULT font-semibold">IIT Kanpur, GlobalPact Holdings, KOC Kuwait, Schoon Energy</strong>
+              </div>
             </div>
           </div>
         </div>

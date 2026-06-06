@@ -107,11 +107,11 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
           <div className="flex flex-wrap gap-4 justify-between items-center">
             <span>© 2026 GlobalPact SustainX.</span>
             <div className="flex gap-3">
-              <Link href="#" className="hover:text-brand-g transition-colors">
+              <Link href="/privacy" className="hover:text-brand-g transition-colors">
                 Privacy
               </Link>
               <span className="text-bdr-DEFAULT">•</span>
-              <Link href="#" className="hover:text-brand-g transition-colors">
+              <Link href="/terms" className="hover:text-brand-g transition-colors">
                 Terms
               </Link>
             </div>

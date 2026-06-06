@@ -372,34 +372,34 @@ export const AISection: React.FC = () => {
               {/* --- FLOATING METRIC OVERLAYS --- */}
 
               {/* Card 1: ESG Analytics (Top Right, floating) */}
-              <div className="absolute top-5 right-5 w-[160px] bg-white/80 backdrop-blur-md border border-white/90 rounded-2xl p-3.5 shadow-lg floating-card-1 select-none">
-                <div className="flex items-center gap-1.5 text-[10.5px] text-t-3 font-semibold uppercase tracking-wider">
+              <div className="absolute top-3 right-3 sm:top-5 sm:right-5 w-[130px] sm:w-[160px] bg-white/80 backdrop-blur-md border border-white/90 rounded-2xl p-2.5 sm:p-3.5 shadow-lg floating-card-1 select-none">
+                <div className="flex items-center gap-1.5 text-[9px] sm:text-[10.5px] text-t-3 font-semibold uppercase tracking-wider">
                   <span className="w-1.5 h-1.5 rounded-full bg-brand-g" />
                   ESG Monitoring
                 </div>
-                <div className="font-syne font-extrabold text-[20px] text-brand-g mt-1">
+                <div className="font-syne font-extrabold text-[16px] sm:text-[20px] text-brand-g mt-1">
                   94.2%
                 </div>
-                <p className="text-[10px] text-t-3 mt-0.5">Scope 1–3 Offset Active</p>
+                <p className="text-[8px] sm:text-[10px] text-t-3 mt-0.5">Scope 1–3 Offset Active</p>
               </div>
 
               {/* Card 2: Live Grid capacity (Bottom Left, floating) */}
-              <div className="absolute bottom-6 left-6 w-[180px] bg-white/80 backdrop-blur-md border border-white/90 rounded-2xl p-3.5 shadow-lg floating-card-2 select-none">
-                <div className="flex items-center gap-1.5 text-[10.5px] text-t-3 font-semibold uppercase tracking-wider">
+              <div className="absolute bottom-3 left-3 sm:bottom-6 sm:left-6 w-[140px] sm:w-[180px] bg-white/80 backdrop-blur-md border border-white/90 rounded-2xl p-2.5 sm:p-3.5 shadow-lg floating-card-2 select-none">
+                <div className="flex items-center gap-1.5 text-[9px] sm:text-[10.5px] text-t-3 font-semibold uppercase tracking-wider">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
                   Live Grid Load
                 </div>
-                <div className="font-syne font-extrabold text-[18px] text-t-DEFAULT mt-1">
+                <div className="font-syne font-extrabold text-[14px] sm:text-[18px] text-t-DEFAULT mt-1">
                   {gridOutput} kW
                 </div>
-                <div className="flex items-center justify-between mt-1 text-[9.5px] font-semibold">
-                  <span className="text-brand-gd bg-brand-gxl px-1.5 py-0.5 rounded-md">Optimal</span>
+                <div className="flex items-center justify-between mt-1 text-[8px] sm:text-[9.5px] font-semibold">
+                  <span className="text-brand-gd bg-brand-gxl px-1 sm:px-1.5 py-0.2 sm:py-0.5 rounded-md">Optimal</span>
                   <span className="text-t-3">{co2Saved}t CO₂ Red</span>
                 </div>
               </div>
 
               {/* Card 3: AI Smart Decision Alert (Middle Right, floating) */}
-              <div className="absolute top-[48%] right-6 w-[170px] bg-white/85 backdrop-blur-md border border-white/90 rounded-xl p-3 shadow-md floating-card-3 text-[10.5px] select-none">
+              <div className="hidden sm:block absolute top-[48%] right-6 w-[170px] bg-white/85 backdrop-blur-md border border-white/90 rounded-xl p-3 shadow-md floating-card-3 text-[10.5px] select-none">
                 <div className="flex items-center gap-1.5 font-bold text-brand-gd">
                   <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-none stroke-current stroke-[2.5]">
                     <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />

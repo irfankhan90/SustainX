@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Syne, DM_Sans } from "next/font/google";
+import { Sora, DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const syne = Syne({
-  variable: "--font-syne",
+const sora = Sora({
+  variable: "--font-sora",
   subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 const dmSans = DM_Sans({
@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${syne.variable} ${dmSans.variable}`}
+      className={`${sora.variable} ${dmSans.variable}`}
     >
       <body>
         {children}

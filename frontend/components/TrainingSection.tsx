@@ -220,7 +220,7 @@ export const TrainingSection: React.FC = () => {
             <div className="flex gap-2 mb-5 flex-wrap">
               <button
                 onClick={() => setFilter("all")}
-                className={`px-4 py-2 border rounded-lg text-xs font-medium cursor-pointer transition-all ${
+                className={`px-4 py-3 sm:py-2 border rounded-lg text-xs font-medium cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2 ${
                   filter === "all"
                     ? "bg-brand-g text-white border-brand-g"
                     : "border-bdr-2 bg-transparent text-t-2 hover:bg-brand-g hover:text-white hover:border-brand-g"
@@ -230,7 +230,7 @@ export const TrainingSection: React.FC = () => {
               </button>
               <button
                 onClick={() => setFilter("cert")}
-                className={`px-4 py-2 border rounded-lg text-xs font-medium cursor-pointer transition-all ${
+                className={`px-4 py-3 sm:py-2 border rounded-lg text-xs font-medium cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2 ${
                   filter === "cert"
                     ? "bg-brand-g text-white border-brand-g"
                     : "border-bdr-2 bg-transparent text-t-2 hover:bg-brand-g hover:text-white hover:border-brand-g"
@@ -240,7 +240,7 @@ export const TrainingSection: React.FC = () => {
               </button>
               <button
                 onClick={() => setFilter("exec")}
-                className={`px-4 py-2 border rounded-lg text-xs font-medium cursor-pointer transition-all ${
+                className={`px-4 py-3 sm:py-2 border rounded-lg text-xs font-medium cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2 ${
                   filter === "exec"
                     ? "bg-brand-g text-white border-brand-g"
                     : "border-bdr-2 bg-transparent text-t-2 hover:bg-brand-g hover:text-white hover:border-brand-g"
@@ -252,10 +252,11 @@ export const TrainingSection: React.FC = () => {
 
             <div className="flex flex-col gap-2">
               {filteredCourses.map((course) => (
-                <div
+                <button
+                  type="button"
                   key={course.code}
                   onClick={() => setActiveIndex(course.originalIndex)}
-                  className={`flex items-center gap-3.5 p-4 border rounded-xl cursor-pointer transition-all duration-200 ${
+                  className={`flex items-center gap-3.5 p-4 border rounded-xl cursor-pointer text-left w-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2 ${
                     activeIndex === course.originalIndex
                       ? "bg-white border-brand-g shadow-sh"
                       : "bg-[#EEF4F1] border-bdr-DEFAULT hover:bg-white hover:border-brand-g hover:shadow-sh"
@@ -289,7 +290,7 @@ export const TrainingSection: React.FC = () => {
                   >
                     <path d="M9 18l6-6-6-6" />
                   </svg>
-                </div>
+                </button>
               ))}
             </div>
           </div>

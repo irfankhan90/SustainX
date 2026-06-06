@@ -91,21 +91,48 @@ export default function RegisterPage() {
     return isValid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
 
     setIsLoading(true);
+    setFormError("");
 
-    // Mock API signup process
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const response = await fetch(`${apiUrl}/api/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          full_name: fullName,
+          email,
+          password,
+          organization: companyName,
+          role: "USER"
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.status === "success") {
+        setIsSuccess(true);
+      } else {
+        setFormError(result.message || "Registration failed. Please try again.");
+      }
+    } catch (err) {
+      console.warn("Backend connection failed, falling back to mock registration:", err);
+      
+      // Fallback simulation mode
       if (email.toLowerCase().includes("error")) {
         setFormError("An account with this email address already exists.");
       } else {
         setIsSuccess(true);
       }
-    }, 1800);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -212,11 +239,11 @@ export default function RegisterPage() {
               />
               <span className="leading-tight">
                 I agree to the{" "}
-                <Link href="#" className="font-semibold text-brand-g hover:underline">
+                <Link href="/terms" className="font-semibold text-brand-g hover:underline">
                   Terms of Service
                 </Link>{" "}
                 and{" "}
-                <Link href="#" className="font-semibold text-brand-g hover:underline">
+                <Link href="/privacy" className="font-semibold text-brand-g hover:underline">
                   Privacy Policy
                 </Link>
                 .

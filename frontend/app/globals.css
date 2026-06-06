@@ -26,7 +26,7 @@
   --shadow-sh2: 0 8px 32px rgba(11,22,18,.10), 0 2px 8px rgba(11,22,18,.05);
 
   --font-sans: var(--font-dm-sans), sans-serif;
-  --font-syne: var(--font-syne), sans-serif;
+  --font-syne: var(--font-sora), sans-serif;
 
   --animate-float-1: float-1 6s ease-in-out infinite;
   --animate-float-2: float-2 6s 2s ease-in-out infinite;
@@ -201,5 +201,14 @@ body {
 .animate-battery-fill {
   transform-origin: bottom;
   animation: batteryCharge 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes spin-globe {
+  from { transform: translateX(0px); }
+  to { transform: translateX(-400px); }
+}
+
+.globe-spin-g {
+  animation: spin-globe 22s linear infinite;
 }
 

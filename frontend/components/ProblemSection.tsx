@@ -69,7 +69,7 @@ export const ProblemSection: React.FC = () => {
 
           {/* RIGHT COLUMN */}
           <div>
-            <div className="bg-[#EEF4F1] border border-bdr-DEFAULT rounded-[20px] p-8 relative overflow-hidden before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:height-[4px] before:bg-gradient-to-r before:from-brand-g before:to-brand-gl">
+            <div className="bg-[#EEF4F1] border border-bdr-DEFAULT rounded-[20px] p-8 relative overflow-hidden before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[4px] before:bg-gradient-to-r before:from-brand-g before:to-brand-gl">
               <div className="text-[11px] font-semibold text-t-3 uppercase tracking-[0.07em] mb-4">
                 Traditional Advisory vs GlobalPact SustainX
               </div>

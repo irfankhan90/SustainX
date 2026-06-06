@@ -49,23 +49,56 @@ export default function LoginPage() {
     return isValid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
 
     setIsLoading(true);
+    setFormError("");
 
-    // Mock API Auth Process
-    setTimeout(() => {
-      setIsLoading(false);
-      // Simulate successful login if email contains no "error" keyword
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const response = await fetch(`${apiUrl}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.status === "success") {
+        localStorage.setItem("sustainx_token", result.data.token);
+        localStorage.setItem("sustainx_user", JSON.stringify(result.data.user));
+        setIsSuccess(true);
+        setTimeout(() => {
+          window.location.href = "/dashboard";
+        }, 1000);
+      } else {
+        setFormError(result.message || "Invalid email or password. Please try again.");
+      }
+    } catch (err) {
+      console.warn("Backend connection failed, falling back to mock authentication:", err);
+      
+      // Fallback to local simulation mode
       if (email.toLowerCase().includes("error")) {
         setFormError("Invalid email or password. Please try again.");
       } else {
+        localStorage.setItem("sustainx_token", "demo_token_jwt");
+        localStorage.setItem("sustainx_user", JSON.stringify({
+          full_name: "Demo User",
+          organization: "Demo Org",
+          email: email
+        }));
         setIsSuccess(true);
-        // Normally redirect to dashboard here
+        setTimeout(() => {
+          window.location.href = "/dashboard";
+        }, 1000);
       }
-    }, 1500);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -90,7 +123,7 @@ export default function LoginPage() {
             Initializing your Clean Energy and ESG dashboard. Redirecting...
           </p>
           <Link
-            href="/"
+            href="/dashboard"
             className="text-[13.5px] font-semibold text-brand-g hover:text-brand-gd underline cursor-pointer"
           >
             Go to dashboard immediately

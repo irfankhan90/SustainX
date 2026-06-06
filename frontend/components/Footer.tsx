@@ -102,7 +102,7 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-[13px] text-white/45 hover:text-brand-gl transition-colors">
+                <Link href="/dashboard" className="text-[13px] text-white/45 hover:text-brand-gl transition-colors">
                   Dashboard Demo
                 </Link>
               </li>
@@ -183,13 +183,13 @@ export const Footer: React.FC = () => {
             © 2026 GlobalPact SustainX. All rights reserved. A group entity of GlobalPact International Holdings.
           </div>
           <div className="flex gap-5">
-            <Link href="#" className="text-white/30 hover:text-brand-gl transition-colors">
+            <Link href="/privacy" className="text-white/30 hover:text-brand-gl transition-colors">
               Privacy Policy
             </Link>
-            <Link href="#" className="text-white/30 hover:text-brand-gl transition-colors">
+            <Link href="/terms" className="text-white/30 hover:text-brand-gl transition-colors">
               Terms of Service
             </Link>
-            <Link href="#" className="text-white/30 hover:text-brand-gl transition-colors">
+            <Link href="/cookies" className="text-white/30 hover:text-brand-gl transition-colors">
               Cookie Policy
             </Link>
           </div>

@@ -75,26 +75,26 @@ export const Navbar: React.FC = () => {
         <div className="w-full flex items-center justify-between max-w-none mx-auto px-6 md:px-8 relative">
           
           {/* BRAND LOGO & TAGLINE */}
-          <Link href="#home" className="flex items-center gap-[14px] group shrink-0 animate-fadeUp" onClick={() => handleLinkClick("#home")}>
+          <Link href="#home" className="flex items-center gap-2 sm:gap-[14px] group shrink-0 animate-fadeUp" onClick={() => handleLinkClick("#home")}>
             <img
               src="/logo.jpg"
               alt="GlobalPact SustainX Logo"
               className={`object-contain transition-all duration-300 ${
-                isScrolled ? "h-[54px]" : "h-[70px]"
+                isScrolled ? "h-[44px] sm:h-[54px]" : "h-[56px] sm:h-[70px]"
               } w-auto flex-shrink-0`}
             />
             <div className="flex flex-col justify-center">
-              <div className="font-syne text-[21.5px] font-extrabold text-t-DEFAULT tracking-tight leading-none">
+              <div className="font-syne text-[18px] sm:text-[21.5px] font-extrabold text-t-DEFAULT tracking-tight leading-none">
                 GlobalPact <span className="bg-gradient-to-r from-brand-g to-brand-gd bg-clip-text text-transparent font-extrabold">SustainX</span>
               </div>
-              <div className="text-[9px] text-t-3 font-bold tracking-widest mt-2 transition-all duration-300 group-hover:text-brand-g uppercase">
+              <div className="hidden sm:block text-[9px] text-t-3 font-bold tracking-widest mt-2 transition-all duration-300 group-hover:text-brand-g uppercase">
                 Powering the Global Energy Transition
               </div>
             </div>
           </Link>
 
           {/* DESKTOP MAIN NAVIGATION LINKS WITH DROPDOWNS */}
-          <ul className="hidden md:flex items-center gap-10 list-none m-0 p-0 lg:absolute lg:left-1/2 lg:-translate-x-1/2">
+          <ul className="hidden lg:flex items-center gap-10 list-none m-0 p-0 lg:absolute lg:left-1/2 lg:-translate-x-1/2">
             {/* About */}
             <li>
               <Link href="#about" className={getLinkClass("#about")} onClick={() => handleLinkClick("#about")}>
@@ -225,18 +225,18 @@ export const Navbar: React.FC = () => {
           </ul>
 
           {/* DESKTOP CTAs WITH BREATHING ROOM */}
-          <div className="hidden md:flex items-center gap-3 shrink-0 ml-8">
+          <div className="hidden lg:flex items-center gap-3 shrink-0 ml-8">
             {/* Outlined Sign In */}
             <Link
               href="/login"
-              className="h-10 px-[18px] flex items-center justify-center text-sm font-semibold text-brand-g rounded-lg border-[1.5px] border-brand-g bg-transparent hover:bg-brand-g hover:text-white transition-all duration-300 active:scale-[0.98] cursor-pointer"
+              className="h-10 px-[18px] flex items-center justify-center text-sm font-semibold text-brand-g rounded-lg border-[1.5px] border-brand-g bg-transparent hover:bg-brand-g hover:text-white transition-all duration-300 active:scale-[0.98] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2"
             >
               Sign in
             </Link>
             {/* Premium Gradient Get Started */}
             <Link
               href="/register"
-              className="h-10 px-[26px] flex items-center justify-center gap-1.5 text-sm font-bold text-white rounded-lg bg-gradient-to-r from-brand-gd via-brand-g to-blue-600 shadow-[0_3px_10px_rgba(29,158,117,0.18)] hover:shadow-[0_8px_20px_rgba(29,158,117,0.28)] hover:-translate-y-[2px] active:translate-y-0 active:scale-[0.98] transition-all duration-300 group cursor-pointer"
+              className="h-10 px-[26px] flex items-center justify-center gap-1.5 text-sm font-bold text-white rounded-lg bg-gradient-to-r from-brand-gd via-brand-g to-blue-600 shadow-[0_3px_10px_rgba(29,158,117,0.18)] hover:shadow-[0_8px_20px_rgba(29,158,117,0.28)] hover:-translate-y-[2px] active:translate-y-0 active:scale-[0.98] transition-all duration-300 group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2"
             >
               <span>Get started free</span>
               <svg
@@ -252,7 +252,7 @@ export const Navbar: React.FC = () => {
           {/* HAMBURGER DRAWER TOGGLE (Mobile) */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="flex md:hidden flex-col gap-[5px] p-2 cursor-pointer z-[110] select-none"
+            className="flex lg:hidden w-11 h-11 flex-col justify-center items-center gap-[5px] p-2 cursor-pointer z-[110] select-none rounded-lg hover:bg-brand-gxl/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2"
             aria-label="Toggle menu"
           >
             <span
@@ -276,8 +276,8 @@ export const Navbar: React.FC = () => {
 
       {/* 3. MOBILE MENU DRAWER */}
       <div
-        className={`fixed inset-0 z-50 bg-[#F8FAF9] flex flex-col pt-24 px-7 transition-all duration-300 md:hidden ${
-          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none translate-x-full"
+        className={`fixed inset-0 z-50 bg-[#F8FAF9] flex flex-col pt-24 px-7 transition-all duration-300 lg:hidden ${
+          isOpen ? "opacity-100 pointer-events-auto translate-x-0" : "opacity-0 pointer-events-none translate-x-full"
         }`}
       >
         {/* Mobile Navigation List */}

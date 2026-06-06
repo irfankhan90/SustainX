@@ -90,6 +90,41 @@ export default function DashboardPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [darkMode, setDarkMode] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  const [user, setUser] = useState<{ name: string; org: string; email: string } | null>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("sustainx_token");
+    const storedUser = localStorage.getItem("sustainx_user");
+    if (token && storedUser) {
+      try {
+        const parsed = JSON.parse(storedUser);
+        setUser({
+          name: parsed.full_name || parsed.name || "GlobalPact Admin",
+          org: parsed.organization || parsed.org || "globalpactholdings.in",
+          email: parsed.email || "",
+        });
+      } catch (e) {
+        // Silent catch
+      }
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("sustainx_token");
+    localStorage.removeItem("sustainx_user");
+    window.location.href = "/login";
+  };
+
+  const userName = user?.name || "GlobalPact Admin";
+  const userOrg = user?.org || "globalpactholdings.in";
+  const userInitials = userName
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase() || "GP";
   
   // Dynamic live fluctuations for energy meters
   const [liveSolar, setLiveSolar] = useState(482.4);
@@ -173,8 +208,18 @@ export default function DashboardPage() {
   return (
     <div className={`min-h-screen w-full flex font-sans ${darkMode ? "bg-[#090F0C] text-[#E0E8E4] dark" : "bg-[#F3F7F5] text-[#0B1612]"}`}>
       
+      {/* Backdrop overlay for mobile */}
+      {showSidebar && (
+        <div 
+          className="fixed inset-0 bg-black/45 z-30 lg:hidden"
+          onClick={() => setShowSidebar(false)}
+        />
+      )}
+
       {/* SIDEBAR NAVIGATION PANEL */}
-      <aside className={`w-64 shrink-0 flex flex-col justify-between p-5 border-r transition-all duration-300 ${darkMode ? "bg-[#0E1613] border-[#1C2C26]" : "bg-white border-[#D0E8DE]"}`}>
+      <aside className={`fixed inset-y-0 left-0 z-40 w-64 lg:relative lg:translate-x-0 flex flex-col justify-between p-5 border-r transition-transform duration-300 ${
+        showSidebar ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+      } ${darkMode ? "bg-[#0E1613] border-[#1C2C26]" : "bg-white border-[#D0E8DE]"}`}>
         <div>
           {/* Logo Branding */}
           <Link href="/" className="inline-flex items-center gap-[12px] mb-8">
@@ -195,8 +240,11 @@ export default function DashboardPage() {
               return (
                 <button
                   key={item.id}
-                  onClick={() => setActiveTab(item.id)}
-                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-left text-xs font-bold tracking-wide transition-all duration-200 cursor-pointer ${
+                  onClick={() => {
+                    setActiveTab(item.id);
+                    setShowSidebar(false);
+                  }}
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-left text-xs font-bold tracking-wide transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2 ${
                     isActive 
                       ? "bg-[#1D9E75] text-white shadow-[0_4px_12px_rgba(29,158,117,0.2)]" 
                       : `text-[#3A5549] dark:text-[#A8C4BA] hover:bg-[#E1F5EE] dark:hover:bg-[#152520] hover:text-[#1D9E75]`
@@ -211,14 +259,24 @@ export default function DashboardPage() {
         </div>
 
         {/* User Card */}
-        <div className={`p-3.5 rounded-2xl flex items-center gap-3 border ${darkMode ? "bg-[#14221D] border-[#1C2C26]" : "bg-[#F8FAF9] border-[#D0E8DE]"}`}>
-          <div className="w-9 h-9 rounded-full bg-[#1D9E75] flex items-center justify-center font-bold text-white text-xs">
-            GP
+        <div className={`p-3.5 rounded-2xl flex items-center justify-between border gap-3 ${darkMode ? "bg-[#14221D] border-[#1C2C26]" : "bg-[#F8FAF9] border-[#D0E8DE]"}`}>
+          <div className="flex items-center gap-3 overflow-hidden">
+            <div className="w-9 h-9 rounded-full bg-[#1D9E75] flex items-center justify-center font-bold text-white text-xs shrink-0 select-none">
+              {userInitials}
+            </div>
+            <div className="overflow-hidden">
+              <h4 className="font-syne text-xs font-bold text-[#0B1612] dark:text-white leading-none truncate" title={userName}>{userName}</h4>
+              <span className="text-[10px] text-[#6B8C80] dark:text-[#A8C4BA] truncate block mt-1" title={userOrg}>{userOrg}</span>
+            </div>
           </div>
-          <div className="overflow-hidden">
-            <h4 className="font-syne text-xs font-bold text-[#0B1612] dark:text-white leading-none">GlobalPact Admin</h4>
-            <span className="text-[10px] text-[#6B8C80] dark:text-[#A8C4BA] truncate block mt-1">globalpactholdings.in</span>
-          </div>
+          <button
+            onClick={handleLogout}
+            className="p-1.5 rounded-lg hover:bg-red-500/10 text-red-500 hover:text-red-600 transition-colors cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+            title="Log Out"
+            aria-label="Log Out"
+          >
+            ❌
+          </button>
         </div>
       </aside>
 
@@ -226,8 +284,16 @@ export default function DashboardPage() {
       <div className="flex-1 flex flex-col min-h-screen overflow-x-hidden">
         
         {/* HEADER BAR */}
-        <header className={`h-16 px-8 border-b flex items-center justify-between z-20 ${darkMode ? "bg-[#0E1613] border-[#1C2C26]" : "bg-white border-[#D0E8DE]"}`}>
-          <div className="flex items-center gap-4 w-96">
+        <header className={`h-16 px-4 sm:px-8 border-b flex items-center justify-between z-20 ${darkMode ? "bg-[#0E1613] border-[#1C2C26]" : "bg-white border-[#D0E8DE]"}`}>
+          <div className="flex items-center gap-2 w-full max-w-[200px] xs:max-w-xs sm:max-w-md md:w-96">
+            {/* Sidebar toggle button for mobile */}
+            <button
+              onClick={() => setShowSidebar(!showSidebar)}
+              className="w-10 h-10 flex items-center justify-center rounded-xl border border-[#D0E8DE] dark:border-[#1C2C26] lg:hidden hover:bg-[#EEF4F1] dark:hover:bg-[#14221D] text-lg cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2"
+              title="Toggle Menu"
+            >
+              <span>☰</span>
+            </button>
             {/* Search Input */}
             <div className="relative w-full">
               <span className="absolute left-3 top-2.5 text-xs text-[#6B8C80]">🔍</span>
@@ -245,11 +311,11 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-2.5 sm:gap-5">
             {/* Theme Toggle */}
             <button
               onClick={() => setDarkMode(!darkMode)}
-              className={`p-2 rounded-xl border transition-all cursor-pointer ${
+              className={`p-2 rounded-xl border transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2 ${
                 darkMode ? "border-[#1C2C26] hover:bg-[#14221D] text-white" : "border-[#D0E8DE] hover:bg-[#EEF4F1] text-[#0B1612]"
               }`}
               title="Toggle Theme"
@@ -261,7 +327,7 @@ export default function DashboardPage() {
             <div className="relative">
               <button
                 onClick={() => setShowNotifications(!showNotifications)}
-                className={`p-2 rounded-xl border relative transition-all cursor-pointer ${
+                className={`p-2 rounded-xl border relative transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2 ${
                   darkMode ? "border-[#1C2C26] hover:bg-[#14221D] text-white" : "border-[#D0E8DE] hover:bg-[#EEF4F1] text-[#0B1612]"
                 }`}
               >
@@ -286,7 +352,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Active Telemetry Widget */}
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#E1F5EE] text-[#0F6E56] font-bold text-xs border border-[#B5D9CB]/40 animate-pulse">
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#E1F5EE] text-[#0F6E56] font-bold text-xs border border-[#B5D9CB]/40 animate-pulse">
               <span className="w-2 h-2 bg-[#1D9E75] rounded-full" />
               <span>ACTIVE SYSTEM</span>
             </div>
@@ -294,7 +360,7 @@ export default function DashboardPage() {
         </header>
 
         {/* CONTAINER CONTENT */}
-        <main className="flex-1 p-8 overflow-y-auto">
+        <main className="flex-1 p-4 sm:p-8 overflow-y-auto">
           
           {/* TAB 1: EXECUTIVE OVERVIEW */}
           {activeTab === "dashboard" && (
@@ -311,88 +377,88 @@ export default function DashboardPage() {
               </div>
 
               {/* Executive Overview Cards Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4">
                 
                 {/* Card 1: Energy */}
-                <div className={`p-5 rounded-2xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${
+                <div className={`p-3.5 sm:p-5 rounded-2xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${
                   darkMode ? "bg-[#0E1613] border-[#1C2C26]" : "bg-white border-[#D0E8DE]"
                 }`}>
-                  <div className="flex justify-between items-start mb-3">
-                    <span className="text-2xl">⚡</span>
-                    <span className="text-[10px] text-green-500 font-bold bg-[#E1F5EE] px-2 py-0.5 rounded-full">+12.4%</span>
+                  <div className="flex justify-between items-start mb-2 sm:mb-3">
+                    <span className="text-xl sm:text-2xl">⚡</span>
+                    <span className="text-[9px] sm:text-[10px] text-green-500 font-bold bg-[#E1F5EE] px-1.5 sm:px-2 py-0.5 rounded-full">+12.4%</span>
                   </div>
-                  <h4 className="text-[10px] uppercase font-bold text-[#6B8C80] tracking-wider mb-1">Generated Output</h4>
-                  <div className="text-xl font-bold font-syne text-[#0B1612] dark:text-white">
+                  <h4 className="text-[9px] sm:text-[10px] uppercase font-bold text-[#6B8C80] tracking-wider mb-1">Generated Output</h4>
+                  <div className="text-sm xs:text-base sm:text-xl font-bold font-syne text-[#0B1612] dark:text-white truncate">
                     <AnimatedCount target={liveSolar + liveWind} decimals={1} suffix=" MWh" />
                   </div>
                 </div>
 
                 {/* Card 2: CO2 Reduction */}
-                <div className={`p-5 rounded-2xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${
+                <div className={`p-3.5 sm:p-5 rounded-2xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${
                   darkMode ? "bg-[#0E1613] border-[#1C2C26]" : "bg-white border-[#D0E8DE]"
                 }`}>
-                  <div className="flex justify-between items-start mb-3">
-                    <span className="text-2xl">🌱</span>
-                    <span className="text-[10px] text-green-500 font-bold bg-[#E1F5EE] px-2 py-0.5 rounded-full">-18.2%</span>
+                  <div className="flex justify-between items-start mb-2 sm:mb-3">
+                    <span className="text-xl sm:text-2xl">🌱</span>
+                    <span className="text-[9px] sm:text-[10px] text-green-500 font-bold bg-[#E1F5EE] px-1.5 sm:px-2 py-0.5 rounded-full">-18.2%</span>
                   </div>
-                  <h4 className="text-[10px] uppercase font-bold text-[#6B8C80] tracking-wider mb-1">Carbon Mitigated</h4>
-                  <div className="text-xl font-bold font-syne text-[#0B1612] dark:text-white">
+                  <h4 className="text-[9px] sm:text-[10px] uppercase font-bold text-[#6B8C80] tracking-wider mb-1">Carbon Mitigated</h4>
+                  <div className="text-sm xs:text-base sm:text-xl font-bold font-syne text-[#0B1612] dark:text-white truncate">
                     <AnimatedCount target={428.6} decimals={1} suffix=" Tons" />
                   </div>
                 </div>
 
                 {/* Card 3: ESG Score */}
-                <div className={`p-5 rounded-2xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${
+                <div className={`p-3.5 sm:p-5 rounded-2xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${
                   darkMode ? "bg-[#0E1613] border-[#1C2C26]" : "bg-white border-[#D0E8DE]"
                 }`}>
-                  <div className="flex justify-between items-start mb-3">
-                    <span className="text-2xl">📊</span>
-                    <span className="text-[10px] text-green-500 font-bold bg-[#E1F5EE] px-2 py-0.5 rounded-full">Grade A</span>
+                  <div className="flex justify-between items-start mb-2 sm:mb-3">
+                    <span className="text-xl sm:text-2xl">📊</span>
+                    <span className="text-[9px] sm:text-[10px] text-green-500 font-bold bg-[#E1F5EE] px-1.5 sm:px-2 py-0.5 rounded-full">Grade A</span>
                   </div>
-                  <h4 className="text-[10px] uppercase font-bold text-[#6B8C80] tracking-wider mb-1">ESG Performance</h4>
-                  <div className="text-xl font-bold font-syne text-[#0B1612] dark:text-white">
+                  <h4 className="text-[9px] sm:text-[10px] uppercase font-bold text-[#6B8C80] tracking-wider mb-1">ESG Performance</h4>
+                  <div className="text-sm xs:text-base sm:text-xl font-bold font-syne text-[#0B1612] dark:text-white truncate">
                     <AnimatedCount target={92.4} decimals={1} suffix="/100" />
                   </div>
                 </div>
 
                 {/* Card 4: AI Insights */}
-                <div className={`p-5 rounded-2xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${
+                <div className={`p-3.5 sm:p-5 rounded-2xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${
                   darkMode ? "bg-[#0E1613] border-[#1C2C26]" : "bg-white border-[#D0E8DE]"
                 }`}>
-                  <div className="flex justify-between items-start mb-3">
-                    <span className="text-2xl">🤖</span>
-                    <span className="text-[10px] text-[#1D9E75] font-bold bg-[#E1F5EE] px-2 py-0.5 rounded-full">Optimal</span>
+                  <div className="flex justify-between items-start mb-2 sm:mb-3">
+                    <span className="text-xl sm:text-2xl">🤖</span>
+                    <span className="text-[9px] sm:text-[10px] text-[#1D9E75] font-bold bg-[#E1F5EE] px-1.5 sm:px-2 py-0.5 rounded-full">Optimal</span>
                   </div>
-                  <h4 className="text-[10px] uppercase font-bold text-[#6B8C80] tracking-wider mb-1">AI Advisories</h4>
-                  <div className="text-xl font-bold font-syne text-[#0B1612] dark:text-white">
+                  <h4 className="text-[9px] sm:text-[10px] uppercase font-bold text-[#6B8C80] tracking-wider mb-1">AI Advisories</h4>
+                  <div className="text-sm xs:text-base sm:text-xl font-bold font-syne text-[#0B1612] dark:text-white truncate">
                     <AnimatedCount target={14} decimals={0} suffix=" Active" />
                   </div>
                 </div>
 
                 {/* Card 5: Active PMC */}
-                <div className={`p-5 rounded-2xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${
+                <div className={`p-3.5 sm:p-5 rounded-2xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${
                   darkMode ? "bg-[#0E1613] border-[#1C2C26]" : "bg-white border-[#D0E8DE]"
                 }`}>
-                  <div className="flex justify-between items-start mb-3">
-                    <span className="text-2xl">📈</span>
-                    <span className="text-[10px] text-[#1D9E75] font-bold bg-[#E1F5EE] px-2 py-0.5 rounded-full">Grid Active</span>
+                  <div className="flex justify-between items-start mb-2 sm:mb-3">
+                    <span className="text-xl sm:text-2xl">📈</span>
+                    <span className="text-[9px] sm:text-[10px] text-[#1D9E75] font-bold bg-[#E1F5EE] px-1.5 sm:px-2 py-0.5 rounded-full">Grid Active</span>
                   </div>
-                  <h4 className="text-[10px] uppercase font-bold text-[#6B8C80] tracking-wider mb-1">Total PMC/EPC</h4>
-                  <div className="text-xl font-bold font-syne text-[#0B1612] dark:text-white">
+                  <h4 className="text-[9px] sm:text-[10px] uppercase font-bold text-[#6B8C80] tracking-wider mb-1">Total PMC/EPC</h4>
+                  <div className="text-sm xs:text-base sm:text-xl font-bold font-syne text-[#0B1612] dark:text-white truncate">
                     <AnimatedCount target={projects.length} decimals={0} suffix=" Sites" />
                   </div>
                 </div>
 
                 {/* Card 6: Training Enrollees */}
-                <div className={`p-5 rounded-2xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${
+                <div className={`p-3.5 sm:p-5 rounded-2xl border shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${
                   darkMode ? "bg-[#0E1613] border-[#1C2C26]" : "bg-white border-[#D0E8DE]"
                 }`}>
-                  <div className="flex justify-between items-start mb-3">
-                    <span className="text-2xl">🎓</span>
-                    <span className="text-[10px] text-green-500 font-bold bg-[#E1F5EE] px-2 py-0.5 rounded-full">+48 enr.</span>
+                  <div className="flex justify-between items-start mb-2 sm:mb-3">
+                    <span className="text-xl sm:text-2xl">🎓</span>
+                    <span className="text-[9px] sm:text-[10px] text-green-500 font-bold bg-[#E1F5EE] px-1.5 sm:px-2 py-0.5 rounded-full">+48 enr.</span>
                   </div>
-                  <h4 className="text-[10px] uppercase font-bold text-[#6B8C80] tracking-wider mb-1">Certifications Issued</h4>
-                  <div className="text-xl font-bold font-syne text-[#0B1612] dark:text-white">
+                  <h4 className="text-[9px] sm:text-[10px] uppercase font-bold text-[#6B8C80] tracking-wider mb-1">Certifications Issued</h4>
+                  <div className="text-sm xs:text-base sm:text-xl font-bold font-syne text-[#0B1612] dark:text-white truncate">
                     <AnimatedCount target={programs.reduce((acc, p) => acc + p.enrolled, 0)} decimals={0} suffix=" Issued" />
                   </div>
                 </div>
@@ -524,7 +590,7 @@ export default function DashboardPage() {
 
                     {/* Tooltip Overlay */}
                     {activeHub && (
-                      <div className={`absolute bottom-5 left-5 p-3.5 rounded-xl shadow-xl border z-20 max-w-[260px] animate-fadeUp ${
+                      <div className={`absolute bottom-2 left-2 right-2 sm:bottom-5 sm:left-5 sm:right-auto p-3.5 rounded-xl shadow-xl border z-20 max-w-none sm:max-w-[260px] animate-fadeUp ${
                         darkMode ? "bg-[#0E1613] border-[#1C2C26] text-white" : "bg-white border-[#D0E8DE]"
                       }`}>
                         {activeHub === "mumbai" && (
@@ -580,7 +646,7 @@ export default function DashboardPage() {
                     </div>
                   </div>
 
-                  <button className="w-full mt-5 py-3 rounded-xl bg-[#1D9E75] text-white font-bold text-xs hover:bg-[#0F6E56] transition-colors cursor-pointer">
+                  <button className="w-full mt-5 py-3 rounded-xl bg-[#1D9E75] text-white font-bold text-xs hover:bg-[#0F6E56] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2">
                     Apply AI Load Balancer
                   </button>
                 </div>
@@ -603,7 +669,7 @@ export default function DashboardPage() {
               </div>
 
               {/* Generation Stats Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
                 {/* Solar card */}
                 <div className={`p-6 rounded-3xl border ${darkMode ? "bg-[#0E1613] border-[#1C2C26]" : "bg-white border-[#D0E8DE]"}`}>
@@ -835,20 +901,20 @@ export default function DashboardPage() {
                 
                 <div className="space-y-4">
                   {/* Roadmaps */}
-                  <div className={`p-4 rounded-xl border flex justify-between items-center ${darkMode ? "bg-[#14221D] border-[#1C2C26]" : "bg-[#F8FAF9] border-[#D0E8DE]"}`}>
+                  <div className={`p-4 rounded-xl border flex flex-col sm:flex-row justify-between sm:items-center gap-3 ${darkMode ? "bg-[#14221D] border-[#1C2C26]" : "bg-[#F8FAF9] border-[#D0E8DE]"}`}>
                     <div>
                       <h4 className="font-syne text-sm font-bold text-[#0B1612] dark:text-white">GCC Net-Zero Policy Roadmap</h4>
                       <span className="text-[11px] text-[#6B8C80]">Client: Energy Commission Doha</span>
                     </div>
-                    <span className="text-xs font-bold text-green-500 bg-[#E1F5EE] px-3 py-1 rounded-full">Phase 3 Active</span>
+                    <span className="text-xs font-bold text-green-500 bg-[#E1F5EE] px-3 py-1 rounded-full self-start sm:self-auto">Phase 3 Active</span>
                   </div>
 
-                  <div className={`p-4 rounded-xl border flex justify-between items-center ${darkMode ? "bg-[#14221D] border-[#1C2C26]" : "bg-[#F8FAF9] border-[#D0E8DE]"}`}>
+                  <div className={`p-4 rounded-xl border flex flex-col sm:flex-row justify-between sm:items-center gap-3 ${darkMode ? "bg-[#14221D] border-[#1C2C26]" : "bg-[#F8FAF9] border-[#D0E8DE]"}`}>
                     <div>
                       <h4 className="font-syne text-sm font-bold text-[#0B1612] dark:text-white">Corporation ESG Disclosure Plan</h4>
                       <span className="text-[11px] text-[#6B8C80]">Client: Auto Manufacturing Canton</span>
                     </div>
-                    <span className="text-xs font-bold text-blue-500 bg-blue-100/30 px-3 py-1 rounded-full">Auditing Draft</span>
+                    <span className="text-xs font-bold text-blue-500 bg-blue-100/30 px-3 py-1 rounded-full self-start sm:self-auto">Auditing Draft</span>
                   </div>
 
                 </div>
@@ -872,14 +938,14 @@ export default function DashboardPage() {
                 </div>
                 <button
                   onClick={handleAddProject}
-                  className="px-5 py-2.5 rounded-xl bg-[#1D9E75] text-white font-bold text-xs hover:bg-[#0F6E56] transition-colors cursor-pointer self-start"
+                  className="px-5 py-2.5 rounded-xl bg-[#1D9E75] text-white font-bold text-xs hover:bg-[#0F6E56] transition-colors cursor-pointer self-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2"
                 >
                   + Add Project Card
                 </button>
               </div>
 
               {/* Kanban Board Container */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 
                 {/* Column 1: Backlog */}
                 <div className={`p-4 rounded-2xl border flex flex-col gap-4 ${darkMode ? "bg-[#0E1613] border-[#1C2C26]" : "bg-white border-[#D0E8DE]"}`}>
@@ -898,7 +964,7 @@ export default function DashboardPage() {
                         <span className="text-[10px] text-[#6B8C80]">Assignee: {p.assignee}</span>
                         <button
                           onClick={() => moveProjectStatus(p.id, "progress")}
-                          className="text-[10px] text-[#1D9E75] font-bold hover:underline cursor-pointer"
+                          className="text-[10px] text-[#1D9E75] font-bold hover:underline cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2 rounded"
                         >
                           Start &rarr;
                         </button>
@@ -930,7 +996,7 @@ export default function DashboardPage() {
                         <span className="text-[10px] text-[#6B8C80]">Assignee: {p.assignee}</span>
                         <button
                           onClick={() => moveProjectStatus(p.id, "review")}
-                          className="text-[10px] text-[#1D9E75] font-bold hover:underline cursor-pointer"
+                          className="text-[10px] text-[#1D9E75] font-bold hover:underline cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2 rounded"
                         >
                           Submit Review &rarr;
                         </button>
@@ -956,7 +1022,7 @@ export default function DashboardPage() {
                         <span className="text-[10px] text-[#6B8C80]">Assignee: {p.assignee}</span>
                         <button
                           onClick={() => moveProjectStatus(p.id, "completed")}
-                          className="text-[10px] text-[#1D9E75] font-bold hover:underline cursor-pointer"
+                          className="text-[10px] text-[#1D9E75] font-bold hover:underline cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2 rounded"
                         >
                           Approve &rarr;
                         </button>
@@ -1027,7 +1093,7 @@ export default function DashboardPage() {
 
                       <button
                         onClick={() => handleRegisterParticipant(prog.id)}
-                        className="w-full mt-5 py-2.5 rounded-xl border border-[#B5D9CB] dark:border-[#1C2C26] text-xs font-bold text-[#1D9E75] hover:bg-brand-gxl transition-all cursor-pointer"
+                        className="w-full mt-5 py-2.5 rounded-xl border border-[#B5D9CB] dark:border-[#1C2C26] text-xs font-bold text-[#1D9E75] hover:bg-brand-gxl transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2"
                       >
                         Register New Participant
                       </button>
@@ -1051,7 +1117,7 @@ export default function DashboardPage() {
               </div>
 
               <div className={`p-6 rounded-3xl border ${darkMode ? "bg-[#0E1613] border-[#1C2C26]" : "bg-white border-[#D0E8DE]"}`}>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {/* Partner 1 */}
                   <div className={`p-5 rounded-2xl border text-center ${darkMode ? "bg-[#14221D] border-[#1C2C26]" : "bg-[#F8FAF9] border-[#D0E8DE]"}`}>
                     <div className="w-12 h-12 rounded-full bg-[#1D9E75]/10 flex items-center justify-center mx-auto text-xl mb-3">🏢</div>
@@ -1094,7 +1160,7 @@ export default function DashboardPage() {
 
                 <div className="space-y-4">
                   {/* report row */}
-                  <div className={`p-4 rounded-xl border flex justify-between items-center ${darkMode ? "bg-[#14221D] border-[#1C2C26]" : "bg-[#F8FAF9] border-[#D0E8DE]"}`}>
+                  <div className={`p-4 rounded-xl border flex flex-col sm:flex-row justify-between sm:items-center gap-3 ${darkMode ? "bg-[#14221D] border-[#1C2C26]" : "bg-[#F8FAF9] border-[#D0E8DE]"}`}>
                     <div className="flex items-center gap-3">
                       <span className="text-xl">📄</span>
                       <div>
@@ -1102,12 +1168,12 @@ export default function DashboardPage() {
                         <span className="text-[11px] text-[#6B8C80]">Generated: 2 days ago · 1.4 MB</span>
                       </div>
                     </div>
-                    <button className="px-3.5 py-1.5 rounded-lg bg-[#E1F5EE] text-[#1D9E75] font-bold text-xs hover:bg-[#1D9E75] hover:text-white transition-all cursor-pointer">
+                    <button className="px-3.5 py-1.5 rounded-lg bg-[#E1F5EE] text-[#1D9E75] font-bold text-xs hover:bg-[#1D9E75] hover:text-white transition-all cursor-pointer self-start sm:self-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2">
                       Download
                     </button>
                   </div>
 
-                  <div className={`p-4 rounded-xl border flex justify-between items-center ${darkMode ? "bg-[#14221D] border-[#1C2C26]" : "bg-[#F8FAF9] border-[#D0E8DE]"}`}>
+                  <div className={`p-4 rounded-xl border flex flex-col sm:flex-row justify-between sm:items-center gap-3 ${darkMode ? "bg-[#14221D] border-[#1C2C26]" : "bg-[#F8FAF9] border-[#D0E8DE]"}`}>
                     <div className="flex items-center gap-3">
                       <span className="text-xl">📄</span>
                       <div>
@@ -1115,7 +1181,7 @@ export default function DashboardPage() {
                         <span className="text-[11px] text-[#6B8C80]">Generated: 1 week ago · 3.2 MB</span>
                       </div>
                     </div>
-                    <button className="px-3.5 py-1.5 rounded-lg bg-[#E1F5EE] text-[#1D9E75] font-bold text-xs hover:bg-[#1D9E75] hover:text-white transition-all cursor-pointer">
+                    <button className="px-3.5 py-1.5 rounded-lg bg-[#E1F5EE] text-[#1D9E75] font-bold text-xs hover:bg-[#1D9E75] hover:text-white transition-all cursor-pointer self-start sm:self-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2">
                       Download
                     </button>
                   </div>

@@ -100,12 +100,14 @@ export default function DashboardPage() {
     if (token && storedUser) {
       try {
         const parsed = JSON.parse(storedUser);
-        setUser({
-          name: parsed.full_name || parsed.name || "GlobalPact Admin",
-          org: parsed.organization || parsed.org || "globalpactholdings.in",
-          email: parsed.email || "",
-        });
-      } catch (e) {
+        setTimeout(() => {
+          setUser({
+            name: parsed.full_name || parsed.name || "GlobalPact Admin",
+            org: parsed.organization || parsed.org || "globalpactholdings.in",
+            email: parsed.email || "",
+          });
+        }, 0);
+      } catch {
         // Silent catch
       }
     }

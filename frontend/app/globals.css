@@ -10,6 +10,8 @@
   --color-brand-gold: #C9A84C;
   --color-brand-gold-l: #F0D080;
   
+  --breakpoint-xs: 375px;
+
   --color-ink-DEFAULT: #0B1612;
   --color-ink-2: #1C2E27;
   --color-ink-3: #0A1628;

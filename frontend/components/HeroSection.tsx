@@ -167,8 +167,8 @@ export const HeroSection: React.FC = () => {
           </div>
 
           {/* RIGHT COLUMN: 3D ROTATING GLOBE & ORBITAL NODES */}
-          <div className="lg:col-span-6 hidden md:block">
-            <div className="relative w-full max-w-[500px] aspect-square mx-auto flex items-center justify-center select-none">
+          <div className="lg:col-span-6 w-full flex items-center justify-center overflow-visible mt-12 lg:mt-0">
+            <div className="relative w-full max-w-[290px] xs:max-w-[340px] sm:max-w-[440px] lg:max-w-[500px] aspect-square mx-auto flex items-center justify-center select-none scale-[0.8] xs:scale-[0.9] sm:scale-100 origin-center transition-all duration-300">
               
               {/* Outer Glow Ring back layer */}
               <div className="absolute w-[360px] h-[360px] rounded-full bg-emerald-500/5 border border-brand-g/10 animate-pulse-slow" />

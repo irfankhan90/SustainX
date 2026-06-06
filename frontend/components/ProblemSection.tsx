@@ -305,16 +305,16 @@ export const ProblemSection: React.FC = () => {
                       transform: "translate(-50%, -50%)",
                       zIndex: isActive ? 30 : 10
                     }}
-                    className={`absolute flex items-center gap-2.5 px-3.5 py-2 rounded-xl border transition-all duration-300 backdrop-blur-md cursor-pointer select-none text-white whitespace-nowrap text-[11px] font-bold ${
+                    className={`absolute flex items-center gap-2.5 px-3.5 py-2 rounded-xl border transition-all duration-300 backdrop-blur-lg cursor-pointer select-none whitespace-nowrap text-[12px] sm:text-[13px] font-extrabold ${
                       isActive
-                        ? "bg-[#102019] border-[#29A075] shadow-[0_0_20px_rgba(29,158,117,0.4)] scale-110 opacity-100"
-                        : "bg-[#09100E]/90 border-[#1A2E26] hover:border-brand-g hover:bg-[#0E1B16]/90 opacity-80"
+                        ? "bg-[#122A20] border-[#5DCAA5] shadow-[0_0_15px_rgba(93,202,165,0.25)] scale-108 opacity-100 z-30"
+                        : "bg-[#0A1412]/95 border-[#28443A] hover:border-[#5DCAA5] hover:bg-[#0F241F]/95 opacity-95"
                     }`}
                   >
                     {/* Glowing color dot indicator */}
-                    <span className={`w-2 h-2 rounded-full bg-gradient-to-r ${pillar.color} shrink-0`} />
-                    <span className="text-[13px]">{pillar.icon}</span>
-                    <span className="font-syne tracking-wide text-t-DEFAULT">{pillar.label}</span>
+                    <span className={`w-2.5 h-2.5 rounded-full bg-gradient-to-r ${pillar.color} shrink-0`} />
+                    <span className="text-[14px]">{pillar.icon}</span>
+                    <span className="font-syne tracking-wide text-white">{pillar.label}</span>
                   </button>
                 );
               })}

@@ -1,0 +1,41 @@
+"use client";
+
+import React from "react";
+
+export const BannerSection: React.FC = () => {
+  return (
+    <section className="relative w-full h-[280px] sm:h-[350px] lg:h-[380px] xl:h-[420px] bg-[#0B1612] overflow-hidden">
+      {/* Cinematic Panoramic Background Image */}
+      <img 
+        src="/sustainx_landscape.png" 
+        alt="SustainX Real-World Renewable Energy Impact Solar Farm and Wind Turbines" 
+        className="absolute inset-0 w-full h-full object-cover object-center select-none pointer-events-none transform scale-102"
+      />
+      
+      {/* Dark Overlay Gradient for Readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/25 lg:from-black/70 lg:via-black/40 lg:to-black/20 z-0" />
+      
+      {/* Subtle bottom border highlight */}
+      <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-[#22A06B]/20" />
+
+      {/* Content Overlay */}
+      <div className="container relative z-10 h-full flex items-center">
+        <div className="max-w-[620px] text-white pr-4">
+          
+          {/* Section Indicator Label */}
+          <span className="font-syne text-[11px] lg:text-[12px] font-bold text-[#22A06B] tracking-widest uppercase mb-3.5 block">
+            Real-World Renewable Energy Impact
+          </span>
+          
+          {/* Main Cinematic Text Overlay */}
+          <h2 className="font-syne text-[26px] sm:text-[34px] lg:text-[38px] xl:text-[44px] font-extrabold leading-[1.18] text-white tracking-tight">
+            Driving Renewable Energy Projects from <span className="text-[#22A06B]">Strategy</span> to <span className="text-[#22A06B]">Execution.</span>
+          </h2>
+          
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default BannerSection;

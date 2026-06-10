@@ -8,7 +8,7 @@ export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeHash, setActiveHash] = useState("#home");
 
-  // Monitor scroll for resizing navbar and hiding announcement bar
+  // Track scroll position to resize navbar and toggle shadow
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 30);
@@ -18,7 +18,7 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Monitor active navigation hash using hashchange and scroll observer
+  // Monitor active navigation hash using hashchange and scroll
   useEffect(() => {
     setActiveHash(window.location.hash || "#home");
 
@@ -30,7 +30,6 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
-  // Close mobile drawer when a link is clicked
   const handleLinkClick = (hash: string) => {
     setActiveHash(hash);
     setIsOpen(false);
@@ -38,64 +37,187 @@ export const Navbar: React.FC = () => {
 
   const getLinkClass = (hash: string) => {
     const isActive = activeHash === hash;
-    return `relative py-2 text-sm font-semibold transition-colors duration-250 group cursor-pointer flex items-center gap-1 ${
-      isActive ? "text-brand-g font-bold" : "text-t-2 hover:text-brand-g"
+    return `relative py-2 text-sm font-semibold transition-colors duration-200 group cursor-pointer flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-g ${
+      isActive ? "text-[#1D9E75] font-bold" : "text-t-2 hover:text-[#1D9E75]"
     }`;
   };
 
   const getUnderlineClass = (hash: string) => {
     const isActive = activeHash === hash;
-    return `absolute bottom-0 left-0 w-full h-[2px] bg-brand-g rounded-full transition-transform duration-300 origin-left ${
+    return `absolute bottom-0 left-0 w-full h-[2px] bg-[#1D9E75] rounded-full transition-transform duration-300 origin-left ${
       isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
     }`;
   };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-[100] w-full transition-all duration-500">
-      {/* 1. ANNOUNCEMENT BAR */}
+      
+      {/* Announcement Bar */}
       <div
-        className={`bg-gradient-to-r from-brand-gxd via-brand-gd to-brand-g text-white px-4 text-center text-[11px] font-medium tracking-wide flex items-center justify-center gap-1.5 transition-all duration-300 overflow-hidden select-none ${
-          isScrolled ? "h-0 py-0 opacity-0" : "h-[26px] py-1 opacity-100 border-b border-white/5"
+        className={`bg-gradient-to-r from-[#085041] via-[#0F6E56] to-[#1D9E75] text-white px-4 text-center text-[11px] font-medium tracking-wide flex items-center justify-center gap-1.5 transition-all duration-300 overflow-hidden select-none ${
+          isScrolled ? "h-0 py-0 opacity-0" : "h-[28px] py-1 opacity-100 border-b border-white/5"
         }`}
       >
         <span>🌍</span>
-        <span className="truncate">
-          Powering the Global Energy Transition through AI & Sustainability
+        <span className="truncate uppercase font-bold tracking-widest text-[9.5px]">
+          GlobalPact SustainX — Energy Transition Execution Partner
         </span>
       </div>
 
-      {/* 2. MAIN NAVIGATION BAR */}
+      {/* Main Navigation Bar */}
       <nav
         className={`w-full flex items-center transition-all duration-300 ${
           isScrolled
-            ? "h-[64px] bg-[#F8FAF9]/88 backdrop-blur-[24px] border-b border-bdr-DEFAULT/70 shadow-[0_4px_25px_rgba(11,22,18,0.02)]"
-            : "h-[84px] bg-[#F8FAF9]/75 backdrop-blur-[12px] border-b border-bdr-DEFAULT/20"
+            ? "h-[64px] bg-[#F8FAF9]/90 backdrop-blur-[24px] border-b border-bdr-DEFAULT/70 shadow-[0_4px_25px_rgba(11,22,18,0.02)]"
+            : "h-[84px] bg-[#F8FAF9]/80 backdrop-blur-[12px] border-b border-bdr-DEFAULT/20"
         }`}
       >
         <div className="w-full flex items-center justify-between max-w-none mx-auto px-6 md:px-8 relative">
           
-          {/* BRAND LOGO & TAGLINE */}
-          <Link href="#home" className="flex items-center gap-2 sm:gap-[14px] group shrink-0 animate-fadeUp" onClick={() => handleLinkClick("#home")}>
+          {/* Brand Logo & Tagline */}
+          <Link 
+            href="#home" 
+            className="flex items-center gap-2 sm:gap-[12px] group shrink-0" 
+            onClick={() => handleLinkClick("#home")}
+          >
             <img
               src="/logo.jpg"
               alt="GlobalPact SustainX Logo"
-              className={`object-contain transition-all duration-300 ${
-                isScrolled ? "h-[44px] sm:h-[54px]" : "h-[56px] sm:h-[70px]"
+              className={`object-contain transition-all duration-350 ${
+                isScrolled ? "h-[44px] sm:h-[48px]" : "h-[54px] sm:h-[62px]"
               } w-auto flex-shrink-0`}
             />
             <div className="flex flex-col justify-center">
-              <div className="font-syne text-[18px] sm:text-[21.5px] font-extrabold text-t-DEFAULT tracking-tight leading-none">
-                GlobalPact <span className="bg-gradient-to-r from-brand-g to-brand-gd bg-clip-text text-transparent font-extrabold">SustainX</span>
+              <div className="font-syne text-[18px] sm:text-[20px] font-extrabold text-t-DEFAULT tracking-tight leading-none">
+                GlobalPact <span className="text-[#1D9E75] font-extrabold">SustainX</span>
               </div>
-              <div className="hidden sm:block text-[9px] text-t-3 font-bold tracking-widest mt-2 transition-all duration-300 group-hover:text-brand-g uppercase">
-                Powering the Global Energy Transition
+              <div className="hidden sm:block text-[8.5px] text-t-3 font-bold tracking-[0.16em] mt-1.5 transition-all duration-300 group-hover:text-[#1D9E75] uppercase">
+                Centre of Excellence
               </div>
             </div>
           </Link>
 
-          {/* DESKTOP MAIN NAVIGATION LINKS WITH DROPDOWNS */}
-          <ul className="hidden lg:flex items-center gap-10 list-none m-0 p-0 lg:absolute lg:left-1/2 lg:-translate-x-1/2">
-            {/* About */}
+          {/* Desktop Navigation Links */}
+          <ul className="hidden lg:flex items-center gap-8 list-none m-0 p-0 lg:absolute lg:left-1/2 lg:-translate-x-1/2">
+            
+            {/* Solutions Dropdown */}
+            <li className="relative group">
+              <span className={getLinkClass("#features")}>
+                <span>Solutions</span>
+                <svg
+                  viewBox="0 0 24 24"
+                  className="w-3.5 h-3.5 fill-none stroke-current stroke-[2.5] transition-transform duration-300 group-hover:rotate-180 mt-[1px]"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+                <span className={getUnderlineClass("#features")} />
+              </span>
+              
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-56 bg-white border border-[#D0E8DE] rounded-xl shadow-[0_12px_32px_rgba(0,0,0,0.08)] py-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
+                <Link
+                  href="#features"
+                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
+                >
+                  Strategic Advisory
+                </Link>
+                <Link
+                  href="#features"
+                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
+                >
+                  Project Management
+                </Link>
+                <Link
+                  href="#features"
+                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
+                >
+                  EPC Solutions
+                </Link>
+                <Link
+                  href="#features"
+                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
+                >
+                  Capacity Building
+                </Link>
+              </div>
+            </li>
+
+            {/* Industries Dropdown */}
+            <li className="relative group">
+              <span className={getLinkClass("#industries")}>
+                <span>Industries</span>
+                <svg
+                  viewBox="0 0 24 24"
+                  className="w-3.5 h-3.5 fill-none stroke-current stroke-[2.5] transition-transform duration-300 group-hover:rotate-180 mt-[1px]"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+                <span className={getUnderlineClass("#industries")} />
+              </span>
+              
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-56 bg-white border border-[#D0E8DE] rounded-xl shadow-[0_12px_32px_rgba(0,0,0,0.08)] py-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
+                <Link
+                  href="#about"
+                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
+                >
+                  Renewable Utilities
+                </Link>
+                <Link
+                  href="#about"
+                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
+                >
+                  Grid Infrastructure
+                </Link>
+                <Link
+                  href="#about"
+                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
+                >
+                  Corporate ESG Compliance
+                </Link>
+                <Link
+                  href="#about"
+                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
+                >
+                  Climate Finance
+                </Link>
+              </div>
+            </li>
+
+            {/* Programs Dropdown */}
+            <li className="relative group">
+              <span className={getLinkClass("#training")}>
+                <span>Programs</span>
+                <svg
+                  viewBox="0 0 24 24"
+                  className="w-3.5 h-3.5 fill-none stroke-current stroke-[2.5] transition-transform duration-300 group-hover:rotate-180 mt-[1px]"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+                <span className={getUnderlineClass("#training")} />
+              </span>
+              
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-56 bg-white border border-[#D0E8DE] rounded-xl shadow-[0_12px_32px_rgba(0,0,0,0.08)] py-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
+                <Link
+                  href="#training"
+                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
+                >
+                  Certified Energy Manager
+                </Link>
+                <Link
+                  href="#training"
+                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
+                >
+                  Clean Energy PMC Track
+                </Link>
+                <Link
+                  href="#training"
+                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
+                >
+                  Executive Leadership Intensive
+                </Link>
+              </div>
+            </li>
+
+            {/* About Link */}
             <li>
               <Link href="#about" className={getLinkClass("#about")} onClick={() => handleLinkClick("#about")}>
                 <span>About</span>
@@ -103,120 +225,8 @@ export const Navbar: React.FC = () => {
               </Link>
             </li>
 
-            {/* Platform Dropdown */}
-            <li className="relative group">
-              <Link href="#features" className={getLinkClass("#features")} onClick={() => handleLinkClick("#features")}>
-                <span>Platform</span>
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-3 h-3 fill-none stroke-current stroke-[2.5] transition-transform duration-300 group-hover:rotate-180 mt-[1px]"
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-                <span className={getUnderlineClass("#features")} />
-              </Link>
-              {/* Premium dropdown card */}
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-52 bg-[#F8FAF9] border border-bdr-DEFAULT/75 rounded-xl shadow-sh2 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
-                <Link
-                  href="#features"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-brand-g hover:bg-brand-gxl/50 transition-colors"
-                >
-                  Analytics Dashboard
-                </Link>
-                <Link
-                  href="#features"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-brand-g hover:bg-brand-gxl/50 transition-colors"
-                >
-                  ESG Scope 1-3 Tracker
-                </Link>
-                <Link
-                  href="#features"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-brand-g hover:bg-brand-gxl/50 transition-colors"
-                >
-                  Hybrid Lab Simulations
-                </Link>
-              </div>
-            </li>
-
-            {/* Programs Dropdown */}
-            <li className="relative group">
-              <Link href="#training" className={getLinkClass("#training")} onClick={() => handleLinkClick("#training")}>
-                <span>Programs</span>
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-3 h-3 fill-none stroke-current stroke-[2.5] transition-transform duration-300 group-hover:rotate-180 mt-[1px]"
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-                <span className={getUnderlineClass("#training")} />
-              </Link>
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-52 bg-[#F8FAF9] border border-bdr-DEFAULT/75 rounded-xl shadow-sh2 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
-                <Link
-                  href="#training"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-brand-g hover:bg-brand-gxl/50 transition-colors"
-                >
-                  Part A — Certifications
-                </Link>
-                <Link
-                  href="#training"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-brand-g hover:bg-brand-gxl/50 transition-colors"
-                >
-                  Part B — Executive Intensives
-                </Link>
-                <Link
-                  href="#training"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-brand-g hover:bg-brand-gxl/50 transition-colors"
-                >
-                  Emerging Tech Curriculum
-                </Link>
-              </div>
-            </li>
-
-            {/* AI Dropdown with Sparkle Badge */}
-            <li className="relative group">
-              <Link href="#ai" className={getLinkClass("#ai")} onClick={() => handleLinkClick("#ai")}>
-                <span>AI</span>
-                <span className="text-[10px] text-brand-gold">✨</span>
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-3 h-3 fill-none stroke-current stroke-[2.5] transition-transform duration-300 group-hover:rotate-180 mt-[1px]"
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-                <span className={getUnderlineClass("#ai")} />
-              </Link>
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-52 bg-[#F8FAF9] border border-bdr-DEFAULT/75 rounded-xl shadow-sh2 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
-                <Link
-                  href="#ai"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-brand-g hover:bg-brand-gxl/50 transition-colors"
-                >
-                  AI Load Optimizer
-                </Link>
-                <Link
-                  href="#ai"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-brand-g hover:bg-brand-gxl/50 transition-colors"
-                >
-                  Predictive Grid Analytics
-                </Link>
-                <Link
-                  href="#ai"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-brand-g hover:bg-brand-gxl/50 transition-colors"
-                >
-                  Automated ESG Reports
-                </Link>
-              </div>
-            </li>
-
-            {/* Pricing */}
+            {/* Contact Link */}
             <li>
-              <Link href="#pricing" className={getLinkClass("#pricing")} onClick={() => handleLinkClick("#pricing")}>
-                <span>Pricing</span>
-                <span className={getUnderlineClass("#pricing")} />
-              </Link>
-            </li>
-
-            {/* Contact (Gets extra margin-left to space Pricing → Contact) */}
-            <li className="ml-5">
               <Link href="#contact" className={getLinkClass("#contact")} onClick={() => handleLinkClick("#contact")}>
                 <span>Contact</span>
                 <span className={getUnderlineClass("#contact")} />
@@ -224,49 +234,42 @@ export const Navbar: React.FC = () => {
             </li>
           </ul>
 
-          {/* DESKTOP CTAs WITH BREATHING ROOM */}
-          <div className="hidden lg:flex items-center gap-3 shrink-0 ml-8">
-            {/* Outlined Sign In */}
+          {/* Desktop Call to Actions */}
+          <div className="hidden lg:flex items-center gap-3 shrink-0 ml-auto relative z-10">
+            {/* Grayscale Subtle Client Login */}
             <Link
               href="/login"
-              className="h-10 px-[18px] flex items-center justify-center text-sm font-semibold text-brand-g rounded-lg border-[1.5px] border-brand-g bg-transparent hover:bg-brand-g hover:text-white transition-all duration-300 active:scale-[0.98] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2"
+              className="h-10 px-4 flex items-center justify-center text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors cursor-pointer mr-2"
             >
-              Sign in
+              Client Portal
             </Link>
-            {/* Premium Gradient Get Started */}
+            {/* Primary Consulting Action Button */}
             <Link
-              href="/register"
-              className="h-10 px-[26px] flex items-center justify-center gap-1.5 text-sm font-bold text-white rounded-lg bg-gradient-to-r from-brand-gd via-brand-g to-blue-600 shadow-[0_3px_10px_rgba(29,158,117,0.18)] hover:shadow-[0_8px_20px_rgba(29,158,117,0.28)] hover:-translate-y-[2px] active:translate-y-0 active:scale-[0.98] transition-all duration-300 group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2"
+              href="#contact"
+              className="h-10 px-[22px] flex items-center justify-center text-sm font-bold text-white rounded-lg bg-[#085041] hover:bg-[#063B30] shadow-[0_4px_12px_rgba(8,80,65,0.15)] hover:shadow-[0_8px_20px_rgba(8,80,65,0.25)] hover:-translate-y-[2px] active:translate-y-0 active:scale-[0.98] transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2"
             >
-              <span>Get started free</span>
-              <svg
-                viewBox="0 0 24 24"
-                className="w-4 h-4 fill-none stroke-current stroke-2 transition-transform duration-300 translate-x-0 group-hover:translate-x-1.5"
-              >
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
+              Schedule Consultation
             </Link>
           </div>
 
-          {/* HAMBURGER DRAWER TOGGLE (Mobile) */}
+          {/* Hamburger Menu Toggle (Mobile) */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="flex lg:hidden w-11 h-11 flex-col justify-center items-center gap-[5px] p-2 cursor-pointer z-[110] select-none rounded-lg hover:bg-brand-gxl/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2"
+            className="flex lg:hidden w-10 h-10 flex-col justify-center items-center gap-[5px] p-2 cursor-pointer z-[110] select-none rounded-lg hover:bg-[#E1F5EE]/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2"
             aria-label="Toggle menu"
           >
             <span
-              className={`w-[22px] h-[2px] bg-t-DEFAULT rounded-sm transition-transform duration-300 ${
+              className={`w-[20px] h-[2px] bg-t-DEFAULT rounded-sm transition-transform duration-300 ${
                 isOpen ? "rotate-45 translate-y-[7px]" : ""
               }`}
             />
             <span
-              className={`w-[22px] h-[2px] bg-t-DEFAULT rounded-sm transition-opacity duration-300 ${
+              className={`w-[20px] h-[2px] bg-t-DEFAULT rounded-sm transition-opacity duration-300 ${
                 isOpen ? "opacity-0" : ""
               }`}
             />
             <span
-              className={`w-[22px] h-[2px] bg-t-DEFAULT rounded-sm transition-transform duration-300 ${
+              className={`w-[20px] h-[2px] bg-t-DEFAULT rounded-sm transition-transform duration-300 ${
                 isOpen ? "-rotate-45 -translate-y-[7px]" : ""
               }`}
             />
@@ -274,104 +277,76 @@ export const Navbar: React.FC = () => {
         </div>
       </nav>
 
-      {/* 3. MOBILE MENU DRAWER */}
+      {/* Mobile Menu Drawer */}
       <div
-        className={`fixed inset-0 z-50 bg-[#F8FAF9] flex flex-col pt-24 px-7 transition-all duration-300 lg:hidden ${
+        className={`fixed inset-0 z-50 bg-[#F8FAF9] flex flex-col pt-24 px-6 transition-all duration-350 lg:hidden ${
           isOpen ? "opacity-100 pointer-events-auto translate-x-0" : "opacity-0 pointer-events-none translate-x-full"
         }`}
       >
-        {/* Mobile Navigation List */}
+        {/* Mobile Links */}
         <ul className="flex flex-col gap-5 list-none m-0 p-0 text-center mb-8">
-          <li>
-            <Link
-              href="#about"
-              onClick={() => handleLinkClick("#about")}
-              className={`text-xl font-bold font-syne block transition-colors ${
-                activeHash === "#about" ? "text-brand-g" : "text-t-DEFAULT hover:text-brand-g"
-              }`}
-            >
-              About
-            </Link>
-          </li>
           <li>
             <Link
               href="#features"
               onClick={() => handleLinkClick("#features")}
-              className={`text-xl font-bold font-syne block transition-colors ${
-                activeHash === "#features" ? "text-brand-g" : "text-t-DEFAULT hover:text-brand-g"
-              }`}
+              className="text-lg font-bold font-syne block transition-colors text-t-DEFAULT hover:text-[#1D9E75]"
             >
-              Platform
+              Solutions
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="#about"
+              onClick={() => handleLinkClick("#about")}
+              className="text-lg font-bold font-syne block transition-colors text-t-DEFAULT hover:text-[#1D9E75]"
+            >
+              Industries
             </Link>
           </li>
           <li>
             <Link
               href="#training"
               onClick={() => handleLinkClick("#training")}
-              className={`text-xl font-bold font-syne block transition-colors ${
-                activeHash === "#training" ? "text-brand-g" : "text-t-DEFAULT hover:text-brand-g"
-              }`}
+              className="text-lg font-bold font-syne block transition-colors text-t-DEFAULT hover:text-[#1D9E75]"
             >
               Programs
             </Link>
           </li>
           <li>
             <Link
-              href="#ai"
-              onClick={() => handleLinkClick("#ai")}
-              className={`text-xl font-bold font-syne block transition-colors ${
-                activeHash === "#ai" ? "text-brand-g" : "text-t-DEFAULT hover:text-brand-g"
-              }`}
+              href="#about"
+              onClick={() => handleLinkClick("#about")}
+              className="text-lg font-bold font-syne block transition-colors text-t-DEFAULT hover:text-[#1D9E75]"
             >
-              AI <span className="text-brand-gold animate-pulse">✨</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="#pricing"
-              onClick={() => handleLinkClick("#pricing")}
-              className={`text-xl font-bold font-syne block transition-colors ${
-                activeHash === "#pricing" ? "text-brand-g" : "text-t-DEFAULT hover:text-brand-g"
-              }`}
-            >
-              Pricing
+              About
             </Link>
           </li>
           <li>
             <Link
               href="#contact"
               onClick={() => handleLinkClick("#contact")}
-              className={`text-xl font-bold font-syne block transition-colors ${
-                activeHash === "#contact" ? "text-brand-g" : "text-t-DEFAULT hover:text-brand-g"
-              }`}
+              className="text-lg font-bold font-syne block transition-colors text-t-DEFAULT hover:text-[#1D9E75]"
             >
               Contact
             </Link>
           </li>
         </ul>
 
-        {/* Mobile Button Actions */}
-        <div className="flex flex-col gap-4 border-t border-bdr-DEFAULT/30 pt-6">
+        {/* Mobile Action Buttons */}
+        <div className="flex flex-col gap-4 border-t border-[#D0E8DE]/45 pt-6">
           <Link
             href="/login"
             onClick={() => setIsOpen(false)}
-            className="w-full h-11 flex items-center justify-center text-sm font-semibold text-brand-g rounded-lg border-[1.5px] border-brand-g bg-white hover:bg-brand-g hover:text-white transition-all duration-300"
+            className="w-full h-11 flex items-center justify-center text-sm font-semibold text-[#1D9E75] rounded-lg border border-[#1D9E75] bg-white hover:bg-[#E1F5EE]/30 transition-all duration-300"
           >
-            Sign in
+            Client Portal
           </Link>
           <Link
-            href="/register"
+            href="#contact"
             onClick={() => setIsOpen(false)}
-            className="w-full h-11 flex items-center justify-center gap-1.5 text-sm font-bold text-white rounded-lg bg-gradient-to-r from-brand-gd via-brand-g to-blue-600 shadow-md transition-all duration-300 group"
+            className="w-full h-11 flex items-center justify-center text-sm font-bold text-white rounded-lg bg-[#085041] hover:bg-[#063B30] shadow-md transition-all duration-300"
           >
-            <span>Get started free</span>
-            <svg
-              viewBox="0 0 24 24"
-              className="w-4 h-4 fill-none stroke-current stroke-2 transition-transform duration-300 translate-x-0 group-hover:translate-x-1"
-            >
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
+            Schedule Consultation
           </Link>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import BannerSection from "@/components/BannerSection";
 import MarqueeSection from "@/components/MarqueeSection";
 import ProblemSection from "@/components/ProblemSection";
 import PillarsSection from "@/components/PillarsSection";
@@ -21,13 +22,14 @@ export default function Home() {
       <Navbar />
       <main>
         <HeroSection />
+        <StatsSection />
+        <BannerSection />
         <MarqueeSection />
         <ProblemSection />
         <PillarsSection />
         <FeaturesSection />
         <TrainingSection />
         <AISection />
-        <StatsSection />
         <PricingSection />
         <TestimonialsSection />
         <TeamSection />

@@ -30,6 +30,18 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
+  // Prevent background scrolling while mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   const handleLinkClick = (hash: string) => {
     setActiveHash(hash);
     setIsOpen(false);
@@ -252,34 +264,40 @@ export const Navbar: React.FC = () => {
             </Link>
           </div>
 
-          {/* Hamburger Menu Toggle (Mobile) */}
+           {/* Hamburger Menu Toggle (Mobile) */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="flex lg:hidden w-10 h-10 flex-col justify-center items-center gap-[5px] p-2 cursor-pointer z-[110] select-none rounded-lg hover:bg-[#E1F5EE]/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2"
-            aria-label="Toggle menu"
+            className="flex lg:hidden w-10 h-10 items-center justify-center cursor-pointer z-[110] select-none rounded-lg hover:bg-[#E1F5EE]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] focus-visible:ring-offset-2 transition-colors duration-250"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
           >
-            <span
-              className={`w-[20px] h-[2px] bg-t-DEFAULT rounded-sm transition-transform duration-300 ${
-                isOpen ? "rotate-45 translate-y-[7px]" : ""
-              }`}
-            />
-            <span
-              className={`w-[20px] h-[2px] bg-t-DEFAULT rounded-sm transition-opacity duration-300 ${
-                isOpen ? "opacity-0" : ""
-              }`}
-            />
-            <span
-              className={`w-[20px] h-[2px] bg-t-DEFAULT rounded-sm transition-transform duration-300 ${
-                isOpen ? "-rotate-45 -translate-y-[7px]" : ""
-              }`}
-            />
+            {isOpen ? (
+              <svg 
+                className="w-6 h-6 text-[#0B6B53] transition-transform duration-300 rotate-0 hover:rotate-90" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor" 
+                strokeWidth={2.5}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg 
+                className="w-6 h-6 text-t-DEFAULT transition-transform duration-300" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor" 
+                strokeWidth={2.5}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
           </button>
         </div>
       </nav>
 
       {/* Mobile Menu Drawer */}
       <div
-        className={`fixed inset-0 z-50 bg-[#F8FAF9] flex flex-col pt-24 px-6 transition-all duration-350 lg:hidden ${
+        className={`fixed inset-0 z-50 bg-[#F8FAF9] flex flex-col pt-24 px-6 transition-all duration-300 ease-in-out lg:hidden ${
           isOpen ? "opacity-100 pointer-events-auto translate-x-0" : "opacity-0 pointer-events-none translate-x-full"
         }`}
       >

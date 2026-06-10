@@ -1,6 +1,10 @@
 "use client";
 
 import React from "react";
+import advisoryImage from "../public/sustainx_advisory.png";
+import pmImage from "../public/sustainx_pm.png";
+import epcImage from "../public/sustainx_epc.png";
+import trainingImage from "../public/sustainx_training.png";
 
 interface Pillar {
   title: string;
@@ -13,7 +17,7 @@ const PILLARS: Pillar[] = [
   {
     title: "Strategic Advisory",
     description: "Feasibility studies, roadmap development, sustainability strategy, and execution planning.",
-    image: "/sustainx_advisory.png",
+    image: advisoryImage.src,
     icon: (
       <svg className="w-3.5 h-3.5 text-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
@@ -23,7 +27,7 @@ const PILLARS: Pillar[] = [
   {
     title: "Project Management",
     description: "Project scheduling, stakeholder coordination, milestone tracking, and execution oversight.",
-    image: "/sustainx_pm.png",
+    image: pmImage.src,
     icon: (
       <svg className="w-3.5 h-3.5 text-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z" />
@@ -33,7 +37,7 @@ const PILLARS: Pillar[] = [
   {
     title: "EPC Solutions",
     description: "Engineering, procurement, construction, commissioning, and deployment support.",
-    image: "/sustainx_epc.png",
+    image: epcImage.src,
     icon: (
       <svg className="w-3.5 h-3.5 text-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c-4.97 0-9 4.03-9 9 0 .46.04.92.1 1.36.09.61.58 1.09 1.19 1.14l1.37.11a22.39 22.39 0 0012.68 0l1.37-.11c.61-.05 1.1-.53 1.19-1.14.06-.44.1-.9.1-1.36 0-4.97-4.03-9-9-9zM12 3v3m-3.5 1.5l2 2m5-2l-2 2" />
@@ -43,7 +47,7 @@ const PILLARS: Pillar[] = [
   {
     title: "Capacity Building",
     description: "Training, certification, workforce development, and operational readiness.",
-    image: "/sustainx_training.png",
+    image: trainingImage.src,
     icon: (
       <svg className="w-3.5 h-3.5 text-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6c-3 0-5.5-1.5-6-4m12 4c.5-2.5-2-4-6-4" />
@@ -177,7 +181,7 @@ export const HeroSection: React.FC = () => {
                 
                 {/* Pillar Card 01: Strategic Advisory */}
                 <div 
-                  className="bg-white border border-[rgba(22,163,74,0.08)] rounded-[24px] overflow-hidden flex flex-col lg:h-[208px] shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_48px_rgba(0,0,0,0.065)] hover:border-[#22A06B]/35 group cursor-pointer"
+                  className="bg-white border border-[rgba(22,163,74,0.08)] rounded-[24px] overflow-hidden flex flex-col lg:h-[290px] shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_48px_rgba(0,0,0,0.065)] hover:border-[#22A06B]/35 group cursor-pointer"
                 >
                   <div className="p-4 pb-0 flex-grow">
                     <div className="w-[30px] h-[30px] rounded-full bg-[#E6F3EE] border border-[#22A06B]/10 text-[#22A06B] flex items-center justify-center mb-2 shadow-sm group-hover:bg-[#22A06B] group-hover:text-white group-hover:border-[#22A06B] transition-all duration-300">
@@ -190,11 +194,16 @@ export const HeroSection: React.FC = () => {
                       {PILLARS[0].description}
                     </p>
                   </div>
-                  <div className="w-full h-[72px] overflow-hidden relative border-t border-[#22A06B]/12 mt-auto group-hover:border-[#22A06B]/25 transition-colors duration-300">
+                  <div className="w-full h-32 md:h-40 overflow-hidden rounded-b-3xl relative border-t border-[#22A06B]/12 mt-auto group-hover:border-[#22A06B]/25 transition-colors duration-300">
                     <img 
                       src={PILLARS[0].image} 
                       alt={PILLARS[0].title} 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = "/sustainx_landscape.png";
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent pointer-events-none" />
                   </div>
@@ -202,7 +211,7 @@ export const HeroSection: React.FC = () => {
 
                 {/* Pillar Card 03: EPC Solutions */}
                 <div 
-                  className="bg-white border border-[rgba(22,163,74,0.08)] rounded-[24px] overflow-hidden flex flex-col lg:h-[208px] shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_48px_rgba(0,0,0,0.065)] hover:border-[#22A06B]/35 group cursor-pointer"
+                  className="bg-white border border-[rgba(22,163,74,0.08)] rounded-[24px] overflow-hidden flex flex-col lg:h-[290px] shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_48px_rgba(0,0,0,0.065)] hover:border-[#22A06B]/35 group cursor-pointer"
                 >
                   <div className="p-4 pb-0 flex-grow">
                     <div className="w-[30px] h-[30px] rounded-full bg-[#E6F3EE] border border-[#22A06B]/10 text-[#22A06B] flex items-center justify-center mb-2 shadow-sm group-hover:bg-[#22A06B] group-hover:text-white group-hover:border-[#22A06B] transition-all duration-300">
@@ -215,11 +224,16 @@ export const HeroSection: React.FC = () => {
                       {PILLARS[2].description}
                     </p>
                   </div>
-                  <div className="w-full h-[72px] overflow-hidden relative border-t border-[#22A06B]/12 mt-auto group-hover:border-[#22A06B]/25 transition-colors duration-300">
+                  <div className="w-full h-32 md:h-40 overflow-hidden rounded-b-3xl relative border-t border-[#22A06B]/12 mt-auto group-hover:border-[#22A06B]/25 transition-colors duration-300">
                     <img 
                       src={PILLARS[2].image} 
                       alt={PILLARS[2].title} 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = "/sustainx_landscape.png";
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent pointer-events-none" />
                   </div>
@@ -232,7 +246,7 @@ export const HeroSection: React.FC = () => {
                 
                 {/* Pillar Card 02: Project Management */}
                 <div 
-                  className="bg-white border border-[rgba(22,163,74,0.08)] rounded-[24px] overflow-hidden flex flex-col lg:h-[208px] shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_48px_rgba(0,0,0,0.065)] hover:border-[#22A06B]/35 group cursor-pointer"
+                  className="bg-white border border-[rgba(22,163,74,0.08)] rounded-[24px] overflow-hidden flex flex-col lg:h-[290px] shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_48px_rgba(0,0,0,0.065)] hover:border-[#22A06B]/35 group cursor-pointer"
                 >
                   <div className="p-4 pb-0 flex-grow">
                     <div className="w-[30px] h-[30px] rounded-full bg-[#E6F3EE] border border-[#22A06B]/10 text-[#22A06B] flex items-center justify-center mb-2 shadow-sm group-hover:bg-[#22A06B] group-hover:text-white group-hover:border-[#22A06B] transition-all duration-300">
@@ -245,11 +259,16 @@ export const HeroSection: React.FC = () => {
                       {PILLARS[1].description}
                     </p>
                   </div>
-                  <div className="w-full h-[72px] overflow-hidden relative border-t border-[#22A06B]/12 mt-auto group-hover:border-[#22A06B]/25 transition-colors duration-300">
+                  <div className="w-full h-32 md:h-40 overflow-hidden rounded-b-3xl relative border-t border-[#22A06B]/12 mt-auto group-hover:border-[#22A06B]/25 transition-colors duration-300">
                     <img 
                       src={PILLARS[1].image} 
                       alt={PILLARS[1].title} 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = "/sustainx_landscape.png";
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent pointer-events-none" />
                   </div>
@@ -257,7 +276,7 @@ export const HeroSection: React.FC = () => {
 
                 {/* Pillar Card 04: Capacity Building */}
                 <div 
-                  className="bg-white border border-[rgba(22,163,74,0.08)] rounded-[24px] overflow-hidden flex flex-col lg:h-[208px] shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_48px_rgba(0,0,0,0.065)] hover:border-[#22A06B]/35 group cursor-pointer"
+                  className="bg-white border border-[rgba(22,163,74,0.08)] rounded-[24px] overflow-hidden flex flex-col lg:h-[290px] shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_48px_rgba(0,0,0,0.065)] hover:border-[#22A06B]/35 group cursor-pointer"
                 >
                   <div className="p-4 pb-0 flex-grow">
                     <div className="w-[30px] h-[30px] rounded-full bg-[#E6F3EE] border border-[#22A06B]/10 text-[#22A06B] flex items-center justify-center mb-2 shadow-sm group-hover:bg-[#22A06B] group-hover:text-white group-hover:border-[#22A06B] transition-all duration-300">
@@ -270,11 +289,16 @@ export const HeroSection: React.FC = () => {
                       {PILLARS[3].description}
                     </p>
                   </div>
-                  <div className="w-full h-[72px] overflow-hidden relative border-t border-[#22A06B]/12 mt-auto group-hover:border-[#22A06B]/25 transition-colors duration-300">
+                  <div className="w-full h-32 md:h-40 overflow-hidden rounded-b-3xl relative border-t border-[#22A06B]/12 mt-auto group-hover:border-[#22A06B]/25 transition-colors duration-300">
                     <img 
                       src={PILLARS[3].image} 
                       alt={PILLARS[3].title} 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = "/sustainx_landscape.png";
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent pointer-events-none" />
                   </div>

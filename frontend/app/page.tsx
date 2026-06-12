@@ -1,13 +1,13 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import StatsSection from "@/components/StatsSection";
 import BannerSection from "@/components/BannerSection";
 import MarqueeSection from "@/components/MarqueeSection";
-import ProblemSection from "@/components/ProblemSection";
+import ShowcaseSection from "@/components/ShowcaseSection";
 import PillarsSection from "@/components/PillarsSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import TrainingSection from "@/components/TrainingSection";
 import AISection from "@/components/AISection";
-import StatsSection from "@/components/StatsSection";
 import PricingSection from "@/components/PricingSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import TeamSection from "@/components/TeamSection";
@@ -25,7 +25,7 @@ export default function Home() {
         <StatsSection />
         <BannerSection />
         <MarqueeSection />
-        <ProblemSection />
+        <ShowcaseSection />
         <PillarsSection />
         <FeaturesSection />
         <TrainingSection />

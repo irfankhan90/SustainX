@@ -59,7 +59,7 @@ export const MarqueeSection: React.FC = () => {
   return (
     <div className="py-8 border-t border-b border-[#E5ECE8] bg-[#F8FAF9] overflow-hidden select-none">
       <div className="text-center text-[10px] sm:text-[11px] font-bold text-[#66756F] tracking-[0.2em] uppercase mb-6">
-        Trusted by Industry Leaders
+        Trusted by Industry Leaders & Experts
       </div>
       <div className="overflow-hidden w-full relative">
         <div className="flex w-max items-center gap-16 sm:gap-24 whitespace-nowrap animate-marquee">

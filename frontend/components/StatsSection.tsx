@@ -11,7 +11,7 @@ export const StatsSection: React.FC = () => {
         <div className="bg-white border border-[#E5ECE8] rounded-[22px] shadow-[0_10px_30px_rgba(0,0,0,0.03)] p-5 lg:py-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-0 items-center justify-between">
             
-            {/* Stat 1: Experts & Consultants */}
+            {/* Stat 1: Years of Combined Experience */}
             <div className="flex items-center gap-3.5 lg:px-6 border-[#E5ECE8] lg:border-r last:border-r-0">
               <div className="w-10 h-10 rounded-full bg-[#E6F3EE] flex items-center justify-center shrink-0">
                 <svg className="w-5 h-5 text-[#22A06B]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -23,12 +23,12 @@ export const StatsSection: React.FC = () => {
                   50+
                 </div>
                 <div className="font-sans text-[12px] lg:text-[13px] font-semibold text-[#4B5B55] leading-tight">
-                  Experts & Consultants
+                  Years of Combined Experience
                 </div>
               </div>
             </div>
 
-            {/* Stat 2: Projects Delivered */}
+            {/* Stat 2: Projects Executed by Team */}
             <div className="flex items-center gap-3.5 lg:px-6 border-[#E5ECE8] lg:border-r last:border-r-0">
               <div className="w-10 h-10 rounded-full bg-[#E6F3EE] flex items-center justify-center shrink-0">
                 <svg className="w-5 h-5 text-[#22A06B]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -37,15 +37,15 @@ export const StatsSection: React.FC = () => {
               </div>
               <div>
                 <div className="font-syne text-[22px] lg:text-[26px] font-extrabold text-[#22A06B] leading-none mb-0.5">
-                  100+
+                  30+
                 </div>
                 <div className="font-sans text-[12px] lg:text-[13px] font-semibold text-[#4B5B55] leading-tight">
-                  Projects Delivered
+                  Projects Executed by Team
                 </div>
               </div>
             </div>
 
-            {/* Stat 3: Countries Impacted */}
+            {/* Stat 3: Expert Consultants */}
             <div className="flex items-center gap-3.5 lg:px-6 border-[#E5ECE8] lg:border-r last:border-r-0">
               <div className="w-10 h-10 rounded-full bg-[#E6F3EE] flex items-center justify-center shrink-0">
                 <svg className="w-5 h-5 text-[#22A06B]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -54,15 +54,15 @@ export const StatsSection: React.FC = () => {
               </div>
               <div>
                 <div className="font-syne text-[22px] lg:text-[26px] font-extrabold text-[#22A06B] leading-none mb-0.5">
-                  25+
+                  30+
                 </div>
                 <div className="font-sans text-[12px] lg:text-[13px] font-semibold text-[#4B5B55] leading-tight">
-                  Countries Impacted
+                  Expert Consultants
                 </div>
               </div>
             </div>
 
-            {/* Stat 4: Years of Excellence */}
+            {/* Stat 4: Countries Impacted */}
             <div className="flex items-center gap-3.5 lg:px-6 last:border-r-0">
               <div className="w-10 h-10 rounded-full bg-[#E6F3EE] flex items-center justify-center shrink-0">
                 <svg className="w-5 h-5 text-[#22A06B]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -74,7 +74,7 @@ export const StatsSection: React.FC = () => {
                   10+
                 </div>
                 <div className="font-sans text-[12px] lg:text-[13px] font-semibold text-[#4B5B55] leading-tight">
-                  Years of Excellence
+                  Countries Impacted
                 </div>
               </div>
             </div>

@@ -264,43 +264,56 @@ export const Navbar: React.FC = () => {
             </Link>
           </div>
 
-           {/* Hamburger Menu Toggle (Mobile) */}
+          {/* Hamburger Menu Toggle (Mobile) */}
           <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="flex lg:hidden w-10 h-10 items-center justify-center cursor-pointer z-[110] select-none rounded-lg hover:bg-[#E1F5EE]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] focus-visible:ring-offset-2 transition-colors duration-250"
-            aria-label={isOpen ? "Close menu" : "Open menu"}
+            onClick={() => setIsOpen(true)}
+            className="flex lg:hidden w-10 h-10 items-center justify-center cursor-pointer select-none rounded-lg hover:bg-[#E1F5EE]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] focus-visible:ring-offset-2 transition-colors duration-250"
+            aria-label="Open menu"
           >
-            {isOpen ? (
-              <svg 
-                className="w-6 h-6 text-[#0B6B53] transition-transform duration-300 rotate-0 hover:rotate-90" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor" 
-                strokeWidth={2.5}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg 
-                className="w-6 h-6 text-t-DEFAULT transition-transform duration-300" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor" 
-                strokeWidth={2.5}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
+            <svg 
+              className="w-6 h-6 text-t-DEFAULT transition-transform duration-300" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor" 
+              strokeWidth={2.5}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
           </button>
         </div>
       </nav>
 
+      {/* Mobile Menu Overlay Backdrop */}
+      <div
+        onClick={() => setIsOpen(false)}
+        className={`fixed inset-0 z-[100] bg-black/45 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${
+          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      />
+
       {/* Mobile Menu Drawer */}
       <div
-        className={`fixed inset-0 z-50 bg-[#F8FAF9] flex flex-col pt-24 px-6 transition-all duration-300 ease-in-out lg:hidden ${
-          isOpen ? "opacity-100 pointer-events-auto translate-x-0" : "opacity-0 pointer-events-none translate-x-full"
+        className={`fixed top-0 right-0 bottom-0 z-[110] w-[310px] max-w-[calc(100vw-40px)] bg-[#F8FAF9] flex flex-col p-6 pt-20 transition-transform duration-300 ease-in-out shadow-2xl border-l border-[#D0E8DE]/30 lg:hidden ${
+          isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
+        {/* Visible Close (X) Button in Top-Right Corner */}
+        <button
+          onClick={() => setIsOpen(false)}
+          className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[#E1F5EE]/50 text-[#0B6B53] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] transition-colors cursor-pointer"
+          aria-label="Close menu"
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2.5}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
         {/* Mobile Links */}
         <ul className="flex flex-col gap-5 list-none m-0 p-0 text-center mb-8">
           <li>

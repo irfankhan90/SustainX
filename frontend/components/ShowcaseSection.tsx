@@ -94,6 +94,7 @@ export const ShowcaseSection: React.FC = () => {
 
   return (
     <section 
+      id="about"
       className="w-full bg-[#F5F8F6] py-10 sm:py-12 border-b border-[#E5ECE8] relative z-20 flex flex-col justify-center h-[520px] sm:h-[480px]"
       onMouseEnter={() => setIsPlaying(false)}
       onMouseLeave={() => setIsPlaying(true)}

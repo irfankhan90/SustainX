@@ -2,11 +2,22 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [activeHash, setActiveHash] = useState("#home");
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  
+  const [mobileExpanded, setMobileExpanded] = useState({
+    solutions: false,
+    industries: false,
+    programs: false,
+  });
+
+  const pathname = usePathname();
+  const router = useRouter();
 
   // Track scroll position to resize navbar and toggle shadow
   useEffect(() => {
@@ -42,9 +53,41 @@ export const Navbar: React.FC = () => {
     };
   }, [isOpen]);
 
+  // Click outside listener for desktop dropdowns
+  useEffect(() => {
+    const handleDocumentClick = () => {
+      setActiveDropdown(null);
+    };
+    window.addEventListener("click", handleDocumentClick);
+    return () => window.removeEventListener("click", handleDocumentClick);
+  }, []);
+
+  const toggleDropdown = (name: string) => {
+    setActiveDropdown((prev) => (prev === name ? null : name));
+  };
+
+  const toggleMobileSection = (section: "solutions" | "industries" | "programs") => {
+    setMobileExpanded((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  };
+
   const handleLinkClick = (hash: string) => {
     setActiveHash(hash);
     setIsOpen(false);
+  };
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsOpen(false);
+    if (pathname === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setActiveHash("#home");
+      window.history.pushState(null, "", "/");
+    } else {
+      router.push("/");
+    }
   };
 
   const getLinkClass = (hash: string) => {
@@ -90,13 +133,13 @@ export const Navbar: React.FC = () => {
           <Link 
             href="#home" 
             className="flex items-center gap-2 sm:gap-[12px] group shrink-0" 
-            onClick={() => handleLinkClick("#home")}
+            onClick={handleLogoClick}
           >
             <img
               src="/logo.jpg"
               alt="GlobalPact SustainX Logo"
               className={`object-contain transition-all duration-350 ${
-                isScrolled ? "h-[44px] sm:h-[48px]" : "h-[54px] sm:h-[62px]"
+                isScrolled ? "h-[48px] sm:h-[54px]" : "h-[60px] sm:h-[72px]"
               } w-auto flex-shrink-0`}
             />
             <div className="flex flex-col justify-center">
@@ -114,7 +157,13 @@ export const Navbar: React.FC = () => {
             
             {/* Solutions Dropdown */}
             <li className="relative group">
-              <span className={getLinkClass("#features")}>
+              <span 
+                className={getLinkClass("#features")}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleDropdown("solutions");
+                }}
+              >
                 <span>Solutions</span>
                 <svg
                   viewBox="0 0 24 24"
@@ -125,7 +174,11 @@ export const Navbar: React.FC = () => {
                 <span className={getUnderlineClass("#features")} />
               </span>
               
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-56 bg-white border border-[#D0E8DE] rounded-xl shadow-[0_12px_32px_rgba(0,0,0,0.08)] py-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
+              <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 w-56 bg-white border border-[#D0E8DE] rounded-xl shadow-[0_12px_32px_rgba(0,0,0,0.08)] py-2.5 transition-all duration-200 transform z-50 ${
+                activeDropdown === "solutions"
+                  ? "opacity-100 visible translate-y-0"
+                  : "opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0"
+              }`}>
                 <Link
                   href="#features"
                   className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
@@ -155,7 +208,13 @@ export const Navbar: React.FC = () => {
 
             {/* Industries Dropdown */}
             <li className="relative group">
-              <span className={getLinkClass("#industries")}>
+              <span 
+                className={getLinkClass("#industries")}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleDropdown("industries");
+                }}
+              >
                 <span>Industries</span>
                 <svg
                   viewBox="0 0 24 24"
@@ -166,7 +225,11 @@ export const Navbar: React.FC = () => {
                 <span className={getUnderlineClass("#industries")} />
               </span>
               
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-56 bg-white border border-[#D0E8DE] rounded-xl shadow-[0_12px_32px_rgba(0,0,0,0.08)] py-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
+              <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 w-56 bg-white border border-[#D0E8DE] rounded-xl shadow-[0_12px_32px_rgba(0,0,0,0.08)] py-2.5 transition-all duration-200 transform z-50 ${
+                activeDropdown === "industries"
+                  ? "opacity-100 visible translate-y-0"
+                  : "opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0"
+              }`}>
                 <Link
                   href="#about"
                   className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
@@ -196,7 +259,13 @@ export const Navbar: React.FC = () => {
 
             {/* Programs Dropdown */}
             <li className="relative group">
-              <span className={getLinkClass("#training")}>
+              <span 
+                className={getLinkClass("#training")}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleDropdown("programs");
+                }}
+              >
                 <span>Programs</span>
                 <svg
                   viewBox="0 0 24 24"
@@ -207,7 +276,11 @@ export const Navbar: React.FC = () => {
                 <span className={getUnderlineClass("#training")} />
               </span>
               
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-56 bg-white border border-[#D0E8DE] rounded-xl shadow-[0_12px_32px_rgba(0,0,0,0.08)] py-2.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
+              <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 w-56 bg-white border border-[#D0E8DE] rounded-xl shadow-[0_12px_32px_rgba(0,0,0,0.08)] py-2.5 transition-all duration-200 transform z-50 ${
+                activeDropdown === "programs"
+                  ? "opacity-100 visible translate-y-0"
+                  : "opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0"
+              }`}>
                 <Link
                   href="#training"
                   className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
@@ -315,34 +388,124 @@ export const Navbar: React.FC = () => {
         </button>
 
         {/* Mobile Links */}
-        <ul className="flex flex-col gap-5 list-none m-0 p-0 text-center mb-8">
+        <ul className="flex flex-col gap-4 list-none m-0 p-0 text-center mb-8 overflow-y-auto max-h-[calc(100vh-280px)] pr-1">
+          {/* Home Link */}
           <li>
             <Link
-              href="#features"
-              onClick={() => handleLinkClick("#features")}
+              href="#home"
+              onClick={() => handleLinkClick("#home")}
               className="text-lg font-bold font-syne block transition-colors text-t-DEFAULT hover:text-[#1D9E75]"
             >
-              Solutions
+              Home
             </Link>
           </li>
+
+          {/* Solutions Dropdown */}
           <li>
-            <Link
-              href="#about"
-              onClick={() => handleLinkClick("#about")}
-              className="text-lg font-bold font-syne block transition-colors text-t-DEFAULT hover:text-[#1D9E75]"
+            <button
+              onClick={() => toggleMobileSection("solutions")}
+              className="w-full text-lg font-bold font-syne flex items-center justify-center gap-2 transition-colors text-t-DEFAULT hover:text-[#1D9E75] cursor-pointer focus-visible:outline-none"
             >
-              Industries
-            </Link>
+              <span>Solutions</span>
+              <svg
+                viewBox="0 0 24 24"
+                className={`w-4.5 h-4.5 fill-none stroke-current stroke-[2.5] transition-transform duration-200 ${
+                  mobileExpanded.solutions ? "rotate-180" : ""
+                }`}
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div
+              className={`overflow-hidden transition-all duration-300 flex flex-col gap-3 bg-[#E6F3EE]/40 rounded-xl ${
+                mobileExpanded.solutions ? "max-h-56 py-3 mt-2 px-4 border border-[#D0E8DE]/20" : "max-h-0"
+              }`}
+            >
+              <Link href="#features" onClick={() => handleLinkClick("#features")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
+                Strategic Advisory
+              </Link>
+              <Link href="#features" onClick={() => handleLinkClick("#features")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
+                Project Management
+              </Link>
+              <Link href="#features" onClick={() => handleLinkClick("#features")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
+                EPC Solutions
+              </Link>
+              <Link href="#features" onClick={() => handleLinkClick("#features")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
+                Capacity Building
+              </Link>
+            </div>
           </li>
+
+          {/* Industries Dropdown */}
           <li>
-            <Link
-              href="#training"
-              onClick={() => handleLinkClick("#training")}
-              className="text-lg font-bold font-syne block transition-colors text-t-DEFAULT hover:text-[#1D9E75]"
+            <button
+              onClick={() => toggleMobileSection("industries")}
+              className="w-full text-lg font-bold font-syne flex items-center justify-center gap-2 transition-colors text-t-DEFAULT hover:text-[#1D9E75] cursor-pointer focus-visible:outline-none"
             >
-              Programs
-            </Link>
+              <span>Industries</span>
+              <svg
+                viewBox="0 0 24 24"
+                className={`w-4.5 h-4.5 fill-none stroke-current stroke-[2.5] transition-transform duration-200 ${
+                  mobileExpanded.industries ? "rotate-180" : ""
+                }`}
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div
+              className={`overflow-hidden transition-all duration-300 flex flex-col gap-3 bg-[#E6F3EE]/40 rounded-xl ${
+                mobileExpanded.industries ? "max-h-56 py-3 mt-2 px-4 border border-[#D0E8DE]/20" : "max-h-0"
+              }`}
+            >
+              <Link href="#about" onClick={() => handleLinkClick("#about")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
+                Renewable Utilities
+              </Link>
+              <Link href="#about" onClick={() => handleLinkClick("#about")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
+                Grid Infrastructure
+              </Link>
+              <Link href="#about" onClick={() => handleLinkClick("#about")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
+                Corporate ESG Compliance
+              </Link>
+              <Link href="#about" onClick={() => handleLinkClick("#about")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
+                Climate Finance
+              </Link>
+            </div>
           </li>
+
+          {/* Programs Dropdown */}
+          <li>
+            <button
+              onClick={() => toggleMobileSection("programs")}
+              className="w-full text-lg font-bold font-syne flex items-center justify-center gap-2 transition-colors text-t-DEFAULT hover:text-[#1D9E75] cursor-pointer focus-visible:outline-none"
+            >
+              <span>Programs</span>
+              <svg
+                viewBox="0 0 24 24"
+                className={`w-4.5 h-4.5 fill-none stroke-current stroke-[2.5] transition-transform duration-200 ${
+                  mobileExpanded.programs ? "rotate-180" : ""
+                }`}
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            <div
+              className={`overflow-hidden transition-all duration-300 flex flex-col gap-3 bg-[#E6F3EE]/40 rounded-xl ${
+                mobileExpanded.programs ? "max-h-48 py-3 mt-2 px-4 border border-[#D0E8DE]/20" : "max-h-0"
+              }`}
+            >
+              <Link href="#training" onClick={() => handleLinkClick("#training")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
+                Certified Energy Manager
+              </Link>
+              <Link href="#training" onClick={() => handleLinkClick("#training")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
+                Clean Energy PMC Track
+              </Link>
+              <Link href="#training" onClick={() => handleLinkClick("#training")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
+                Executive Leadership Intensive
+              </Link>
+            </div>
+          </li>
+
+          {/* About Link */}
           <li>
             <Link
               href="#about"
@@ -352,6 +515,8 @@ export const Navbar: React.FC = () => {
               About
             </Link>
           </li>
+
+          {/* Contact Link */}
           <li>
             <Link
               href="#contact"

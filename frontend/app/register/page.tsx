@@ -6,8 +6,8 @@ import AuthLayout from "@/components/auth/AuthLayout";
 import InputField from "@/components/auth/InputField";
 import PasswordInput from "@/components/auth/PasswordInput";
 import AuthButton from "@/components/auth/AuthButton";
-import SocialButtons from "@/components/auth/SocialButtons";
-import RegisterVisual from "@/components/auth/RegisterVisual";
+
+
 
 export default function RegisterPage() {
   const [fullName, setFullName] = useState("");
@@ -121,15 +121,8 @@ export default function RegisterPage() {
       } else {
         setFormError(result.message || "Registration failed. Please try again.");
       }
-    } catch (err) {
-      console.warn("Backend connection failed, falling back to mock registration:", err);
-      
-      // Fallback simulation mode
-      if (email.toLowerCase().includes("error")) {
-        setFormError("An account with this email address already exists.");
-      } else {
-        setIsSuccess(true);
-      }
+    } catch {
+      setFormError("Unable to connect to the server. Please check your connection and try again.");
     } finally {
       setIsLoading(false);
     }
@@ -139,7 +132,7 @@ export default function RegisterPage() {
     <AuthLayout
       title="Create your account"
       subtitle="Start tracking, analyzing, and reducing your carbon footprint today."
-      customVisual={<RegisterVisual />}
+      customVisual={undefined}
     >
       {isSuccess ? (
         <div className="bg-brand-gxl/50 border border-brand-gl/40 p-6 rounded-2xl flex flex-col items-center text-center animate-fadeUp">
@@ -155,7 +148,7 @@ export default function RegisterPage() {
             Account Created Successfully!
           </h2>
           <p className="text-[13px] text-t-2 leading-relaxed mb-4">
-            We've sent a verification email to <strong className="text-t-DEFAULT">{email}</strong>. Please check your inbox and click the activation link.
+            We&apos;ve sent a verification email to <strong className="text-t-DEFAULT">{email}</strong>. Please check your inbox and click the activation link.
           </p>
           <Link
             href="/login"
@@ -259,19 +252,6 @@ export default function RegisterPage() {
           <AuthButton isLoading={isLoading} className="mt-2.5">
             Create Account
           </AuthButton>
-
-          <div className="flex items-center gap-3 my-2">
-            <div className="flex-1 h-[1px] bg-bdr-DEFAULT" />
-            <span className="text-[11px] text-t-3 font-semibold uppercase tracking-wider">
-              Or sign up with
-            </span>
-            <div className="flex-1 h-[1px] bg-bdr-DEFAULT" />
-          </div>
-
-          <SocialButtons
-            onGoogleClick={() => alert("Google signup flow triggered")}
-            onLinkedInClick={() => alert("LinkedIn signup flow triggered")}
-          />
 
           <p className="text-[13.5px] text-t-2 text-center mt-3">
             Already have an account?{" "}

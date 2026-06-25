@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "full_name": "SustainX Administrator",
+    "email": "admin@sustainx.com",
+    "password_hash": "$2a$10$Omk/QnvUehSpJ3fwHJuk/u91w6625.uZzH4rDKHlxkFPPWGuQ6XTa",
+    "organization": "GlobalPact SustainX",
+    "role": "ADMIN",
+    "is_active": true,
+    "created_at": "2026-06-20T10:51:43.186Z",
+    "updated_at": "2026-06-20T10:51:43.186Z"
+  }
+]

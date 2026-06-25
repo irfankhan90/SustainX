@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Button } from "./ui/Button";
+import SectionHeader from "./ui/SectionHeader";
 
 const features = [
   {
@@ -64,7 +65,7 @@ export const AISection: React.FC = () => {
   }, []);
 
   return (
-    <section className="bg-[#F8FAF9] text-t-DEFAULT py-24 relative overflow-hidden border-t border-b border-bdr-DEFAULT" id="ai">
+    <section className="bg-surface-DEFAULT text-t-DEFAULT py-24 relative overflow-hidden border-t border-b border-bdr-DEFAULT" id="ai">
       
       {/* Dynamic Keyframe Animations Embedded */}
       <style jsx global>{`
@@ -124,24 +125,24 @@ export const AISection: React.FC = () => {
           
           {/* LEFT: TEXT AND SPECS (5 Columns) */}
           <div className="lg:col-span-5 flex flex-col justify-center">
-            <div className="inline-flex items-center gap-[7px] self-start px-3.5 py-[5px] border border-brand-g/20 rounded-full text-xs font-semibold text-brand-g bg-brand-gxl tracking-wider uppercase mb-5">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-g animate-pulse" />
-              AI Framework
-            </div>
-            
-            <h2 className="font-syne text-[32px] sm:text-[4vw] md:text-[42px] font-extrabold leading-[1.1] tracking-[-0.030em] text-t-DEFAULT mb-5">
-              AI-powered <span className="text-brand-g">sustainability</span> intelligence.
-            </h2>
-            
-            <p className="text-[16px] text-t-2 font-light leading-relaxed mb-8">
-              Our advanced AI engine integrates live telemetry, weather forecast vectors, and grid requirements to automate carbon accounting, predict solar/wind output, and balance EV fleet load distributions.
-            </p>
+            <SectionHeader
+              label="AI Framework"
+              heading={
+                <>
+                  AI-powered <span className="text-brand-g">sustainability</span> intelligence.
+                </>
+              }
+              description="Our advanced AI engine integrates live telemetry, weather forecast vectors, and grid requirements to automate carbon accounting, predict solar/wind output, and balance EV fleet load distributions."
+              align="left"
+              dot={true}
+              className="mb-8"
+            />
 
             {/* Features list */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-              {features.map((feat, idx) => (
+              {features.map((feat) => (
                 <div
-                  key={idx}
+                  key={feat.title.toLowerCase().replace(/[^a-z]/g, "-")}
                   className="p-4 bg-white border border-bdr-DEFAULT rounded-2xl shadow-[0_4px_12px_rgba(11,22,18,0.02)] hover:border-brand-gl transition-colors duration-250"
                 >
                   <h4 className="text-[14px] font-bold text-t-DEFAULT mb-1 flex items-center gap-2">
@@ -372,7 +373,7 @@ export const AISection: React.FC = () => {
               {/* --- FLOATING METRIC OVERLAYS --- */}
 
               {/* Card 1: ESG Analytics (Top Right, floating) */}
-              <div className="absolute top-3 right-3 sm:top-5 sm:right-5 w-[130px] sm:w-[160px] bg-white/80 backdrop-blur-md border border-white/90 rounded-2xl p-2.5 sm:p-3.5 shadow-lg floating-card-1 select-none">
+              <div className="hidden sm:block absolute top-3 right-3 sm:top-5 sm:right-5 w-[130px] sm:w-[160px] bg-white/80 backdrop-blur-md border border-white/90 rounded-2xl p-2.5 sm:p-3.5 shadow-lg floating-card-1 select-none">
                 <div className="flex items-center gap-1.5 text-[9px] sm:text-[10.5px] text-t-3 font-semibold uppercase tracking-wider">
                   <span className="w-1.5 h-1.5 rounded-full bg-brand-g" />
                   ESG Monitoring
@@ -384,7 +385,7 @@ export const AISection: React.FC = () => {
               </div>
 
               {/* Card 2: Live Grid capacity (Bottom Left, floating) */}
-              <div className="absolute bottom-3 left-3 sm:bottom-6 sm:left-6 w-[140px] sm:w-[180px] bg-white/80 backdrop-blur-md border border-white/90 rounded-2xl p-2.5 sm:p-3.5 shadow-lg floating-card-2 select-none">
+              <div className="hidden sm:block absolute bottom-3 left-3 sm:bottom-6 sm:left-6 w-[140px] sm:w-[180px] bg-white/80 backdrop-blur-md border border-white/90 rounded-2xl p-2.5 sm:p-3.5 shadow-lg floating-card-2 select-none">
                 <div className="flex items-center gap-1.5 text-[9px] sm:text-[10.5px] text-t-3 font-semibold uppercase tracking-wider">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
                   Live Grid Load

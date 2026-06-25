@@ -11,31 +11,43 @@ interface AuthLayoutProps {
 }
 
 // Background data particles generator
+const PARTICLE_PRESETS = [
+  { size: 5, left: 12, delay: 2, duration: 18 },
+  { size: 3, left: 45, delay: 8, duration: 24 },
+  { size: 6, left: 78, delay: 1, duration: 14 },
+  { size: 4, left: 23, delay: 5, duration: 20 },
+  { size: 5, left: 89, delay: 9, duration: 22 },
+  { size: 3, left: 5, delay: 3, duration: 16 },
+  { size: 7, left: 62, delay: 7, duration: 25 },
+  { size: 4, left: 34, delay: 11, duration: 13 },
+  { size: 6, left: 91, delay: 0, duration: 15 },
+  { size: 5, left: 56, delay: 4, duration: 21 },
+  { size: 3, left: 17, delay: 10, duration: 19 },
+  { size: 4, left: 73, delay: 6, duration: 17 },
+];
+
 const Particles: React.FC = () => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
-    setMounted(true);
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   if (!mounted) return null;
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
-      {[...Array(12)].map((_, i) => {
-        const size = Math.random() * 4 + 3;
-        const left = Math.random() * 95;
-        const delay = Math.random() * 12;
-        const duration = Math.random() * 14 + 12;
+      {PARTICLE_PRESETS.map((p, i) => {
         return (
           <div
             key={i}
             className="bg-drift-particle bg-[#5DCAA5]/25"
             style={{
-              width: `${size}px`,
-              height: `${size}px`,
-              left: `${left}%`,
-              animationDelay: `${delay}s`,
-              animationDuration: `${duration}s`,
+              width: `${p.size}px`,
+              height: `${p.size}px`,
+              left: `${p.left}%`,
+              animationDelay: `${p.delay}s`,
+              animationDuration: `${p.duration}s`,
             }}
           />
         );
@@ -51,7 +63,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
   customVisual,
 }) => {
   return (
-    <div className="min-h-screen w-full flex bg-[#F8FAF9] font-sans antialiased text-t-DEFAULT">
+    <main className="min-h-screen w-full flex bg-[#F8FAF9] font-sans antialiased text-t-DEFAULT" id="main-content">
       
       {/* Inline styles for custom sun flare animation */}
       <style jsx global>{`
@@ -80,9 +92,9 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
             <img
               src="/logo.jpg"
               alt="GlobalPact SustainX Logo"
-              className="h-[64px] w-auto object-contain flex-shrink-0"
+              className="h-[48px] sm:h-[64px] w-auto object-contain flex-shrink-0"
             />
-            <div className="font-syne text-[20px] font-bold text-t-DEFAULT tracking-tight leading-none">
+            <div className="font-syne text-[18px] sm:text-[20px] font-bold text-t-DEFAULT tracking-tight leading-none">
               GlobalPact <span className="text-brand-g">SustainX</span>
             </div>
           </Link>
@@ -316,7 +328,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
           </div>
         )}
       </div>
-    </div>
+    </main>
   );
 };
 

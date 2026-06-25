@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth";
+import inquiryRoutes from "./routes/inquiry";
+import contactRoutes from "./routes/contact";
 import { authenticateJWT, AuthenticatedRequest } from "./middleware/auth";
 import { errorHandler } from "./utils/errors";
 import { testConnection } from "./config/database";
@@ -9,11 +11,19 @@ import { testConnection } from "./config/database";
 // Load environment variables
 dotenv.config();
 
+// Fail fast if critical environment variables are missing
+if (!process.env.JWT_SECRET) {
+  console.error("FATAL: JWT_SECRET environment variable is not set. Exiting.");
+  process.exit(1);
+}
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: "*",
+}));
 app.use(express.json());
 
 // Public health check route
@@ -27,6 +37,8 @@ app.get("/health", (req, res) => {
 
 // API Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/inquiries", inquiryRoutes);
+app.use("/api/contacts", contactRoutes);
 
 // Protected route example to verify authentication and role-based middleware
 app.get("/api/protected/dashboard", authenticateJWT, (req: AuthenticatedRequest, res) => {
@@ -55,4 +67,8 @@ const startServer = async () => {
   });
 };
 
-startServer();
+if (process.env.NODE_ENV !== "production") {
+  startServer();
+}
+
+export default app;

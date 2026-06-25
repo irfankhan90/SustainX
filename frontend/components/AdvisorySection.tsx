@@ -1,37 +1,44 @@
-"use client";
-
 import React from "react";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 const advisors = [
   {
+    id: "reji-kumar-pillai",
     name: "Reji Kumar Pillai",
     org: "President, India Smart Grid Forum · Chairman, Global Smart Energy Federation",
   },
   {
+    id: "somitra-sanadhya",
     name: "Prof. Somitra Sanadhya",
     org: "Wadhwani School of AI, IIT Kanpur",
   },
   {
+    id: "ali-t-alouani",
     name: "Dr. Ali T Alouani",
     org: "Tennessee Tech University, USA",
   },
   {
+    id: "simon-kehimkar",
     name: "Simon Kehimkar",
     org: "Manager, General Motors, USA",
   },
   {
+    id: "aqueel-ahmad",
     name: "Dr. Aqueel Ahmad",
     org: "Manager, Switch Mobility",
   },
   {
+    id: "ali-al-duaij",
     name: "Ali Al Duaij",
     org: "Manager, KOC, Kuwait",
   },
   {
+    id: "samir-al-shariff",
     name: "Dr. Samir Al-Shariff",
     org: "Taibah University, Saudi Arabia",
   },
   {
+    id: "rakan-chabaan",
     name: "Dr. Rakan Chabaan",
     org: "Senior Manager, Hyundai Kia, USA",
   },
@@ -39,24 +46,18 @@ const advisors = [
 
 export const AdvisorySection: React.FC = () => {
   return (
-    <section className="py-20 bg-[#EEF4F1] border-t border-b border-bdr-DEFAULT">
+    <section className="py-20 bg-surface-3 border-t border-b border-bdr-DEFAULT">
       <div className="container">
-        <div className="text-center mb-12">
-          <div className="inline-block px-3.5 py-1 bg-brand-gxl text-brand-gd rounded-full text-xs font-semibold tracking-wide uppercase mb-3.5 border border-bdr-2">
-            Global Advisory Board
-          </div>
-          <h2 className="font-syne text-[28px] sm:text-[3.5vw] md:text-[44px] font-extrabold leading-[1.1] tracking-[-0.025em] text-t-DEFAULT mb-3.5">
-            Supported by industry pioneers worldwide
-          </h2>
-          <p className="text-[17px] text-t-2 font-light leading-[1.65] max-w-[540px] mx-auto">
-            Our advisory board brings together global leaders from automotive, energy, academia, and policy sectors.
-          </p>
-        </div>
+        <SectionHeader
+          label="Global Advisory Board"
+          heading="Supported by industry pioneers worldwide"
+          description="Our advisory board brings together global leaders from automotive, energy, academia, and policy sectors."
+        />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          {advisors.map((advisor, idx) => (
+          {advisors.map((advisor) => (
             <div
-              key={idx}
+              key={advisor.id}
               className="bg-white border border-bdr-DEFAULT rounded-xl p-[18px] transition-all duration-200 hover:shadow-sh2 hover:-translate-y-0.5"
             >
               <h3 className="font-syne text-sm font-bold text-t-DEFAULT mb-[3px]">
@@ -72,4 +73,5 @@ export const AdvisorySection: React.FC = () => {
     </section>
   );
 };
+
 export default AdvisorySection;

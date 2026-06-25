@@ -30,21 +30,33 @@ export default function ForgotPasswordPage() {
     return true;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
 
     setIsLoading(true);
+    setFormError("");
 
-    // Mock API Reset Link generation
-    setTimeout(() => {
-      setIsLoading(false);
-      if (email.toLowerCase().includes("error")) {
-        setFormError("We couldn't find an account matching that email address.");
-      } else {
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const response = await fetch(`${apiUrl}/api/auth/forgot-password`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.status === "success") {
         setIsSuccess(true);
+      } else {
+        setFormError(result.message || "Unable to process your request. Please try again.");
       }
-    }, 1500);
+    } catch {
+      setFormError("Unable to connect to the server. Please check your connection and try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -68,7 +80,7 @@ export default function ForgotPasswordPage() {
             Reset Link Sent
           </h2>
           <p className="text-[13px] text-t-2 leading-relaxed mb-5">
-            We have sent password reset instructions to <strong className="text-t-DEFAULT">{email}</strong>. Please check your spam folder if it doesn't arrive in a few minutes.
+            We have sent password reset instructions to <strong className="text-t-DEFAULT">{email}</strong>. Please check your spam folder if it doesn&apos;t arrive in a few minutes.
           </p>
           <div className="flex flex-col gap-2.5 w-full">
             <button
@@ -76,7 +88,7 @@ export default function ForgotPasswordPage() {
                 setIsSuccess(false);
                 setIsLoading(false);
               }}
-              className="w-full h-10 flex items-center justify-center rounded-lg border border-bdr-DEFAULT bg-white text-t-2 text-[13.5px] font-semibold hover:bg-[#F8FAF9] hover:border-bdr-2 transition-all cursor-pointer"
+              className="w-full h-11 flex items-center justify-center rounded-lg border border-bdr-DEFAULT bg-white text-t-2 text-[13.5px] font-semibold hover:bg-[#F8FAF9] hover:border-bdr-2 transition-all cursor-pointer"
             >
               Resend email
             </button>

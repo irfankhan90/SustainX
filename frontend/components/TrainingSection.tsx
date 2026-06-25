@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 interface Course {
   badge: string;
@@ -200,27 +201,22 @@ export const TrainingSection: React.FC = () => {
     courseData[activeIndex] || courseData[0];
 
   return (
-    <section className="py-24 bg-white" id="training">
+    <section className="py-24 bg-white scroll-mt-[var(--navbar-height)]" id="training">
       <div className="container">
-        <div className="text-center mb-12">
-          <div className="inline-block px-3.5 py-1 bg-brand-gxl text-brand-gd rounded-full text-xs font-semibold tracking-wide uppercase mb-3.5">
-            Training Programs — 2026 Edition
-          </div>
-          <h2 className="font-syne text-[28px] sm:text-[3.5vw] md:text-[44px] font-extrabold leading-[1.1] tracking-[-0.025em] text-t-DEFAULT mb-3.5">
-            Map your path in the clean energy ecosystem
-          </h2>
-          <p className="text-[17px] text-t-2 font-light leading-[1.65] max-w-[540px] mx-auto">
-            5 Certificate & Diploma programs + 5 Executive Intensives. Designed for every career stage — engineers to C-suite.
-          </p>
-        </div>
+        <SectionHeader
+          label="Training Programs — 2026 Edition"
+          heading="Map your path in the clean energy ecosystem"
+          description="5 Certificate & Diploma programs + 5 Executive Intensives. Designed for every career stage — engineers to C-suite."
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* LEFT LIST */}
           <div>
             <div className="flex gap-2 mb-5 flex-wrap">
               <button
+                type="button"
                 onClick={() => setFilter("all")}
-                className={`px-4 py-3 sm:py-2 border rounded-lg text-xs font-medium cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2 ${
+                className={`px-4 py-3 sm:py-2 flex items-center justify-center min-h-[44px] sm:min-h-[38px] border rounded-lg text-xs font-medium cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2 ${
                   filter === "all"
                     ? "bg-brand-g text-white border-brand-g"
                     : "border-bdr-2 bg-transparent text-t-2 hover:bg-brand-g hover:text-white hover:border-brand-g"
@@ -229,8 +225,9 @@ export const TrainingSection: React.FC = () => {
                 All Programs
               </button>
               <button
+                type="button"
                 onClick={() => setFilter("cert")}
-                className={`px-4 py-3 sm:py-2 border rounded-lg text-xs font-medium cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2 ${
+                className={`px-4 py-3 sm:py-2 flex items-center justify-center min-h-[44px] sm:min-h-[38px] border rounded-lg text-xs font-medium cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2 ${
                   filter === "cert"
                     ? "bg-brand-g text-white border-brand-g"
                     : "border-bdr-2 bg-transparent text-t-2 hover:bg-brand-g hover:text-white hover:border-brand-g"
@@ -239,8 +236,9 @@ export const TrainingSection: React.FC = () => {
                 Part A — Cert/Diploma
               </button>
               <button
+                type="button"
                 onClick={() => setFilter("exec")}
-                className={`px-4 py-3 sm:py-2 border rounded-lg text-xs font-medium cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2 ${
+                className={`px-4 py-3 sm:py-2 flex items-center justify-center min-h-[44px] sm:min-h-[38px] border rounded-lg text-xs font-medium cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2 ${
                   filter === "exec"
                     ? "bg-brand-g text-white border-brand-g"
                     : "border-bdr-2 bg-transparent text-t-2 hover:bg-brand-g hover:text-white hover:border-brand-g"
@@ -259,7 +257,7 @@ export const TrainingSection: React.FC = () => {
                   className={`flex items-center gap-3.5 p-4 border rounded-xl cursor-pointer text-left w-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2 ${
                     activeIndex === course.originalIndex
                       ? "bg-white border-brand-g shadow-sh"
-                      : "bg-[#EEF4F1] border-bdr-DEFAULT hover:bg-white hover:border-brand-g hover:shadow-sh"
+                      : "bg-surface-3 border-bdr-DEFAULT hover:bg-white hover:border-brand-g hover:shadow-sh"
                   }`}
                 >
                   <div
@@ -296,7 +294,7 @@ export const TrainingSection: React.FC = () => {
           </div>
 
           {/* RIGHT DETAIL */}
-          <div className="bg-[#EEF4F1] border border-bdr-DEFAULT rounded-[20px] p-7 sticky top-[90px]">
+          <div className="bg-surface-3 border border-bdr-DEFAULT rounded-[20px] p-6 sm:p-7 lg:sticky lg:top-[90px]">
             <div className="inline-block px-3 py-1 bg-brand-g text-white rounded-md text-[11px] font-semibold mb-3.5">
               {selectedCourse.badge}
             </div>
@@ -317,7 +315,7 @@ export const TrainingSection: React.FC = () => {
             <ul className="list-none m-0 p-0 mb-5">
               {selectedCourse.modules.map((mod, i) => (
                 <li
-                  key={i}
+                  key={`${selectedCourse.code}-mod-${i}`}
                   className="flex items-center gap-2.5 py-2 border-b border-bdr-DEFAULT text-[13px] text-t-2"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-brand-gl shrink-0" />
@@ -348,4 +346,5 @@ export const TrainingSection: React.FC = () => {
     </section>
   );
 };
+
 export default TrainingSection;

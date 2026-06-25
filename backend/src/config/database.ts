@@ -36,14 +36,20 @@ export const query = async (text: string, params?: any[]) => {
   return res;
 };
 
+let isConnected = false;
+
+export const isDbConnected = () => isConnected;
+
 export const testConnection = async (): Promise<boolean> => {
   try {
     const client = await pool.connect();
     console.log("PostgreSQL Database connected successfully.");
     client.release();
+    isConnected = true;
     return true;
   } catch (err: any) {
     console.error("PostgreSQL Database connection error:", err.message);
+    isConnected = false;
     return false;
   }
 };

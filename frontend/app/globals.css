@@ -11,6 +11,10 @@
   --color-brand-gold: #C9A84C;
   --color-brand-gold-l: #F0D080;
   
+  --color-surface-2: #F4F8F6;
+  --color-surface-3: #EEF4F1;
+  --color-surface-muted: #E6F3EE;
+  
   --breakpoint-xs: 375px;
 
   --color-ink-DEFAULT: #0B1612;
@@ -63,8 +67,22 @@
   }
 }
 
+:root {
+  --navbar-height: 112px;
+}
+
 html {
   scroll-behavior: smooth;
+}
+
+/* Ensure focus-visible is consistently styled across all interactive elements for a11y */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #1D9E75; /* brand-g */
+  outline-offset: 2px;
 }
 
 body {
@@ -93,8 +111,15 @@ body {
   max-width: 1120px;
   margin-right: auto;
   margin-left: auto;
-  padding-right: 28px;
-  padding-left: 28px;
+  padding-right: 16px;
+  padding-left: 16px;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-right: 28px;
+    padding-left: 28px;
+  }
 }
 
 /* CUSTOM ANIMATION ENABLERS FROM ORIGINAL CODE */
@@ -213,5 +238,15 @@ body {
 
 .globe-spin-g {
   animation: spin-globe 22s linear infinite;
+}
+
+/* Respect user preference for reduced motion (WCAG 2.1 AA) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 

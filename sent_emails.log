@@ -1,0 +1,93 @@
+
+
+=== EMAIL TO: apex@energy.com ===
+Timestamp: 2026-06-20T11:02:04.247Z
+Subject: Inquiry Confirmation: "Discuss a Project Opportunity" - GlobalPact SustainX
+Html:
+
+    <div style="font-family: 'DM Sans', Arial, sans-serif; max-width: 600px; margin: auto; padding: 32px; border: 1px solid #D0E8DE; border-radius: 16px; background-color: #ffffff; color: #0B1612; box-shadow: 0 4px 12px rgba(11,22,18,0.03);">
+      <div style="display: flex; align-items: center; margin-bottom: 24px;">
+        <h2 style="color: #0B1612; margin: 0; font-size: 20px; font-weight: 800; font-family: 'Sora', sans-serif;">
+          GlobalPact <span style="color: #0F8B6D;">SustainX</span>
+        </h2>
+      </div>
+      <div style="border-top: 1.5px solid #E6F3EE; margin-bottom: 24px;"></div>
+      <p style="font-size: 15px; line-height: 1.6; color: #1C2E27; margin-bottom: 16px;">Dear Test Partner,</p>
+      <p style="font-size: 15px; line-height: 1.6; color: #1C2E27; margin-bottom: 16px;">
+        Thank you for contacting GlobalPact SustainX. We have successfully received your business inquiry under the category:
+      </p>
+      <div style="background-color: #E6F3EE; border-left: 4px solid #0F8B6D; padding: 12px 16px; border-radius: 4px; margin-bottom: 24px; font-weight: bold; color: #085041; font-size: 14px;">
+        Discuss a Project Opportunity
+      </div>
+      <p style="font-size: 15px; line-height: 1.6; color: #1C2E27; margin-bottom: 24px;">
+        Our team of energy transition experts is reviewing your requirements and will reach out to you within 24-48 business hours to discuss alignment and next steps.
+      </p>
+      <p style="font-size: 14px; line-height: 1.5; color: #6B8C80; margin-bottom: 32px;">
+        *This is an automated confirmation of receipt. Please do not reply directly to this email.
+      </p>
+      <div style="border-top: 1.5px solid #E6F3EE; padding-top: 20px; font-size: 12px; color: #6B8C80; text-align: center;">
+        <strong>GlobalPact SustainX Centre of Excellence</strong><br />
+        Accelerating the Energy Transition Ecosystem
+      </div>
+    </div>
+  
+===================================
+
+===================================
+TIMESTAMP: 2026-06-23T08:52:50.134Z
+TO: john@abcenergy.com
+SUBJECT: Thank You for Contacting GlobalPact SustainX
+HTML CONTENT:
+
+    <div style="font-family: 'DM Sans', Arial, sans-serif; max-width: 600px; margin: auto; padding: 32px; border: 1px solid #D0E8DE; border-radius: 16px; background-color: #ffffff; color: #0B1612;">
+      <h2 style="color: #0F8B6D; font-family: 'Sora', sans-serif;">GlobalPact SustainX</h2>
+      <hr style="border: 0; border-top: 1px solid #E6F3EE; margin: 20px 0;" />
+      <p style="font-size: 15px; line-height: 1.6; color: #1C2E27;">Dear John Smith,</p>
+      <p style="font-size: 15px; line-height: 1.6; color: #1C2E27;">
+        Thank you for reaching out to GlobalPact SustainX. Our team has received your inquiry and will review it shortly.
+      </p>
+      <div style="background-color: #E6F3EE; border-left: 4px solid #0F8B6D; padding: 12px 16px; border-radius: 4px; margin: 20px 0; font-size: 14px;">
+        <strong>Inquiry Category:</strong> Strategic Partnership
+      </div>
+      <p style="font-size: 13px; color: #6B8C80;">
+        *This is an automated confirmation of receipt. Please do not reply directly to this email.
+      </p>
+    </div>
+  
+===================================
+
+===================================
+TIMESTAMP: 2026-06-23T08:52:50.135Z
+TO: admin@sustainx.com
+SUBJECT: New Partner With Us Inquiry Received
+HTML CONTENT:
+
+    <div style="font-family: 'DM Sans', Arial, sans-serif; max-width: 600px; margin: auto; padding: 32px; border: 1px solid #D0E8DE; border-radius: 16px; background-color: #ffffff; color: #0B1612;">
+      <h2 style="color: #0F8B6D; font-family: 'Sora', sans-serif;">New Inquiry Notification</h2>
+      <hr style="border: 0; border-top: 1px solid #E6F3EE; margin: 20px 0;" />
+      <p style="font-size: 15px; color: #1C2E27;">A new partnership inquiry has been submitted with the following details:</p>
+      <table style="width: 100%; font-size: 14px; border-collapse: collapse; margin: 20px 0;">
+        <tr>
+          <td style="padding: 8px 0; font-weight: bold; width: 150px;">Name:</td>
+          <td style="padding: 8px 0;">John Smith</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; font-weight: bold;">Organization:</td>
+          <td style="padding: 8px 0;">ABC Energy Pvt Ltd</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; font-weight: bold;">Email:</td>
+          <td style="padding: 8px 0;"><a href="mailto:john@abcenergy.com">john@abcenergy.com</a></td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; font-weight: bold;">Inquiry Type:</td>
+          <td style="padding: 8px 0;">Strategic Partnership</td>
+        </tr>
+      </table>
+      <div style="background-color: #F8FAF9; border: 1px solid #D0E8DE; padding: 16px; border-radius: 8px; margin-top: 20px;">
+        <div style="font-weight: bold; font-size: 12px; color: #6B8C80; text-transform: uppercase; margin-bottom: 8px;">Message:</div>
+        <div style="font-size: 14px; line-height: 1.6; color: #1C2E27; white-space: pre-wrap;">We would like to explore partnership opportunities with SustainX.</div>
+      </div>
+    </div>
+  
+===================================

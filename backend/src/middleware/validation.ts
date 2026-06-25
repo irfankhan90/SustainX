@@ -45,3 +45,102 @@ export const validateLogin = (req: Request, res: Response, next: NextFunction) =
 
   next();
 };
+
+export const validateInquiry = (req: Request, res: Response, next: NextFunction) => {
+  // Normalize camelCase input keys to snake_case
+  if (req.body.fullName !== undefined) {
+    req.body.full_name = req.body.fullName;
+  }
+  if (req.body.inquiryType !== undefined) {
+    req.body.inquiry_type = req.body.inquiryType;
+  }
+
+  // Ensure organization is optional and defaulted to empty string if not provided
+  if (req.body.organization === undefined || req.body.organization === null) {
+    req.body.organization = "";
+  }
+
+  const { full_name, email, inquiry_type, message } = req.body;
+
+  if (!full_name || !full_name.trim()) {
+    console.error("[Validation Failed] Full Name is required.");
+    return res.status(400).json({ success: false, message: "Full Name is required." });
+  }
+
+  if (!email || !email.trim()) {
+    console.error("[Validation Failed] Business Email Address is required.");
+    return res.status(400).json({ success: false, message: "Business Email Address is required." });
+  }
+
+  const emailRegex = /\S+@\S+\.\S+/;
+  if (!emailRegex.test(email)) {
+    console.error("[Validation Failed] Invalid email format.");
+    return res.status(400).json({ success: false, message: "Invalid email format." });
+  }
+
+  const validInquiryTypes = [
+    "Strategic Partnership",
+    "Develop With SustainX",
+    "Accelerate Transformation",
+    "Request Strategic Advisory",
+    "Discuss a Project Opportunity",
+    "Access Energy Trading Services",
+    "Other"
+  ];
+
+  if (!inquiry_type || !validInquiryTypes.includes(inquiry_type.trim())) {
+    console.error("[Validation Failed] Invalid inquiry type.");
+    return res.status(400).json({ success: false, message: "Invalid inquiry type." });
+  }
+
+  if (!message || !message.trim()) {
+    console.error("[Validation Failed] Message is required.");
+    return res.status(400).json({ success: false, message: "Message is required." });
+  }
+
+  console.log("[Validation Passed]");
+  next();
+};
+
+export const validateContact = (req: Request, res: Response, next: NextFunction) => {
+  // Normalize camelCase input keys to snake_case
+  if (req.body.fullName !== undefined) {
+    req.body.full_name = req.body.fullName;
+  }
+  if (req.body.emailAddress !== undefined) {
+    req.body.email = req.body.emailAddress;
+  }
+
+  const { full_name, email, subject, message } = req.body;
+
+  if (!full_name || !full_name.trim()) {
+    console.error("[Validation Failed] Full Name is required.");
+    return res.status(400).json({ success: false, message: "Full Name is required." });
+  }
+
+  if (!email || !email.trim()) {
+    console.error("[Validation Failed] Email Address is required.");
+    return res.status(400).json({ success: false, message: "Email Address is required." });
+  }
+
+  const emailRegex = /\S+@\S+\.\S+/;
+  if (!emailRegex.test(email)) {
+    console.error("[Validation Failed] Invalid email format.");
+    return res.status(400).json({ success: false, message: "Invalid email format." });
+  }
+
+  if (!subject || !subject.trim()) {
+    console.error("[Validation Failed] Subject is required.");
+    return res.status(400).json({ success: false, message: "Subject is required." });
+  }
+
+  if (!message || !message.trim()) {
+    console.error("[Validation Failed] Message is required.");
+    return res.status(400).json({ success: false, message: "Message is required." });
+  }
+
+  console.log("[Validation Passed] Contact Us details verified.");
+  next();
+};
+
+

@@ -1,21 +1,13 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [activeHash, setActiveHash] = useState("#home");
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  
-  const [mobileExpanded, setMobileExpanded] = useState({
-    solutions: false,
-    industries: false,
-    programs: false,
-  });
-
   const pathname = usePathname();
   const router = useRouter();
 
@@ -31,14 +23,19 @@ export const Navbar: React.FC = () => {
 
   // Monitor active navigation hash using hashchange and scroll
   useEffect(() => {
-    setActiveHash(window.location.hash || "#home");
+    const timer = setTimeout(() => {
+      setActiveHash(window.location.hash || "#home");
+    }, 0);
 
     const handleHashChange = () => {
       setActiveHash(window.location.hash || "#home");
     };
 
     window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("hashchange", handleHashChange);
+    };
   }, []);
 
   // Prevent background scrolling while mobile menu is open
@@ -52,26 +49,6 @@ export const Navbar: React.FC = () => {
       document.body.style.overflow = "";
     };
   }, [isOpen]);
-
-  // Click outside listener for desktop dropdowns
-  useEffect(() => {
-    const handleDocumentClick = () => {
-      setActiveDropdown(null);
-    };
-    window.addEventListener("click", handleDocumentClick);
-    return () => window.removeEventListener("click", handleDocumentClick);
-  }, []);
-
-  const toggleDropdown = (name: string) => {
-    setActiveDropdown((prev) => (prev === name ? null : name));
-  };
-
-  const toggleMobileSection = (section: "solutions" | "industries" | "programs") => {
-    setMobileExpanded((prev) => ({
-      ...prev,
-      [section]: !prev[section],
-    }));
-  };
 
   const handleLinkClick = (hash: string) => {
     setActiveHash(hash);
@@ -92,15 +69,24 @@ export const Navbar: React.FC = () => {
 
   const getLinkClass = (hash: string) => {
     const isActive = activeHash === hash;
-    return `relative py-2 text-sm font-semibold transition-colors duration-200 group cursor-pointer flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-g ${
-      isActive ? "text-[#1D9E75] font-bold" : "text-t-2 hover:text-[#1D9E75]"
+    return `relative py-2 text-sm font-semibold transition-colors duration-300 group cursor-pointer flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75] ${
+      isActive ? "text-[#1D9E75]" : "text-t-2 hover:text-[#1D9E75]"
     }`;
   };
 
   const getUnderlineClass = (hash: string) => {
     const isActive = activeHash === hash;
-    return `absolute bottom-0 left-0 w-full h-[2px] bg-[#1D9E75] rounded-full transition-transform duration-300 origin-left ${
-      isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+    return `absolute bottom-[-4px] left-0 w-full h-[2.5px] bg-[#1D9E75] rounded-full transition-transform duration-300 ease-out origin-left ${
+      isActive ? "scale-x-100 bg-[#1D9E75]" : "scale-x-0 group-hover:scale-x-100 bg-[#1D9E75]/70"
+    }`;
+  };
+
+  const getMobileLinkClass = (hash: string) => {
+    const isActive = activeHash === hash;
+    return `text-[17px] font-bold font-syne block py-2.5 px-4 rounded-xl transition-all duration-300 ${
+      isActive
+        ? "text-[#1D9E75] bg-[#1D9E75]/8 shadow-[0_4px_12px_rgba(29,158,117,0.06)]"
+        : "text-t-DEFAULT hover:text-[#1D9E75] hover:bg-[#1D9E75]/4"
     }`;
   };
 
@@ -109,7 +95,7 @@ export const Navbar: React.FC = () => {
       
       {/* Announcement Bar */}
       <div
-        className={`bg-gradient-to-r from-[#085041] via-[#0F6E56] to-[#1D9E75] text-white px-4 text-center text-[11px] font-medium tracking-wide flex items-center justify-center gap-1.5 transition-all duration-300 overflow-hidden select-none ${
+        className={`hidden sm:flex bg-gradient-to-r from-[#085041] via-[#0F6E56] to-[#1D9E75] text-white px-4 text-center text-[11px] font-medium tracking-wide items-center justify-center gap-1.5 transition-all duration-300 overflow-hidden select-none ${
           isScrolled ? "h-0 py-0 opacity-0" : "h-[28px] py-1 opacity-100 border-b border-white/5"
         }`}
       >
@@ -123,31 +109,34 @@ export const Navbar: React.FC = () => {
       <nav
         className={`w-full flex items-center transition-all duration-300 ${
           isScrolled
-            ? "h-[64px] bg-[#F8FAF9]/90 backdrop-blur-[24px] border-b border-bdr-DEFAULT/70 shadow-[0_4px_25px_rgba(11,22,18,0.02)]"
-            : "h-[84px] bg-[#F8FAF9]/80 backdrop-blur-[12px] border-b border-bdr-DEFAULT/20"
+            ? "h-[68px] bg-white/95 backdrop-blur-[20px] border-b border-[#085041]/10 shadow-[0_12px_40px_-15px_rgba(8,80,65,0.12)]"
+            : "h-[88px] bg-white border-b border-[#085041]/5"
         }`}
       >
-        <div className="w-full flex items-center justify-between max-w-none mx-auto px-6 md:px-8 relative">
+        <div className="w-full flex items-center justify-between max-w-none mx-auto px-4 sm:px-6 md:px-8 relative">
           
           {/* Brand Logo & Tagline */}
           <Link 
             href="#home" 
-            className="flex items-center gap-2 sm:gap-[12px] group shrink-0" 
+            className="flex items-center gap-1.5 sm:gap-[12px] group shrink-0 select-none" 
             onClick={handleLogoClick}
           >
-            <img
+            <Image
               src="/logo.jpg"
               alt="GlobalPact SustainX Logo"
-              className={`object-contain transition-all duration-350 ${
-                isScrolled ? "h-[48px] sm:h-[54px]" : "h-[60px] sm:h-[72px]"
+              width={72}
+              height={72}
+              priority
+              className={`object-contain transition-all duration-300 ${
+                isScrolled ? "h-[32px] sm:h-[40px] md:h-[54px]" : "h-[42px] sm:h-[50px] md:h-[72px]"
               } w-auto flex-shrink-0`}
             />
             <div className="flex flex-col justify-center">
-              <div className="font-syne text-[18px] sm:text-[20px] font-extrabold text-t-DEFAULT tracking-tight leading-none">
+              <div className="font-syne text-[15px] sm:text-[20px] font-extrabold text-t-DEFAULT tracking-tight leading-none">
                 GlobalPact <span className="text-[#1D9E75] font-extrabold">SustainX</span>
               </div>
-              <div className="hidden sm:block text-[8.5px] text-t-3 font-bold tracking-[0.16em] mt-1.5 transition-all duration-300 group-hover:text-[#1D9E75] uppercase">
-                Centre of Excellence
+              <div className="text-[7.5px] min-[375px]:text-[8.5px] sm:text-[10px] md:text-[11px] text-t-3 font-bold tracking-wide mt-1 transition-all duration-300 group-hover:text-[#1D9E75] whitespace-nowrap">
+                Empowering Sustainable Growth Worldwide
               </div>
             </div>
           </Link>
@@ -155,151 +144,36 @@ export const Navbar: React.FC = () => {
           {/* Desktop Navigation Links */}
           <ul className="hidden lg:flex items-center gap-8 list-none m-0 p-0 lg:absolute lg:left-1/2 lg:-translate-x-1/2">
             
-            {/* Solutions Dropdown */}
-            <li className="relative group">
-              <span 
-                className={getLinkClass("#features")}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleDropdown("solutions");
-                }}
-              >
+            {/* Home Link */}
+            <li>
+              <Link href="#home" className={getLinkClass("#home")} onClick={() => handleLinkClick("#home")}>
+                <span>Home</span>
+                <span className={getUnderlineClass("#home")} />
+              </Link>
+            </li>
+
+            {/* Solutions Link */}
+            <li>
+              <Link href="#pillars" className={getLinkClass("#pillars")} onClick={() => handleLinkClick("#pillars")}>
                 <span>Solutions</span>
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-3.5 h-3.5 fill-none stroke-current stroke-[2.5] transition-transform duration-300 group-hover:rotate-180 mt-[1px]"
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-                <span className={getUnderlineClass("#features")} />
-              </span>
-              
-              <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 w-56 bg-white border border-[#D0E8DE] rounded-xl shadow-[0_12px_32px_rgba(0,0,0,0.08)] py-2.5 transition-all duration-200 transform z-50 ${
-                activeDropdown === "solutions"
-                  ? "opacity-100 visible translate-y-0"
-                  : "opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0"
-              }`}>
-                <Link
-                  href="#features"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
-                >
-                  Strategic Advisory
-                </Link>
-                <Link
-                  href="#features"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
-                >
-                  Project Management
-                </Link>
-                <Link
-                  href="#features"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
-                >
-                  EPC Solutions
-                </Link>
-                <Link
-                  href="#features"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
-                >
-                  Capacity Building
-                </Link>
-              </div>
+                <span className={getUnderlineClass("#pillars")} />
+              </Link>
             </li>
 
-            {/* Industries Dropdown */}
-            <li className="relative group">
-              <span 
-                className={getLinkClass("#industries")}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleDropdown("industries");
-                }}
-              >
-                <span>Industries</span>
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-3.5 h-3.5 fill-none stroke-current stroke-[2.5] transition-transform duration-300 group-hover:rotate-180 mt-[1px]"
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-                <span className={getUnderlineClass("#industries")} />
-              </span>
-              
-              <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 w-56 bg-white border border-[#D0E8DE] rounded-xl shadow-[0_12px_32px_rgba(0,0,0,0.08)] py-2.5 transition-all duration-200 transform z-50 ${
-                activeDropdown === "industries"
-                  ? "opacity-100 visible translate-y-0"
-                  : "opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0"
-              }`}>
-                <Link
-                  href="#about"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
-                >
-                  Renewable Utilities
-                </Link>
-                <Link
-                  href="#about"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
-                >
-                  Grid Infrastructure
-                </Link>
-                <Link
-                  href="#about"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
-                >
-                  Corporate ESG Compliance
-                </Link>
-                <Link
-                  href="#about"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
-                >
-                  Climate Finance
-                </Link>
-              </div>
-            </li>
-
-            {/* Programs Dropdown */}
-            <li className="relative group">
-              <span 
-                className={getLinkClass("#training")}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleDropdown("programs");
-                }}
-              >
+            {/* Programs Link */}
+            <li>
+              <Link href="#capacity-building" className={getLinkClass("#capacity-building")} onClick={() => handleLinkClick("#capacity-building")}>
                 <span>Programs</span>
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-3.5 h-3.5 fill-none stroke-current stroke-[2.5] transition-transform duration-300 group-hover:rotate-180 mt-[1px]"
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-                <span className={getUnderlineClass("#training")} />
-              </span>
-              
-              <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 w-56 bg-white border border-[#D0E8DE] rounded-xl shadow-[0_12px_32px_rgba(0,0,0,0.08)] py-2.5 transition-all duration-200 transform z-50 ${
-                activeDropdown === "programs"
-                  ? "opacity-100 visible translate-y-0"
-                  : "opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0"
-              }`}>
-                <Link
-                  href="#training"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
-                >
-                  Certified Energy Manager
-                </Link>
-                <Link
-                  href="#training"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
-                >
-                  Clean Energy PMC Track
-                </Link>
-                <Link
-                  href="#training"
-                  className="block px-4 py-2 text-xs font-bold text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/50 transition-colors"
-                >
-                  Executive Leadership Intensive
-                </Link>
-              </div>
+                <span className={getUnderlineClass("#capacity-building")} />
+              </Link>
+            </li>
+
+            {/* Partnerships Link */}
+            <li>
+              <Link href="#partnerships" className={getLinkClass("#partnerships")} onClick={() => handleLinkClick("#partnerships")}>
+                <span>Partnerships</span>
+                <span className={getUnderlineClass("#partnerships")} />
+              </Link>
             </li>
 
             {/* About Link */}
@@ -320,27 +194,73 @@ export const Navbar: React.FC = () => {
           </ul>
 
           {/* Desktop Call to Actions */}
-          <div className="hidden lg:flex items-center gap-3 shrink-0 ml-auto relative z-10">
-            {/* Grayscale Subtle Client Login */}
-            <Link
-              href="/login"
-              className="h-10 px-4 flex items-center justify-center text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors cursor-pointer mr-2"
-            >
-              Client Portal
-            </Link>
+          <div className="hidden lg:flex items-center gap-3 shrink-0 ml-auto relative z-30">
+            {/* Social Media Links */}
+            <div className="relative z-30 flex items-center gap-1.5 mr-2 border-r border-[#D0E8DE]/45 pr-3.5">
+              {/* LinkedIn */}
+              <a
+                href="https://www.linkedin.com/company/globalpactsustainx/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative z-40 pointer-events-auto w-8 h-8 rounded-lg flex items-center justify-center text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/8 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75]"
+                aria-label="GlobalPact SustainX on LinkedIn"
+              >
+                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+              </a>
+              {/* Facebook */}
+              <a
+                href="https://www.facebook.com/GlobalPactSustainX"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative z-40 pointer-events-auto w-8 h-8 rounded-lg flex items-center justify-center text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/8 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75]"
+                aria-label="GlobalPact SustainX on Facebook"
+              >
+                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current">
+                  <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
+                </svg>
+              </a>
+              {/* X / Twitter */}
+              <a
+                href="https://x.com/globalSustainx"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative z-40 pointer-events-auto w-8 h-8 rounded-lg flex items-center justify-center text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/8 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75]"
+                aria-label="GlobalPact SustainX on X (formerly Twitter)"
+              >
+                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </a>
+              {/* Instagram */}
+              <a
+                href="https://www.instagram.com/globalpactsustainx/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative z-40 pointer-events-auto w-8 h-8 rounded-lg flex items-center justify-center text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/8 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75]"
+                aria-label="GlobalPact SustainX on Instagram"
+              >
+                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-none stroke-current stroke-2 stroke-linecap-round stroke-linejoin-round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                </svg>
+              </a>
+            </div>
             {/* Primary Consulting Action Button */}
             <Link
-              href="#contact"
-              className="h-10 px-[22px] flex items-center justify-center text-sm font-bold text-white rounded-lg bg-[#085041] hover:bg-[#063B30] shadow-[0_4px_12px_rgba(8,80,65,0.15)] hover:shadow-[0_8px_20px_rgba(8,80,65,0.25)] hover:-translate-y-[2px] active:translate-y-0 active:scale-[0.98] transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2"
+              href="#partnership-inquiry"
+              className="h-10 px-5 flex items-center justify-center text-sm font-bold text-white rounded-lg bg-[#1D9E75] hover:bg-[#157C5C] shadow-[0_4px_12px_rgba(29,158,117,0.15)] hover:shadow-[0_8px_20px_rgba(29,158,117,0.25)] hover:-translate-y-[2px] active:translate-y-0 active:scale-[0.98] transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] focus-visible:ring-offset-2"
             >
-              Schedule Consultation
+              Partner With Us
             </Link>
           </div>
 
           {/* Hamburger Menu Toggle (Mobile) */}
           <button
             onClick={() => setIsOpen(true)}
-            className="flex lg:hidden w-10 h-10 items-center justify-center cursor-pointer select-none rounded-lg hover:bg-[#E1F5EE]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] focus-visible:ring-offset-2 transition-colors duration-250"
+            className="flex lg:hidden w-12 h-12 items-center justify-center cursor-pointer select-none rounded-lg hover:bg-[#E1F5EE]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] focus-visible:ring-offset-2 transition-colors duration-250"
             aria-label="Open menu"
           >
             <svg 
@@ -360,20 +280,20 @@ export const Navbar: React.FC = () => {
       <div
         onClick={() => setIsOpen(false)}
         className={`fixed inset-0 z-[100] bg-black/45 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${
-          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          isOpen ? "opacity-100 pointer-events-auto visible" : "opacity-0 pointer-events-none invisible"
         }`}
       />
 
       {/* Mobile Menu Drawer */}
       <div
         className={`fixed top-0 right-0 bottom-0 z-[110] w-[310px] max-w-[calc(100vw-40px)] bg-[#F8FAF9] flex flex-col p-6 pt-20 transition-transform duration-300 ease-in-out shadow-2xl border-l border-[#D0E8DE]/30 lg:hidden ${
-          isOpen ? "translate-x-0" : "translate-x-full"
+          isOpen ? "translate-x-0 visible" : "translate-x-full invisible"
         }`}
       >
         {/* Visible Close (X) Button in Top-Right Corner */}
         <button
           onClick={() => setIsOpen(false)}
-          className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[#E1F5EE]/50 text-[#0B6B53] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] transition-colors cursor-pointer"
+          className="absolute top-4 right-4 w-12 h-12 flex items-center justify-center rounded-lg hover:bg-[#E1F5EE]/50 text-[#0B6B53] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] transition-colors cursor-pointer"
           aria-label="Close menu"
         >
           <svg
@@ -388,121 +308,49 @@ export const Navbar: React.FC = () => {
         </button>
 
         {/* Mobile Links */}
-        <ul className="flex flex-col gap-4 list-none m-0 p-0 text-center mb-8 overflow-y-auto max-h-[calc(100vh-280px)] pr-1">
+        <ul className="flex flex-col gap-4.5 list-none m-0 p-0 text-center mb-8 overflow-y-auto max-h-[calc(100vh-320px)] pr-1">
           {/* Home Link */}
           <li>
             <Link
               href="#home"
               onClick={() => handleLinkClick("#home")}
-              className="text-lg font-bold font-syne block transition-colors text-t-DEFAULT hover:text-[#1D9E75]"
+              className={getMobileLinkClass("#home")}
             >
               Home
             </Link>
           </li>
 
-          {/* Solutions Dropdown */}
+          {/* Solutions Link */}
           <li>
-            <button
-              onClick={() => toggleMobileSection("solutions")}
-              className="w-full text-lg font-bold font-syne flex items-center justify-center gap-2 transition-colors text-t-DEFAULT hover:text-[#1D9E75] cursor-pointer focus-visible:outline-none"
+            <Link
+              href="#pillars"
+              onClick={() => handleLinkClick("#pillars")}
+              className={getMobileLinkClass("#pillars")}
             >
-              <span>Solutions</span>
-              <svg
-                viewBox="0 0 24 24"
-                className={`w-4.5 h-4.5 fill-none stroke-current stroke-[2.5] transition-transform duration-200 ${
-                  mobileExpanded.solutions ? "rotate-180" : ""
-                }`}
-              >
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
-            <div
-              className={`overflow-hidden transition-all duration-300 flex flex-col gap-3 bg-[#E6F3EE]/40 rounded-xl ${
-                mobileExpanded.solutions ? "max-h-56 py-3 mt-2 px-4 border border-[#D0E8DE]/20" : "max-h-0"
-              }`}
-            >
-              <Link href="#features" onClick={() => handleLinkClick("#features")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
-                Strategic Advisory
-              </Link>
-              <Link href="#features" onClick={() => handleLinkClick("#features")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
-                Project Management
-              </Link>
-              <Link href="#features" onClick={() => handleLinkClick("#features")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
-                EPC Solutions
-              </Link>
-              <Link href="#features" onClick={() => handleLinkClick("#features")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
-                Capacity Building
-              </Link>
-            </div>
+              Solutions
+            </Link>
           </li>
 
-          {/* Industries Dropdown */}
+          {/* Programs Link */}
           <li>
-            <button
-              onClick={() => toggleMobileSection("industries")}
-              className="w-full text-lg font-bold font-syne flex items-center justify-center gap-2 transition-colors text-t-DEFAULT hover:text-[#1D9E75] cursor-pointer focus-visible:outline-none"
+            <Link
+              href="#capacity-building"
+              onClick={() => handleLinkClick("#capacity-building")}
+              className={getMobileLinkClass("#capacity-building")}
             >
-              <span>Industries</span>
-              <svg
-                viewBox="0 0 24 24"
-                className={`w-4.5 h-4.5 fill-none stroke-current stroke-[2.5] transition-transform duration-200 ${
-                  mobileExpanded.industries ? "rotate-180" : ""
-                }`}
-              >
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
-            <div
-              className={`overflow-hidden transition-all duration-300 flex flex-col gap-3 bg-[#E6F3EE]/40 rounded-xl ${
-                mobileExpanded.industries ? "max-h-56 py-3 mt-2 px-4 border border-[#D0E8DE]/20" : "max-h-0"
-              }`}
-            >
-              <Link href="#about" onClick={() => handleLinkClick("#about")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
-                Renewable Utilities
-              </Link>
-              <Link href="#about" onClick={() => handleLinkClick("#about")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
-                Grid Infrastructure
-              </Link>
-              <Link href="#about" onClick={() => handleLinkClick("#about")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
-                Corporate ESG Compliance
-              </Link>
-              <Link href="#about" onClick={() => handleLinkClick("#about")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
-                Climate Finance
-              </Link>
-            </div>
+              Programs
+            </Link>
           </li>
 
-          {/* Programs Dropdown */}
+          {/* Partnerships Link */}
           <li>
-            <button
-              onClick={() => toggleMobileSection("programs")}
-              className="w-full text-lg font-bold font-syne flex items-center justify-center gap-2 transition-colors text-t-DEFAULT hover:text-[#1D9E75] cursor-pointer focus-visible:outline-none"
+            <Link
+              href="#partnerships"
+              onClick={() => handleLinkClick("#partnerships")}
+              className={getMobileLinkClass("#partnerships")}
             >
-              <span>Programs</span>
-              <svg
-                viewBox="0 0 24 24"
-                className={`w-4.5 h-4.5 fill-none stroke-current stroke-[2.5] transition-transform duration-200 ${
-                  mobileExpanded.programs ? "rotate-180" : ""
-                }`}
-              >
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </button>
-            <div
-              className={`overflow-hidden transition-all duration-300 flex flex-col gap-3 bg-[#E6F3EE]/40 rounded-xl ${
-                mobileExpanded.programs ? "max-h-48 py-3 mt-2 px-4 border border-[#D0E8DE]/20" : "max-h-0"
-              }`}
-            >
-              <Link href="#training" onClick={() => handleLinkClick("#training")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
-                Certified Energy Manager
-              </Link>
-              <Link href="#training" onClick={() => handleLinkClick("#training")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
-                Clean Energy PMC Track
-              </Link>
-              <Link href="#training" onClick={() => handleLinkClick("#training")} className="text-sm font-semibold text-t-2 hover:text-[#1D9E75] transition-colors block">
-                Executive Leadership Intensive
-              </Link>
-            </div>
+              Partnerships
+            </Link>
           </li>
 
           {/* About Link */}
@@ -510,7 +358,7 @@ export const Navbar: React.FC = () => {
             <Link
               href="#about"
               onClick={() => handleLinkClick("#about")}
-              className="text-lg font-bold font-syne block transition-colors text-t-DEFAULT hover:text-[#1D9E75]"
+              className={getMobileLinkClass("#about")}
             >
               About
             </Link>
@@ -521,7 +369,7 @@ export const Navbar: React.FC = () => {
             <Link
               href="#contact"
               onClick={() => handleLinkClick("#contact")}
-              className="text-lg font-bold font-syne block transition-colors text-t-DEFAULT hover:text-[#1D9E75]"
+              className={getMobileLinkClass("#contact")}
             >
               Contact
             </Link>
@@ -529,21 +377,67 @@ export const Navbar: React.FC = () => {
         </ul>
 
         {/* Mobile Action Buttons */}
-        <div className="flex flex-col gap-4 border-t border-[#D0E8DE]/45 pt-6">
+        <div className="flex flex-col gap-4 border-t border-[#D0E8DE]/45 pt-6 mt-auto">
           <Link
-            href="/login"
+            href="#partnership-inquiry"
             onClick={() => setIsOpen(false)}
-            className="w-full h-11 flex items-center justify-center text-sm font-semibold text-[#1D9E75] rounded-lg border border-[#1D9E75] bg-white hover:bg-[#E1F5EE]/30 transition-all duration-300"
+            className="w-full h-11 flex items-center justify-center text-sm font-bold text-white rounded-lg bg-[#1D9E75] hover:bg-[#157C5C] shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
           >
-            Client Portal
+            Partner With Us
           </Link>
-          <Link
-            href="#contact"
-            onClick={() => setIsOpen(false)}
-            className="w-full h-11 flex items-center justify-center text-sm font-bold text-white rounded-lg bg-[#085041] hover:bg-[#063B30] shadow-md transition-all duration-300"
-          >
-            Schedule Consultation
-          </Link>
+          {/* Mobile Social Media Links */}
+          <div className="relative z-25 flex items-center justify-center gap-4 pt-4 border-t border-[#D0E8DE]/30 mt-2">
+            {/* LinkedIn */}
+            <a
+              href="https://www.linkedin.com/company/globalpactsustainx/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative z-30 pointer-events-auto w-11 h-11 rounded-lg border border-[#D0E8DE]/45 flex items-center justify-center text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/8 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75]"
+              aria-label="GlobalPact SustainX on LinkedIn"
+            >
+              <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] fill-current">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+            </a>
+            {/* Facebook */}
+            <a
+              href="https://www.facebook.com/GlobalPactSustainX"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative z-30 pointer-events-auto w-11 h-11 rounded-lg border border-[#D0E8DE]/45 flex items-center justify-center text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/8 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75]"
+              aria-label="GlobalPact SustainX on Facebook"
+            >
+              <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] fill-current">
+                <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
+              </svg>
+            </a>
+            {/* X / Twitter */}
+            <a
+              href="https://x.com/globalSustainx"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative z-30 pointer-events-auto w-11 h-11 rounded-lg border border-[#D0E8DE]/45 flex items-center justify-center text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/8 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75]"
+              aria-label="GlobalPact SustainX on X (formerly Twitter)"
+            >
+              <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] fill-current">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+            {/* Instagram */}
+            <a
+              href="https://www.instagram.com/globalpactsustainx/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative z-30 pointer-events-auto w-11 h-11 rounded-lg border border-[#D0E8DE]/45 flex items-center justify-center text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/8 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75]"
+              aria-label="GlobalPact SustainX on Instagram"
+            >
+              <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] fill-none stroke-current stroke-2 stroke-linecap-round stroke-linejoin-round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </header>

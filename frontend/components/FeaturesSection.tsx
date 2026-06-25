@@ -1,9 +1,9 @@
-"use client";
-
 import React from "react";
+import SectionHeader from "@/components/ui/SectionHeader";
 
 const features = [
   {
+    id: "certified-programs",
     title: "10 Certified Programs",
     desc: "Certificate & Diploma programs (A1–A5) plus 5 Executive Intensive programs (B1–B5) covering every career stage — from engineers to CXOs.",
     tag: "Part A + Part B tracks",
@@ -15,6 +15,7 @@ const features = [
     ),
   },
   {
+    id: "ai-analytics",
     title: "AI-Powered Analytics",
     desc: "Predictive analytics, ESG monitoring, smart recommendations, and automated sustainability reports powered by OpenAI & TensorFlow.",
     tag: "Real-time AI insights",
@@ -27,6 +28,7 @@ const features = [
     ),
   },
   {
+    id: "hybrid-learning",
     title: "Hybrid Learning",
     desc: "Online modules combined with in-person workshops, simulation labs using PVsyst & HOMER, and global industry expert masterclasses.",
     tag: "Online + In-person",
@@ -39,6 +41,7 @@ const features = [
     ),
   },
   {
+    id: "industry-certificates",
     title: "Industry Certificates",
     desc: "Industry-recognised credentials that enhance professional standing, accelerate career advancement, and open doors to global networks.",
     tag: "GlobalPact certified",
@@ -50,6 +53,7 @@ const features = [
     ),
   },
   {
+    id: "esg-dashboard",
     title: "ESG Dashboard",
     desc: "Track CO₂ reduction, Scope 1–3 emissions, energy saved, and waste managed in real-time with interactive charts and AI-generated alerts.",
     tag: "Scope 1–3 tracking",
@@ -62,6 +66,7 @@ const features = [
     ),
   },
   {
+    id: "corporate-collab",
     title: "Corporate Collaboration",
     desc: "Multi-seat enterprise accounts, team progress tracking, custom training programs aligned with Vision 2030 and India Net-Zero targets.",
     tag: "Enterprise-ready",
@@ -78,16 +83,18 @@ const features = [
 
 const deliveryMethods = [
   {
+    id: "hybrid",
     title: "Hybrid Learning",
     desc: "Online + In-person workshops for maximum flexibility",
     icon: (
-      <svg viewBox="0 0 24 24" className="w-[22px] h-[22px] fill-none stroke-white stroke-2">
+      <svg viewBox="0 0 24 24" className="w-[22px].h-[22px] fill-none stroke-white stroke-2">
         <rect x="2" y="3" width="20" height="14" rx="2" />
         <line x1="8" y1="21" x2="16" y2="21" />
       </svg>
     ),
   },
   {
+    id: "experts",
     title: "Industry Experts",
     desc: "Global case studies led by sector leaders from GM, IIT, KOC",
     icon: (
@@ -98,6 +105,7 @@ const deliveryMethods = [
     ),
   },
   {
+    id: "simulations",
     title: "Simulation Tools",
     desc: "PVsyst, HOMER, and digital lab environments",
     icon: (
@@ -108,6 +116,7 @@ const deliveryMethods = [
     ),
   },
   {
+    id: "capstone",
     title: "Capstone Projects",
     desc: "End-to-End project execution from design to commissioning",
     icon: (
@@ -118,6 +127,7 @@ const deliveryMethods = [
     ),
   },
   {
+    id: "integration",
     title: "Industry Integration",
     desc: "Live internships and project opportunities with global partners",
     icon: (
@@ -134,24 +144,18 @@ export const FeaturesSection: React.FC = () => {
   return (
     <>
       {/* FEATURES GRID */}
-      <section className="py-24" id="features">
+      <section className="py-24 scroll-mt-[var(--navbar-height)]" id="features">
         <div className="container">
-          <div className="text-center mb-14">
-            <div className="inline-block px-3.5 py-1 bg-brand-gxl text-brand-gd rounded-full text-xs font-semibold tracking-wide uppercase mb-3.5">
-              Platform Features
-            </div>
-            <h2 className="font-syne text-[28px] sm:text-[3.5vw] md:text-[44px] font-extrabold leading-[1.1] tracking-[-0.025em] text-t-DEFAULT mb-3.5">
-              Everything your team needs to lead the energy transition
-            </h2>
-            <p className="text-[17px] text-t-2 font-light leading-[1.65] max-w-[540px] mx-auto">
-              From certified programs to AI-powered ESG dashboards — one platform for the entire clean energy journey.
-            </p>
-          </div>
+          <SectionHeader
+            label="Platform Features"
+            heading="Everything your team needs to lead the energy transition"
+            description="From certified programs to AI-powered ESG dashboards — one platform for the entire clean energy journey."
+          />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[1px] bg-bdr-DEFAULT border border-bdr-DEFAULT rounded-2xl overflow-hidden">
-            {features.map((feature, idx) => (
+            {features.map((feature) => (
               <div
-                key={idx}
+                key={feature.id}
                 className="bg-white p-9 group transition-colors duration-250 hover:bg-brand-gxl"
               >
                 <div className="w-12 h-12 bg-brand-gxl text-brand-g rounded-xl flex items-center justify-center mb-5 transition-colors duration-250 group-hover:bg-brand-g group-hover:text-white fill-none stroke-brand-g group-hover:stroke-white stroke-2 stroke-linecap-round stroke-linejoin-round">
@@ -173,24 +177,18 @@ export const FeaturesSection: React.FC = () => {
       </section>
 
       {/* DELIVERY MODEL */}
-      <section className="py-24 bg-white border-t border-b border-bdr-DEFAULT">
+      <section id="delivery-model" className="py-24 bg-white border-t border-b border-bdr-DEFAULT">
         <div className="container">
-          <div className="text-center mb-12">
-            <div className="inline-block px-3.5 py-1 bg-brand-gxl text-brand-gd rounded-full text-xs font-semibold tracking-wide uppercase mb-3.5">
-              Delivery Model
-            </div>
-            <h2 className="font-syne text-[28px] sm:text-[3.5vw] md:text-[44px] font-extrabold leading-[1.1] tracking-[-0.025em] text-t-DEFAULT mb-3.5">
-              Applied learning ecosystem for real-world execution
-            </h2>
-            <p className="text-[17px] text-t-2 font-light leading-[1.65] max-w-[540px] mx-auto">
-              Theory + Practical Application + Industry Reality = Applied Competency & Accelerated Career Advancement
-            </p>
-          </div>
+          <SectionHeader
+            label="Delivery Model"
+            heading="Applied learning ecosystem for real-world execution"
+            description="Theory + Practical Application + Industry Reality = Applied Competency & Accelerated Career Advancement"
+          />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mt-10">
-            {deliveryMethods.map((method, idx) => (
+            {deliveryMethods.map((method) => (
               <div
-                key={idx}
+                key={method.id}
                 className="bg-brand-gxl border border-bdr-2 rounded-xl p-5 text-center transition-all hover:shadow-sh"
               >
                 <div className="w-11 h-11 bg-brand-g rounded-xl flex items-center justify-center mx-auto mb-3 shrink-0">
@@ -210,4 +208,5 @@ export const FeaturesSection: React.FC = () => {
     </>
   );
 };
+
 export default FeaturesSection;

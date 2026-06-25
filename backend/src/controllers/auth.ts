@@ -24,7 +24,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
       role,
     });
 
-    const jwtSecret = process.env.JWT_SECRET || "super_secret_sustainx_key_change_me";
+    const jwtSecret = process.env.JWT_SECRET!;
     const jwtExpiresIn = process.env.JWT_EXPIRES_IN || "7d";
 
     const token = jwt.sign(
@@ -72,7 +72,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       return next(new AppError("Invalid email or password", 401));
     }
 
-    const jwtSecret = process.env.JWT_SECRET || "super_secret_sustainx_key_change_me";
+    const jwtSecret = process.env.JWT_SECRET!;
     const jwtExpiresIn = process.env.JWT_EXPIRES_IN || "7d";
 
     const token = jwt.sign(

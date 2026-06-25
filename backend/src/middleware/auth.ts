@@ -24,7 +24,7 @@ export const authenticateJWT = (
   const token = authHeader.split(" ")[1];
 
   try {
-    const jwtSecret = process.env.JWT_SECRET || "super_secret_sustainx_key_change_me";
+    const jwtSecret = process.env.JWT_SECRET!;
     const decoded = jwt.verify(token, jwtSecret) as {
       id: number;
       email: string;

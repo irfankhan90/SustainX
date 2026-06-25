@@ -6,12 +6,11 @@ import AuthLayout from "@/components/auth/AuthLayout";
 import InputField from "@/components/auth/InputField";
 import PasswordInput from "@/components/auth/PasswordInput";
 import AuthButton from "@/components/auth/AuthButton";
-import SocialButtons from "@/components/auth/SocialButtons";
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
 
   // Error states
   const [emailError, setEmailError] = useState("");
@@ -41,8 +40,8 @@ export default function LoginPage() {
     if (!password) {
       setPasswordError("Password is required");
       isValid = false;
-    } else if (password.length < 6) {
-      setPasswordError("Password must be at least 6 characters");
+    } else if (password.length < 8) {
+      setPasswordError("Password must be at least 8 characters");
       isValid = false;
     }
 
@@ -73,29 +72,13 @@ export default function LoginPage() {
         localStorage.setItem("sustainx_user", JSON.stringify(result.data.user));
         setIsSuccess(true);
         setTimeout(() => {
-          window.location.href = "/dashboard";
+          window.location.href = "/";
         }, 1000);
       } else {
         setFormError(result.message || "Invalid email or password. Please try again.");
       }
-    } catch (err) {
-      console.warn("Backend connection failed, falling back to mock authentication:", err);
-      
-      // Fallback to local simulation mode
-      if (email.toLowerCase().includes("error")) {
-        setFormError("Invalid email or password. Please try again.");
-      } else {
-        localStorage.setItem("sustainx_token", "demo_token_jwt");
-        localStorage.setItem("sustainx_user", JSON.stringify({
-          full_name: "Demo User",
-          organization: "Demo Org",
-          email: email
-        }));
-        setIsSuccess(true);
-        setTimeout(() => {
-          window.location.href = "/dashboard";
-        }, 1000);
-      }
+    } catch {
+      setFormError("Unable to connect to the server. Please check your connection and try again.");
     } finally {
       setIsLoading(false);
     }
@@ -120,13 +103,13 @@ export default function LoginPage() {
             Sign In Successful
           </h2>
           <p className="text-[13px] text-t-2 leading-relaxed mb-4">
-            Initializing your Clean Energy and ESG dashboard. Redirecting...
+            Redirecting to homepage...
           </p>
           <Link
-            href="/dashboard"
+            href="/"
             className="text-[13.5px] font-semibold text-brand-g hover:text-brand-gd underline cursor-pointer"
           >
-            Go to dashboard immediately
+            Go to home immediately
           </Link>
         </div>
       ) : (
@@ -169,17 +152,7 @@ export default function LoginPage() {
               disabled={isLoading}
               required
             />
-            <div className="flex items-center justify-between mt-1.5 text-[13px]">
-              <label className="flex items-center gap-2 text-t-2 select-none cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  disabled={isLoading}
-                  className="w-4 h-4 rounded border-bdr-DEFAULT text-brand-g focus:ring-brand-gl cursor-pointer"
-                />
-                <span className="text-[13px] text-t-2 font-medium">Remember me</span>
-              </label>
+            <div className="flex items-center justify-end mt-1.5 text-[13px]">
               <Link
                 href="/forgot-password"
                 className="font-semibold text-brand-g hover:text-brand-gd transition-colors cursor-pointer"
@@ -212,21 +185,8 @@ export default function LoginPage() {
             </div>
           </AuthButton>
 
-          <div className="flex items-center gap-3 my-3">
-            <div className="flex-1 h-[1px] bg-bdr-DEFAULT" />
-            <span className="text-[12px] text-t-3 font-semibold uppercase tracking-wider">
-              Or continue with
-            </span>
-            <div className="flex-1 h-[1px] bg-bdr-DEFAULT" />
-          </div>
-
-          <SocialButtons
-            onGoogleClick={() => alert("Google auth redirect triggered")}
-            onLinkedInClick={() => alert("LinkedIn auth redirect triggered")}
-          />
-
           <p className="text-[13.5px] text-t-2 text-center mt-4">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link
               href="/register"
               className="font-semibold text-brand-g hover:text-brand-gd transition-colors underline cursor-pointer"

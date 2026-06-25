@@ -11,6 +11,33 @@ export const Navbar: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
 
+  const [mounted, setMounted] = useState(false);
+  const [user, setUser] = useState<{ full_name: string; email: string; role: "USER" | "ADMIN" } | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+    const storedUser = localStorage.getItem("sustainx_user");
+    const storedToken = localStorage.getItem("sustainx_token");
+    if (storedUser && storedToken) {
+      try {
+        setUser(JSON.parse(storedUser));
+        setToken(storedToken);
+      } catch (err) {
+        console.error("Error parsing stored user details", err);
+      }
+    }
+  }, []);
+
+  const handleSignOut = () => {
+    localStorage.removeItem("sustainx_token");
+    localStorage.removeItem("sustainx_user");
+    setUser(null);
+    setToken(null);
+    setIsOpen(false);
+    router.push("/");
+  };
+
   // Track scroll position to resize navbar and toggle shadow
   useEffect(() => {
     const handleScroll = () => {
@@ -162,9 +189,9 @@ export const Navbar: React.FC = () => {
 
             {/* Programs Link */}
             <li>
-              <Link href="#capacity-building" className={getLinkClass("#capacity-building")} onClick={() => handleLinkClick("#capacity-building")}>
+              <Link href="/programs" className={getLinkClass("/programs")} onClick={() => handleLinkClick("/programs")}>
                 <span>Programs</span>
-                <span className={getUnderlineClass("#capacity-building")} />
+                <span className={getUnderlineClass("/programs")} />
               </Link>
             </li>
 
@@ -249,6 +276,36 @@ export const Navbar: React.FC = () => {
               </a>
             </div>
             {/* Primary Consulting Action Button */}
+            {mounted && token && user ? (
+              <>
+                <span className="text-xs font-semibold text-t-2 select-none mr-2">
+                  Hello, {user.full_name.split(" ")[0]}
+                </span>
+                {user.role === "ADMIN" && (
+                  <Link
+                    href="/admin/inquiries"
+                    className="h-10 px-4 flex items-center justify-center text-xs font-bold text-brand-gd border border-brand-gl/40 rounded-lg bg-[#E1F5EE]/40 hover:bg-[#E1F5EE] transition-all cursor-pointer mr-1 focus-visible:outline-none"
+                  >
+                    Dashboard
+                  </Link>
+                )}
+                <button
+                  onClick={handleSignOut}
+                  className="h-10 px-4 flex items-center justify-center text-xs font-bold text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-all cursor-pointer focus-visible:outline-none"
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              mounted && (
+                <Link
+                  href="/login"
+                  className="h-10 px-4 flex items-center justify-center text-xs font-bold text-[#1D9E75] border border-[#1D9E75]/30 rounded-lg hover:bg-[#E1F5EE]/20 transition-all cursor-pointer mr-1 focus-visible:outline-none"
+                >
+                  Sign In
+                </Link>
+              )
+            )}
             <Link
               href="#partnership-inquiry"
               className="h-10 px-5 flex items-center justify-center text-sm font-bold text-white rounded-lg bg-[#1D9E75] hover:bg-[#157C5C] shadow-[0_4px_12px_rgba(29,158,117,0.15)] hover:shadow-[0_8px_20px_rgba(29,158,117,0.25)] hover:-translate-y-[2px] active:translate-y-0 active:scale-[0.98] transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] focus-visible:ring-offset-2"
@@ -334,9 +391,9 @@ export const Navbar: React.FC = () => {
           {/* Programs Link */}
           <li>
             <Link
-              href="#capacity-building"
-              onClick={() => handleLinkClick("#capacity-building")}
-              className={getMobileLinkClass("#capacity-building")}
+              href="/programs"
+              onClick={() => handleLinkClick("/programs")}
+              className={getMobileLinkClass("/programs")}
             >
               Programs
             </Link>
@@ -378,6 +435,38 @@ export const Navbar: React.FC = () => {
 
         {/* Mobile Action Buttons */}
         <div className="flex flex-col gap-4 border-t border-[#D0E8DE]/45 pt-6 mt-auto">
+          {mounted && token && user ? (
+            <>
+              <div className="text-xs font-semibold text-t-2 text-center mb-1 select-none">
+                Hello, {user.full_name}
+              </div>
+              {user.role === "ADMIN" && (
+                <Link
+                  href="/admin/inquiries"
+                  onClick={() => setIsOpen(false)}
+                  className="w-full h-11 flex items-center justify-center text-sm font-bold text-brand-gd border border-brand-gl/40 rounded-lg bg-[#E1F5EE]/40 hover:bg-[#E1F5EE] transition-all"
+                >
+                  Admin Dashboard
+                </Link>
+              )}
+              <button
+                onClick={handleSignOut}
+                className="w-full h-11 flex items-center justify-center text-sm font-bold text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-all cursor-pointer"
+              >
+                Sign Out
+              </button>
+            </>
+          ) : (
+            mounted && (
+              <Link
+                href="/login"
+                onClick={() => setIsOpen(false)}
+                className="w-full h-11 flex items-center justify-center text-sm font-bold text-[#1D9E75] border border-[#1D9E75]/30 rounded-lg hover:bg-[#E1F5EE]/20 transition-all"
+              >
+                Sign In
+              </Link>
+            )
+          )}
           <Link
             href="#partnership-inquiry"
             onClick={() => setIsOpen(false)}

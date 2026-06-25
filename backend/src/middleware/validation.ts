@@ -143,4 +143,21 @@ export const validateContact = (req: Request, res: Response, next: NextFunction)
   next();
 };
 
+export const validateForgotPassword = (req: Request, res: Response, next: NextFunction) => {
+  const { email } = req.body;
+
+  if (!email || !email.trim()) {
+    console.error("[Validation Failed] Email address is required for forgot password.");
+    return res.status(400).json({ status: "error", message: "Email address is required." });
+  }
+
+  const emailRegex = /\S+@\S+\.\S+/;
+  if (!emailRegex.test(email)) {
+    console.error("[Validation Failed] Invalid email format for forgot password.");
+    return res.status(400).json({ status: "error", message: "Invalid email format." });
+  }
+
+  next();
+};
+
 

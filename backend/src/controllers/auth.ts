@@ -1,8 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 import { findUserByEmail, createUser } from "../models/user";
 import { AppError } from "../utils/errors";
+import { sendPasswordResetEmail } from "../utils/mailer";
 
 export const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -96,6 +98,32 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
           created_at: user.created_at,
         },
       },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const forgotPassword = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email } = req.body;
+
+    const user = await findUserByEmail(email);
+    if (!user) {
+      console.log(`[Forgot Password] Requested email ${email} not found. Returning mock success to prevent enumeration.`);
+      return res.status(200).json({
+        status: "success",
+        message: "Password reset instructions sent successfully.",
+      });
+    }
+
+    const token = crypto.randomBytes(20).toString("hex");
+
+    await sendPasswordResetEmail(user.email, token);
+
+    res.status(200).json({
+      status: "success",
+      message: "Password reset instructions sent successfully.",
     });
   } catch (err) {
     next(err);

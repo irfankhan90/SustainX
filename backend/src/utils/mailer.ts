@@ -301,3 +301,68 @@ export const sendContactAdminNotificationEmail = async (params: ContactAdminNoti
   }
 };
 
+export const sendPasswordResetEmail = async (email: string, token: string) => {
+  const host = process.env.SMTP_HOST;
+  const port = process.env.SMTP_PORT;
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+  const from = process.env.SMTP_FROM || "no-reply@sustainx.com";
+
+  const emailSubject = "Reset Your SustainX Password";
+  const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+  const resetLink = `${frontendUrl}/reset-password?token=${token}&email=${encodeURIComponent(email)}`;
+
+  const emailHtml = `
+    <div style="font-family: 'DM Sans', Arial, sans-serif; max-width: 600px; margin: auto; padding: 32px; border: 1px solid #D0E8DE; border-radius: 16px; background-color: #ffffff; color: #0B1612;">
+      <h2 style="color: #1D9E75; font-family: 'Sora', sans-serif;">GlobalPact SustainX</h2>
+      <hr style="border: 0; border-top: 1px solid #E6F3EE; margin: 20px 0;" />
+      <p style="font-size: 15px; line-height: 1.6; color: #1C2E27; margin-bottom: 12px;">
+        Hello,
+      </p>
+      <p style="font-size: 15px; line-height: 1.6; color: #1C2E27; margin-bottom: 20px;">
+        We received a request to reset your password for your SustainX account. Click the button below to set a new password:
+      </p>
+      <div style="text-align: center; margin: 24px 0;">
+        <a href="${resetLink}" style="background-color: #1D9E75; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block; font-size: 14px;">Reset Password</a>
+      </div>
+      <p style="font-size: 13px; line-height: 1.6; color: #6B8C80; margin-bottom: 12px;">
+        If the button above does not work, copy and paste this link in your browser:
+      </p>
+      <p style="font-size: 13px; line-height: 1.6; color: #1D9E75; word-break: break-all; margin-bottom: 24px;">
+        <a href="${resetLink}" style="color: #1D9E75;">${resetLink}</a>
+      </p>
+      <p style="font-size: 13px; line-height: 1.6; color: #6B8C80; margin-bottom: 24px;">
+        This password reset link will expire in 1 hour. If you did not make this request, you can safely ignore this email.
+      </p>
+      <p style="font-size: 15px; line-height: 1.6; color: #1C2E27; font-weight: bold; margin-top: 20px;">
+        Regards,<br />
+        GlobalPact SustainX Support Team
+      </p>
+    </div>
+  `;
+
+  if (host && port && user && pass) {
+    try {
+      const transporter = nodemailer.createTransport({
+        host,
+        port: parseInt(port, 10),
+        auth: { user, pass },
+      });
+      await transporter.sendMail({
+        from,
+        to: email,
+        subject: emailSubject,
+        html: emailHtml,
+      });
+      console.log(`[Mailer] Password reset email sent successfully to ${email}`);
+    } catch (err: any) {
+      console.error(`[Mailer] Failed to send password reset email via SMTP to ${email}: ${err.message}`);
+      logEmailToFile(email, emailSubject, emailHtml);
+      throw new Error(`SMTP sending failed: ${err.message}`);
+    }
+  } else {
+    console.warn(`[Mailer] SMTP configuration is missing. Mock password reset email logged for ${email}.`);
+    logEmailToFile(email, emailSubject, emailHtml);
+  }
+};
+

@@ -172,20 +172,27 @@ export const HeroSection: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(true);
   const [progress, setProgress] = useState(0);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [resetKey, setResetKey] = useState(0);
 
   const SLIDE_DURATION = 5500; // 5.5 seconds autoplay
   const lastActiveIndexRef = useRef(activeIndex);
+  const lastResetKeyRef = useRef(resetKey);
+
+  const triggerReset = () => {
+    setResetKey((prev) => prev + 1);
+    setProgress(0);
+  };
 
   const handleNext = () => {
     setDirection(1);
     setActiveIndex((prev) => (prev + 1) % SLIDES.length);
-    setProgress(0);
+    triggerReset();
   };
 
   const handlePrev = () => {
     setDirection(-1);
     setActiveIndex((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
-    setProgress(0);
+    triggerReset();
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -211,19 +218,22 @@ export const HeroSection: React.FC = () => {
     if (!isPlaying) return;
 
     let currentProgress = progress;
-    if (lastActiveIndexRef.current !== activeIndex) {
+    if (lastActiveIndexRef.current !== activeIndex || lastResetKeyRef.current !== resetKey) {
       currentProgress = 0;
       setProgress(0);
       lastActiveIndexRef.current = activeIndex;
+      lastResetKeyRef.current = resetKey;
     }
 
     const startTime = Date.now() - (currentProgress / 100) * SLIDE_DURATION;
 
-    const interval = setInterval(() => {
+    let interval: NodeJS.Timeout;
+    interval = setInterval(() => {
       const elapsed = Date.now() - startTime;
       const newProgress = Math.min(100, (elapsed / SLIDE_DURATION) * 100);
 
       if (newProgress >= 100) {
+        clearInterval(interval);
         setProgress(0);
         setDirection(1);
         setActiveIndex((prev) => (prev + 1) % SLIDES.length);
@@ -233,7 +243,7 @@ export const HeroSection: React.FC = () => {
     }, 50);
 
     return () => clearInterval(interval);
-  }, [isPlaying, activeIndex]);
+  }, [isPlaying, activeIndex, resetKey]);
 
   const activeSlide = SLIDES[activeIndex];
 
@@ -379,7 +389,7 @@ export const HeroSection: React.FC = () => {
                     onClick={() => {
                       setDirection(idx > activeIndex ? 1 : -1);
                       setActiveIndex(idx);
-                      setProgress(0);
+                      triggerReset();
                     }}
                     className="relative py-2.5 bg-transparent cursor-pointer focus:outline-none group focus-visible:outline-none"
                     aria-label={`Go to slide ${idx + 1}`}
@@ -428,7 +438,7 @@ export const HeroSection: React.FC = () => {
                           onClick={() => {
                             setDirection(1);
                             setActiveIndex(1);
-                            setProgress(0);
+                            triggerReset();
                           }}
                           className="bg-white border border-bdr-DEFAULT rounded-[20px] overflow-hidden flex flex-col h-[200px] shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-sh hover:border-brand-g/25 group cursor-pointer"
                         >
@@ -458,7 +468,7 @@ export const HeroSection: React.FC = () => {
                           onClick={() => {
                             setDirection(1);
                             setActiveIndex(3);
-                            setProgress(0);
+                            triggerReset();
                           }}
                           className="bg-white border border-bdr-DEFAULT rounded-[20px] overflow-hidden flex flex-col h-[200px] shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-sh hover:border-brand-g/25 group cursor-pointer"
                         >
@@ -491,7 +501,7 @@ export const HeroSection: React.FC = () => {
                           onClick={() => {
                             setDirection(1);
                             setActiveIndex(2);
-                            setProgress(0);
+                            triggerReset();
                           }}
                           className="bg-white border border-bdr-DEFAULT rounded-[20px] overflow-hidden flex flex-col h-[200px] shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-sh hover:border-brand-g/25 group cursor-pointer"
                         >
@@ -521,7 +531,7 @@ export const HeroSection: React.FC = () => {
                           onClick={() => {
                             setDirection(1);
                             setActiveIndex(4);
-                            setProgress(0);
+                            triggerReset();
                           }}
                           className="bg-white border border-bdr-DEFAULT rounded-[20px] overflow-hidden flex flex-col h-[200px] shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-sh hover:border-brand-g/25 group cursor-pointer"
                         >
@@ -577,7 +587,7 @@ export const HeroSection: React.FC = () => {
                       onClick={() => {
                         setDirection(1);
                         setActiveIndex(idx + 1);
-                        setProgress(0);
+                        triggerReset();
                       }}
                       className={`max-[374px]:w-[240px] max-[374px]:shrink-0 max-[374px]:snap-center bg-white border rounded-[20px] overflow-hidden flex flex-col h-[180px] transition-all duration-300 ${
                         isCurrentActive
@@ -650,7 +660,7 @@ export const HeroSection: React.FC = () => {
                       onClick={() => {
                         setDirection(idx > activeIndex ? 1 : -1);
                         setActiveIndex(idx);
-                        setProgress(0);
+                        triggerReset();
                       }}
                       className="relative py-2 bg-transparent cursor-pointer focus:outline-none"
                       aria-label={`Go to slide ${idx + 1}`}

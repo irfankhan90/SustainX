@@ -48,6 +48,7 @@ const navItems: NavItem[] = [
       { label: "Executive & Corporate", href: "/programs#training-exec" },
     ],
   },
+  { label: "AI Sustainability", href: "/#ai" },
   {
     label: "Team",
     submenu: [

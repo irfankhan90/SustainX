@@ -54,13 +54,16 @@ export const validateInquiry = (req: Request, res: Response, next: NextFunction)
   if (req.body.inquiryType !== undefined) {
     req.body.inquiry_type = req.body.inquiryType;
   }
+  if (req.body.mobileNumber !== undefined) {
+    req.body.phone = req.body.mobileNumber;
+  }
 
   // Ensure organization is optional and defaulted to empty string if not provided
   if (req.body.organization === undefined || req.body.organization === null) {
     req.body.organization = "";
   }
 
-  const { full_name, email, inquiry_type, message } = req.body;
+  const { full_name, email, phone, inquiry_type, message } = req.body;
 
   if (!full_name || !full_name.trim()) {
     console.error("[Validation Failed] Full Name is required.");
@@ -68,14 +71,26 @@ export const validateInquiry = (req: Request, res: Response, next: NextFunction)
   }
 
   if (!email || !email.trim()) {
-    console.error("[Validation Failed] Business Email Address is required.");
-    return res.status(400).json({ success: false, message: "Business Email Address is required." });
+    console.error("[Validation Failed] Email Address is required.");
+    return res.status(400).json({ success: false, message: "Email Address is required." });
   }
 
   const emailRegex = /\S+@\S+\.\S+/;
   if (!emailRegex.test(email)) {
     console.error("[Validation Failed] Invalid email format.");
     return res.status(400).json({ success: false, message: "Invalid email format." });
+  }
+
+  if (!phone || !phone.trim()) {
+    console.error("[Validation Failed] Mobile Number is required.");
+    return res.status(400).json({ success: false, message: "Mobile Number is required." });
+  }
+
+  // Basic international mobile pattern validation: allows leading +, numbers, spaces, dashes, parentheses
+  const phoneRegex = /^\+?[0-9\s\-()]{7,25}$/;
+  if (!phoneRegex.test(phone.trim())) {
+    console.error("[Validation Failed] Invalid mobile number format.");
+    return res.status(400).json({ success: false, message: "Invalid mobile number format." });
   }
 
   const validInquiryTypes = [

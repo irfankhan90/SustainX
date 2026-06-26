@@ -4,10 +4,66 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
+interface SubmenuItem {
+  label: string;
+  href: string;
+}
+
+interface NavItem {
+  label: string;
+  href?: string;
+  submenu?: SubmenuItem[];
+}
+
+const navItems: NavItem[] = [
+  { label: "Home", href: "/#home" },
+  {
+    label: "About Us",
+    submenu: [
+      { label: "Vision", href: "/#about" },
+      { label: "Mission", href: "/#about" },
+    ],
+  },
+  {
+    label: "Solutions",
+    submenu: [
+      { label: "Strategic Advisory", href: "/#pillars" },
+      { label: "Project Management", href: "/#pillars" },
+      { label: "Turnkey Solution", href: "/#pillars" },
+      { label: "Capacity Building", href: "/#capacity-building" },
+    ],
+  },
+  {
+    label: "Industries",
+    submenu: [
+      { label: "Platform Features", href: "/#features" },
+      { label: "Delivery Model", href: "/#delivery-model" },
+    ],
+  },
+  {
+    label: "Training",
+    submenu: [
+      { label: "Certificate", href: "/programs#training-cert" },
+      { label: "Diploma", href: "/programs#training-cert" },
+      { label: "Executive & Corporate", href: "/programs#training-exec" },
+    ],
+  },
+  {
+    label: "Team",
+    submenu: [
+      { label: "Management", href: "/#about" },
+      { label: "Advisory Board", href: "/#advisory-board" },
+    ],
+  },
+  { label: "Contact", href: "/#contact" },
+];
+
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [activeHash, setActiveHash] = useState("#home");
+  const [expandedMobileMenus, setExpandedMobileMenus] = useState<{ [key: string]: boolean }>({});
+  
   const pathname = usePathname();
   const router = useRouter();
 
@@ -77,8 +133,13 @@ export const Navbar: React.FC = () => {
     };
   }, [isOpen]);
 
-  const handleLinkClick = (hash: string) => {
-    setActiveHash(hash);
+  const handleLinkClick = (href: string) => {
+    const hash = href.split("#")[1];
+    if (hash) {
+      setActiveHash(`#${hash}`);
+    } else {
+      setActiveHash("");
+    }
     setIsOpen(false);
   };
 
@@ -94,23 +155,47 @@ export const Navbar: React.FC = () => {
     }
   };
 
-  const getLinkClass = (hash: string) => {
-    const isActive = activeHash === hash;
-    return `relative py-2 text-sm font-semibold transition-colors duration-300 group cursor-pointer flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75] ${
+  const toggleMobileMenu = (label: string) => {
+    setExpandedMobileMenus((prev) => ({
+      ...prev,
+      [label]: !prev[label],
+    }));
+  };
+
+  const isItemActive = (item: NavItem) => {
+    if (item.href) {
+      const hash = item.href.split("#")[1];
+      if (hash) {
+        return pathname === "/" && activeHash === `#${hash}`;
+      }
+      return pathname === item.href;
+    }
+    if (item.submenu) {
+      return item.submenu.some((sub) => {
+        const pathPart = sub.href.split("#")[0];
+        const hashPart = sub.href.split("#")[1];
+        const pathMatches = pathname === pathPart || (pathPart === "/" && pathname === "/");
+        const hashMatches = !hashPart || activeHash === `#${hashPart}`;
+        return pathMatches && hashMatches;
+      });
+    }
+    return false;
+  };
+
+  const getLinkClass = (isActive: boolean) => {
+    return `relative py-2 text-sm font-semibold transition-colors duration-300 group cursor-pointer flex items-center gap-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75] ${
       isActive ? "text-[#1D9E75]" : "text-t-2 hover:text-[#1D9E75]"
     }`;
   };
 
-  const getUnderlineClass = (hash: string) => {
-    const isActive = activeHash === hash;
+  const getUnderlineClass = (isActive: boolean) => {
     return `absolute bottom-[-4px] left-0 w-full h-[2.5px] bg-[#1D9E75] rounded-full transition-transform duration-300 ease-out origin-left ${
-      isActive ? "scale-x-100 bg-[#1D9E75]" : "scale-x-0 group-hover:scale-x-100 bg-[#1D9E75]/70"
+      isActive ? "scale-x-100 bg-[#1D9E75]" : "scale-x-0 group-hover:scale-x-100 group-focus-within:scale-x-100 bg-[#1D9E75]/70"
     }`;
   };
 
-  const getMobileLinkClass = (hash: string) => {
-    const isActive = activeHash === hash;
-    return `text-[17px] font-bold font-syne block py-2.5 px-4 rounded-xl transition-all duration-300 ${
+  const getMobileLinkClass = (isActive: boolean) => {
+    return `text-[17px] font-bold font-syne block py-2.5 px-4 rounded-xl transition-all duration-300 cursor-pointer ${
       isActive
         ? "text-[#1D9E75] bg-[#1D9E75]/8 shadow-[0_4px_12px_rgba(29,158,117,0.06)]"
         : "text-t-DEFAULT hover:text-[#1D9E75] hover:bg-[#1D9E75]/4"
@@ -140,7 +225,7 @@ export const Navbar: React.FC = () => {
             : "h-[88px] bg-white border-b border-[#085041]/5"
         }`}
       >
-        <div className="w-full flex items-center justify-between max-w-none mx-auto px-4 sm:px-6 md:px-8 relative">
+        <div className="w-full flex items-center justify-between gap-4 max-w-none mx-auto px-4 sm:px-6 md:px-8">
           
           {/* Brand Logo & Tagline */}
           <Link 
@@ -162,68 +247,88 @@ export const Navbar: React.FC = () => {
               <div className="font-syne text-[15px] sm:text-[20px] font-extrabold text-t-DEFAULT tracking-tight leading-none">
                 GlobalPact <span className="text-[#1D9E75] font-extrabold">SustainX</span>
               </div>
-              <div className="text-[7.5px] min-[375px]:text-[8.5px] sm:text-[10px] md:text-[11px] text-t-3 font-bold tracking-wide mt-1 transition-all duration-300 group-hover:text-[#1D9E75] whitespace-nowrap">
+              <div className="text-[7.5px] min-[375px]:text-[8.5px] sm:text-[10px] md:text-[11px] lg:hidden xl:block text-t-3 font-bold tracking-wide mt-1 transition-all duration-300 group-hover:text-[#1D9E75] whitespace-nowrap">
                 Empowering Sustainable Growth Worldwide
               </div>
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <ul className="hidden lg:flex items-center gap-8 list-none m-0 p-0 lg:absolute lg:left-1/2 lg:-translate-x-1/2">
-            
-            {/* Home Link */}
-            <li>
-              <Link href="#home" className={getLinkClass("#home")} onClick={() => handleLinkClick("#home")}>
-                <span>Home</span>
-                <span className={getUnderlineClass("#home")} />
-              </Link>
-            </li>
+          <ul className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-8 list-none m-0 p-0">
+            {navItems.map((item, idx) => {
+              const hasSubmenu = !!item.submenu;
+              const isActive = isItemActive(item);
 
-            {/* Solutions Link */}
-            <li>
-              <Link href="#pillars" className={getLinkClass("#pillars")} onClick={() => handleLinkClick("#pillars")}>
-                <span>Solutions</span>
-                <span className={getUnderlineClass("#pillars")} />
-              </Link>
-            </li>
+              if (!hasSubmenu) {
+                return (
+                  <li key={idx}>
+                    <Link
+                      href={item.href || "#"}
+                      className={getLinkClass(isActive)}
+                      onClick={() => handleLinkClick(item.href || "#")}
+                    >
+                      <span>{item.label}</span>
+                      <span className={getUnderlineClass(isActive)} />
+                    </Link>
+                  </li>
+                );
+              }
 
-            {/* Programs Link */}
-            <li>
-              <Link href="/programs" className={getLinkClass("/programs")} onClick={() => handleLinkClick("/programs")}>
-                <span>Programs</span>
-                <span className={getUnderlineClass("/programs")} />
-              </Link>
-            </li>
+              return (
+                <li key={idx} className="relative group py-2">
+                  <button
+                    className={`relative py-2 text-sm font-semibold transition-colors duration-300 flex items-center gap-1 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75] ${
+                      isActive ? "text-[#1D9E75]" : "text-t-2 hover:text-[#1D9E75]"
+                    }`}
+                  >
+                    <span>{item.label}</span>
+                    <svg
+                      className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180 text-current"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                    >
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                    <span className={getUnderlineClass(isActive)} />
+                  </button>
 
-            {/* Partnerships Link */}
-            <li>
-              <Link href="#partnerships" className={getLinkClass("#partnerships")} onClick={() => handleLinkClick("#partnerships")}>
-                <span>Partnerships</span>
-                <span className={getUnderlineClass("#partnerships")} />
-              </Link>
-            </li>
+                  {/* Dropdown Menu */}
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto z-50">
+                    <ul className="w-56 bg-white border border-[#D0E8DE]/45 rounded-2xl shadow-[0_12px_40px_-15px_rgba(8,80,65,0.15)] py-2.5 list-none m-0">
+                      {item.submenu?.map((sub, sIdx) => {
+                        const isSubActive =
+                          pathname === sub.href.split("#")[0] || (sub.href.split("#")[0] === "/" && pathname === "/") &&
+                          (activeHash === `#${sub.href.split("#")[1]}` || (!sub.href.split("#")[1] && activeHash === "#home"));
 
-            {/* About Link */}
-            <li>
-              <Link href="#about" className={getLinkClass("#about")} onClick={() => handleLinkClick("#about")}>
-                <span>About</span>
-                <span className={getUnderlineClass("#about")} />
-              </Link>
-            </li>
-
-            {/* Contact Link */}
-            <li>
-              <Link href="#contact" className={getLinkClass("#contact")} onClick={() => handleLinkClick("#contact")}>
-                <span>Contact</span>
-                <span className={getUnderlineClass("#contact")} />
-              </Link>
-            </li>
+                        return (
+                          <li key={sIdx}>
+                            <Link
+                              href={sub.href}
+                              onClick={() => handleLinkClick(sub.href)}
+                              className={`block px-5 py-2 text-[13px] font-semibold transition-colors duration-200 ${
+                                isSubActive
+                                  ? "text-[#1D9E75] bg-[#1D9E75]/5 font-bold"
+                                  : "text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/5"
+                              }`}
+                            >
+                              {sub.label}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
 
           {/* Desktop Call to Actions */}
           <div className="hidden lg:flex items-center gap-3 shrink-0 ml-auto relative z-30">
             {/* Social Media Links */}
-            <div className="relative z-30 flex items-center gap-1.5 mr-2 border-r border-[#D0E8DE]/45 pr-3.5">
+            <div className="relative z-30 hidden xl:flex items-center gap-1.5 mr-2 border-r border-[#D0E8DE]/45 pr-3.5">
               {/* LinkedIn */}
               <a
                 href="https://www.linkedin.com/company/globalpactsustainx/"
@@ -317,7 +422,7 @@ export const Navbar: React.FC = () => {
           {/* Hamburger Menu Toggle (Mobile) */}
           <button
             onClick={() => setIsOpen(true)}
-            className="flex lg:hidden w-12 h-12 items-center justify-center cursor-pointer select-none rounded-lg hover:bg-[#E1F5EE]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] focus-visible:ring-offset-2 transition-colors duration-250"
+            className="flex lg:hidden w-12 h-12 items-center justify-center cursor-pointer select-none rounded-lg hover:bg-[#E1F5EE]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] focus-visible:ring-offset-2 transition-colors duration-250 animate-fade-in"
             aria-label="Open menu"
           >
             <svg 
@@ -347,10 +452,30 @@ export const Navbar: React.FC = () => {
           isOpen ? "translate-x-0 visible" : "translate-x-full invisible"
         }`}
       >
+        {/* Mobile Header (Logo & Brand & Tagline) */}
+        <div className="absolute top-4 left-5 flex items-center gap-2 select-none">
+          <Image
+            src="/logo.jpg"
+            alt="GlobalPact SustainX Logo"
+            width={40}
+            height={40}
+            priority
+            className="object-contain h-[36px] w-auto flex-shrink-0 rounded-lg"
+          />
+          <div className="flex flex-col justify-center">
+            <div className="font-syne text-[14px] font-extrabold text-t-DEFAULT tracking-tight leading-none">
+              GlobalPact <span className="text-[#1D9E75] font-extrabold">SustainX</span>
+            </div>
+            <div className="text-[7.5px] text-t-3 font-semibold tracking-tight mt-0.5 whitespace-nowrap">
+              Empowering Sustainable Growth Worldwide
+            </div>
+          </div>
+        </div>
+
         {/* Visible Close (X) Button in Top-Right Corner */}
         <button
           onClick={() => setIsOpen(false)}
-          className="absolute top-4 right-4 w-12 h-12 flex items-center justify-center rounded-lg hover:bg-[#E1F5EE]/50 text-[#0B6B53] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] transition-colors cursor-pointer"
+          className="absolute top-3 right-3 w-12 h-12 flex items-center justify-center rounded-lg hover:bg-[#E1F5EE]/50 text-[#0B6B53] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] transition-colors cursor-pointer"
           aria-label="Close menu"
         >
           <svg
@@ -358,79 +483,90 @@ export const Navbar: React.FC = () => {
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            strokeWidth={2.5}
+            strokeWidth="2.5"
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
         {/* Mobile Links */}
-        <ul className="flex flex-col gap-4.5 list-none m-0 p-0 text-center mb-8 overflow-y-auto max-h-[calc(100vh-320px)] pr-1">
-          {/* Home Link */}
-          <li>
-            <Link
-              href="#home"
-              onClick={() => handleLinkClick("#home")}
-              className={getMobileLinkClass("#home")}
-            >
-              Home
-            </Link>
-          </li>
-
-          {/* Solutions Link */}
-          <li>
-            <Link
-              href="#pillars"
-              onClick={() => handleLinkClick("#pillars")}
-              className={getMobileLinkClass("#pillars")}
-            >
-              Solutions
-            </Link>
-          </li>
-
-          {/* Programs Link */}
-          <li>
-            <Link
-              href="/programs"
-              onClick={() => handleLinkClick("/programs")}
-              className={getMobileLinkClass("/programs")}
-            >
-              Programs
-            </Link>
-          </li>
-
-          {/* Partnerships Link */}
-          <li>
-            <Link
-              href="#partnerships"
-              onClick={() => handleLinkClick("#partnerships")}
-              className={getMobileLinkClass("#partnerships")}
-            >
-              Partnerships
-            </Link>
-          </li>
-
-          {/* About Link */}
-          <li>
-            <Link
-              href="#about"
-              onClick={() => handleLinkClick("#about")}
-              className={getMobileLinkClass("#about")}
-            >
-              About
-            </Link>
-          </li>
-
-          {/* Contact Link */}
-          <li>
-            <Link
-              href="#contact"
-              onClick={() => handleLinkClick("#contact")}
-              className={getMobileLinkClass("#contact")}
-            >
-              Contact
-            </Link>
-          </li>
+        <ul className="flex flex-col gap-3 list-none m-0 p-0 text-left mb-8 overflow-y-auto max-h-[calc(100vh-280px)] pr-1">
+          {navItems.map((item, idx) => {
+            const hasSubmenu = !!item.submenu;
+            const isExpanded = !!expandedMobileMenus[item.label];
+            const isActive = isItemActive(item);
+            
+            if (!hasSubmenu) {
+              return (
+                <li key={idx}>
+                  <Link
+                    href={item.href || "#"}
+                    onClick={() => handleLinkClick(item.href || "#")}
+                    className={getMobileLinkClass(isActive)}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            }
+            
+            return (
+              <li key={idx} className="flex flex-col">
+                <button
+                  onClick={() => toggleMobileMenu(item.label)}
+                  className={`w-full text-[17px] font-bold font-syne flex items-center justify-between py-2.5 px-4 rounded-xl transition-all duration-300 cursor-pointer ${
+                    isActive
+                      ? "text-[#1D9E75] bg-[#1D9E75]/8 shadow-[0_4px_12px_rgba(29,158,117,0.06)]"
+                      : "text-t-DEFAULT hover:text-[#1D9E75] hover:bg-[#1D9E75]/4"
+                  }`}
+                >
+                  <span>{item.label}</span>
+                  <svg
+                    className={`w-4 h-4 text-current transition-transform duration-250 ${
+                      isExpanded ? "rotate-180" : ""
+                    }`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </button>
+                
+                {/* Accordion Content */}
+                <div
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    isExpanded ? "max-h-96 opacity-100 mt-1" : "max-h-0 opacity-0 pointer-events-none"
+                  }`}
+                >
+                  <ul className="flex flex-col gap-1.5 list-none m-0 pl-6 pr-2 py-1">
+                    {item.submenu?.map((sub, sIdx) => {
+                      const isSubActive =
+                        pathname === sub.href.split("#")[0] || (sub.href.split("#")[0] === "/" && pathname === "/") &&
+                        (activeHash === `#${sub.href.split("#")[1]}` || (!sub.href.split("#")[1] && activeHash === "#home"));
+                        
+                      return (
+                        <li key={sIdx}>
+                          <Link
+                            href={sub.href}
+                            onClick={() => handleLinkClick(sub.href)}
+                            className={`block py-2 px-3 text-[14px] font-semibold rounded-lg transition-colors duration-200 ${
+                              isSubActive
+                                ? "text-[#1D9E75] bg-[#1D9E75]/5 font-bold"
+                                : "text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/4"
+                            }`}
+                          >
+                            {sub.label}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </li>
+            );
+          })}
         </ul>
 
         {/* Mobile Action Buttons */}

@@ -6,7 +6,7 @@ export const submitInquiry = async (req: Request, res: Response, next: NextFunct
   console.log("[Request Received] body:", req.body);
   console.log("[Validation Passed] Processing submitInquiry controller...");
 
-  const { full_name, organization, email, inquiry_type, message } = req.body;
+  const { full_name, organization, email, phone, inquiry_type, message } = req.body;
   
   let inquiry;
   try {
@@ -14,6 +14,7 @@ export const submitInquiry = async (req: Request, res: Response, next: NextFunct
       full_name: full_name.trim(),
       organization: (organization || "").trim(),
       email: email.trim(),
+      phone: phone.trim(),
       inquiry_type: inquiry_type.trim(),
       message: message.trim()
     });
@@ -36,6 +37,7 @@ export const submitInquiry = async (req: Request, res: Response, next: NextFunct
       fullName: inquiry.full_name,
       organization: inquiry.organization,
       email: inquiry.email,
+      phone: inquiry.phone,
       inquiryType: inquiry.inquiry_type,
       message: inquiry.message
     });

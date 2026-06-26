@@ -9,6 +9,7 @@ interface Inquiry {
   full_name: string;
   organization: string;
   email: string;
+  phone: string;
   inquiry_type: string;
   message: string;
   status: string;
@@ -460,9 +461,16 @@ export default function AdminInquiriesPage() {
                 </div>
 
                 <div>
-                  <div className="text-[11px] font-bold text-t-3 uppercase tracking-wider mb-1">Business Email</div>
+                  <div className="text-[11px] font-bold text-t-3 uppercase tracking-wider mb-1">Email Address</div>
                   <a href={`mailto:${activeInquiry.email}`} className="text-sm text-brand-g font-semibold hover:underline">
                     {activeInquiry.email}
+                  </a>
+                </div>
+
+                <div>
+                  <div className="text-[11px] font-bold text-t-3 uppercase tracking-wider mb-1">Mobile Number</div>
+                  <a href={`tel:${activeInquiry.phone}`} className="text-sm text-t-DEFAULT font-semibold hover:underline">
+                    {activeInquiry.phone}
                   </a>
                 </div>
 

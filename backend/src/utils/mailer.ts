@@ -121,12 +121,13 @@ interface AdminNotificationParams {
   fullName: string;
   organization: string;
   email: string;
+  phone: string;
   inquiryType: string;
   message: string;
 }
 
 export const sendAdminNotificationEmail = async (params: AdminNotificationParams) => {
-  const { fullName, organization, email, inquiryType, message } = params;
+  const { fullName, organization, email, phone, inquiryType, message } = params;
 
   const host = process.env.SMTP_HOST;
   const port = process.env.SMTP_PORT;
@@ -144,7 +145,8 @@ export const sendAdminNotificationEmail = async (params: AdminNotificationParams
       <p style="font-size: 15px; color: #1C2E27; line-height: 1.8;">
         <strong>Full Name:</strong> ${fullName}<br />
         <strong>Organization:</strong> ${organization || "N/A"}<br />
-        <strong>Business Email:</strong> ${email}<br />
+        <strong>Email Address:</strong> ${email}<br />
+        <strong>Mobile Number:</strong> ${phone}<br />
         <strong>Inquiry Type:</strong> ${inquiryType}<br />
         <strong>Submission Date:</strong> ${new Date().toLocaleString()}<br />
       </p>

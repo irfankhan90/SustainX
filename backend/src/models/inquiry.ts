@@ -7,6 +7,7 @@ export interface Inquiry {
   full_name: string;
   organization: string;
   email: string;
+  phone: string;
   inquiry_type: string;
   message: string;
   status: string;
@@ -18,6 +19,7 @@ export interface InquiryCreationParams {
   full_name: string;
   organization: string;
   email: string;
+  phone: string;
   inquiry_type: string;
   message: string;
 }
@@ -52,19 +54,20 @@ const saveFallbackInquiries = (inquiries: Inquiry[]) => {
 };
 
 export const createInquiry = async (params: InquiryCreationParams): Promise<Inquiry> => {
-  const { full_name, organization, email, inquiry_type, message } = params;
+  const { full_name, organization, email, phone, inquiry_type, message } = params;
   
   // Try DB query if database URL or host is configured
   if (process.env.DATABASE_URL || process.env.DB_HOST) {
     try {
       const result = await query(
-        `INSERT INTO inquiries (full_name, organization, email, inquiry_type, message, status) 
-         VALUES ($1, $2, $3, $4, $5, $6) 
+        `INSERT INTO inquiries (full_name, organization, email, phone, inquiry_type, message, status) 
+         VALUES ($1, $2, $3, $4, $5, $6, $7) 
          RETURNING *`,
         [
           full_name.trim(),
           organization.trim(),
           email.toLowerCase().trim(),
+          phone.trim(),
           inquiry_type.trim(),
           message.trim(),
           "New"
@@ -85,6 +88,7 @@ export const createInquiry = async (params: InquiryCreationParams): Promise<Inqu
     full_name: full_name.trim(),
     organization: organization.trim(),
     email: email.toLowerCase().trim(),
+    phone: phone.trim(),
     inquiry_type: inquiry_type.trim(),
     message: message.trim(),
     status: "New",

@@ -57,12 +57,10 @@ const coursesSchema = {
 export default function ProgramsPage() {
   return (
     <>
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(coursesSchema) }}
-        />
-      </head>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(coursesSchema) }}
+      />
       <Navbar />
       <main className="pt-[112px] bg-white min-h-screen" id="main-content">
         <TrainingSection />

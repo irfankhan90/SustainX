@@ -17,6 +17,7 @@ export const InquirySection: React.FC = () => {
   const [fullName, setFullName] = useState("");
   const [organization, setOrganization] = useState("");
   const [email, setEmail] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
   const [inquiryType, setInquiryType] = useState("Strategic Partnership");
   const [message, setMessage] = useState("");
 
@@ -56,13 +57,18 @@ export const InquirySection: React.FC = () => {
         errorMsg = "Full name is required";
       }
     } else if (name === "organization") {
-      // Organization is optional, no error required
       errorMsg = "";
     } else if (name === "email") {
       if (!value.trim()) {
         errorMsg = "Email address is required";
       } else if (!/\S+@\S+\.\S+/.test(value)) {
         errorMsg = "Please enter a valid email address";
+      }
+    } else if (name === "mobileNumber") {
+      if (!value.trim()) {
+        errorMsg = "Mobile number is required";
+      } else if (!/^\+?[0-9\s\-()]{7,25}$/.test(value)) {
+        errorMsg = "Please enter a valid mobile number";
       }
     } else if (name === "message") {
       if (!value.trim()) {
@@ -84,6 +90,7 @@ export const InquirySection: React.FC = () => {
     if (name === "fullName") setFullName(value);
     else if (name === "organization") setOrganization(value);
     else if (name === "email") setEmail(value);
+    else if (name === "mobileNumber") setMobileNumber(value);
     else if (name === "message") setMessage(value);
 
     if (touched[name]) {
@@ -95,18 +102,21 @@ export const InquirySection: React.FC = () => {
     e.preventDefault();
 
     // Mark all as touched
-    const newTouched = { fullName: true, organization: false, email: true, message: true };
+    const newTouched = { fullName: true, organization: false, email: true, mobileNumber: true, message: true };
     setTouched(newTouched);
 
     // Validate all
     validateField("fullName", fullName);
     validateField("email", email);
+    validateField("mobileNumber", mobileNumber);
     validateField("message", message);
 
     const hasErrors =
       !fullName.trim() ||
       !email.trim() ||
       !/\S+@\S+\.\S+/.test(email) ||
+      !mobileNumber.trim() ||
+      !/^\+?[0-9\s\-()]{7,25}$/.test(mobileNumber) ||
       !message.trim();
 
     if (hasErrors) return;
@@ -124,6 +134,7 @@ export const InquirySection: React.FC = () => {
           fullName,
           organization,
           email,
+          mobileNumber,
           inquiryType,
           message,
         }),
@@ -137,6 +148,7 @@ export const InquirySection: React.FC = () => {
         setFullName("");
         setOrganization("");
         setEmail("");
+        setMobileNumber("");
         setInquiryType("Strategic Partnership");
         setMessage("");
         setTouched({});
@@ -182,7 +194,7 @@ export const InquirySection: React.FC = () => {
               Partnership Inquiry Portal
             </div>
             
-            <h2 className="font-syne text-[36px] sm:text-[44px] font-extrabold text-[#0A1628] leading-[1.15] mb-6">
+            <h2 className="font-syne text-3xl sm:text-4xl lg:text-[44px] font-extrabold text-[#0A1628] leading-[1.15] mb-6">
               Co-create the new energy future.
             </h2>
             
@@ -221,7 +233,7 @@ export const InquirySection: React.FC = () => {
           {/* Right Column: Form Card */}
           <div className="lg:col-span-7">
             <motion.div 
-              className="bg-white/85 backdrop-blur-[16px] border border-[#D0E8DE] shadow-sh2 rounded-[32px] p-8 sm:p-10 relative overflow-hidden"
+              className="bg-white/85 backdrop-blur-[16px] border border-[#D0E8DE] shadow-sh2 rounded-[32px] p-5 sm:p-8 md:p-10 relative overflow-hidden"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -285,28 +297,54 @@ export const InquirySection: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Email Address */}
-                    <div className="flex flex-col gap-1.5">
-                      <label htmlFor="email" className="text-xs font-bold text-[#0A1628] uppercase tracking-wider">
-                        Business Email Address
-                      </label>
-                      <input
-                        id="email"
-                        type="email"
-                        className={`w-full h-12 px-4 rounded-xl border bg-transparent text-sm text-[#0B1612] transition-all duration-200 outline-none ${
-                          touched.email && errors.email
-                            ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
-                            : "border-[#D0E8DE] focus:border-[#0F8B6D] focus:ring-1 focus:ring-[#0F8B6D]"
-                        }`}
-                        placeholder="s.jenkins@company.com"
-                        value={email}
-                        onChange={(e) => handleChange("email", e.target.value)}
-                        onBlur={(e) => handleBlur("email", e.target.value)}
-                        disabled={isLoading}
-                      />
-                      {touched.email && errors.email && (
-                        <span className="text-[11px] text-red-500 font-semibold mt-0.5">{errors.email}</span>
-                      )}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                      {/* Email Address */}
+                      <div className="flex flex-col gap-1.5">
+                        <label htmlFor="email" className="text-xs font-bold text-[#0A1628] uppercase tracking-wider">
+                          Email Address
+                        </label>
+                        <input
+                          id="email"
+                          type="email"
+                          className={`w-full h-12 px-4 rounded-xl border bg-transparent text-sm text-[#0B1612] transition-all duration-200 outline-none ${
+                            touched.email && errors.email
+                              ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
+                              : "border-[#D0E8DE] focus:border-[#0F8B6D] focus:ring-1 focus:ring-[#0F8B6D]"
+                          }`}
+                          placeholder="name@domain.com"
+                          value={email}
+                          onChange={(e) => handleChange("email", e.target.value)}
+                          onBlur={(e) => handleBlur("email", e.target.value)}
+                          disabled={isLoading}
+                        />
+                        {touched.email && errors.email && (
+                          <span className="text-[11px] text-red-500 font-semibold mt-0.5">{errors.email}</span>
+                        )}
+                      </div>
+
+                      {/* Mobile Number */}
+                      <div className="flex flex-col gap-1.5">
+                        <label htmlFor="mobileNumber" className="text-xs font-bold text-[#0A1628] uppercase tracking-wider">
+                          Mobile Number
+                        </label>
+                        <input
+                          id="mobileNumber"
+                          type="tel"
+                          className={`w-full h-12 px-4 rounded-xl border bg-transparent text-sm text-[#0B1612] transition-all duration-200 outline-none ${
+                            touched.mobileNumber && errors.mobileNumber
+                              ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
+                              : "border-[#D0E8DE] focus:border-[#0F8B6D] focus:ring-1 focus:ring-[#0F8B6D]"
+                          }`}
+                          placeholder="+91 XXXXX XXXXX"
+                          value={mobileNumber}
+                          onChange={(e) => handleChange("mobileNumber", e.target.value)}
+                          onBlur={(e) => handleBlur("mobileNumber", e.target.value)}
+                          disabled={isLoading}
+                        />
+                        {touched.mobileNumber && errors.mobileNumber && (
+                          <span className="text-[11px] text-red-500 font-semibold mt-0.5">{errors.mobileNumber}</span>
+                        )}
+                      </div>
                     </div>
 
                     {/* Inquiry Type Dropdown */}

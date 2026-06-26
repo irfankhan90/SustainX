@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SectionHeader from "@/components/ui/SectionHeader";
 
 interface Course {
@@ -191,6 +191,20 @@ const courseData: Course[] = [
 export const TrainingSection: React.FC = () => {
   const [filter, setFilter] = useState<"all" | "cert" | "exec">("all");
   const [activeIndex, setActiveIndex] = useState<number>(0);
+
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash;
+      if (hash === "#training-cert") {
+        setFilter("cert");
+      } else if (hash === "#training-exec") {
+        setFilter("exec");
+      }
+    };
+    handleHash();
+    window.addEventListener("hashchange", handleHash, { passive: true });
+    return () => window.removeEventListener("hashchange", handleHash);
+  }, []);
 
   const filteredCourses = courseData
     .map((course, originalIndex) => ({ ...course, originalIndex }))

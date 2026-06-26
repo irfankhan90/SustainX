@@ -46,7 +46,7 @@ const advisors = [
 
 export const AdvisorySection: React.FC = () => {
   return (
-    <section className="py-20 bg-surface-3 border-t border-b border-bdr-DEFAULT">
+    <section id="advisory-board" className="py-20 bg-surface-3 border-t border-b border-bdr-DEFAULT scroll-mt-[var(--navbar-height)]">
       <div className="container">
         <SectionHeader
           label="Global Advisory Board"

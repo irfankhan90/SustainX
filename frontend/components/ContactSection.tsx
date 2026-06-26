@@ -148,7 +148,7 @@ export const ContactSection: React.FC = () => {
               General Inquiries
             </div>
             
-            <h2 className="font-syne text-[36px] sm:text-[44px] font-extrabold text-t-DEFAULT leading-[1.15] mb-6">
+            <h2 className="font-syne text-3xl sm:text-4xl lg:text-[44px] font-extrabold text-t-DEFAULT leading-[1.15] mb-6">
               Connect with our advisory desk.
             </h2>
             
@@ -191,7 +191,7 @@ export const ContactSection: React.FC = () => {
           {/* Right Column: Form Card */}
           <div className="lg:col-span-7">
             <motion.div 
-              className="bg-white/90 backdrop-blur-[16px] border border-bdr-DEFAULT shadow-sh2 rounded-[32px] p-8 sm:p-10 relative overflow-hidden"
+              className="bg-white/90 backdrop-blur-[16px] border border-bdr-DEFAULT shadow-sh2 rounded-[32px] p-5 sm:p-8 md:p-10 relative overflow-hidden"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

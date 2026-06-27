@@ -16,12 +16,16 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: "Home", href: "/#home" },
+  { label: "Home", href: "/" },
   {
-    label: "About Us",
+    label: "About",
+    href: "/about",
     submenu: [
-      { label: "Vision", href: "/#about" },
-      { label: "Mission", href: "/#about" },
+      { label: "About Us", href: "/about/about-us" },
+      { label: "Vision", href: "/about/vision" },
+      { label: "Mission", href: "/about/mission" },
+      { label: "Platform Features", href: "/about/platform-features" },
+      { label: "Delivery Model", href: "/about/delivery-model" },
     ],
   },
   {
@@ -29,34 +33,34 @@ const navItems: NavItem[] = [
     submenu: [
       { label: "Strategic Advisory", href: "/solutions/strategic-advisory" },
       { label: "Project Management", href: "/solutions/project-management" },
-      { label: "Turnkey Solution", href: "/solutions/turnkey-solution" },
+      { label: "Turnkey Solution & EPC", href: "/solutions/turnkey-solution-epc" },
       { label: "Capacity Building", href: "/solutions/capacity-building" },
     ],
   },
   {
-    label: "Industries",
+    label: "Capacity Building",
     submenu: [
-      { label: "Platform Features", href: "/#features" },
-      { label: "Delivery Model", href: "/#delivery-model" },
+      { label: "Certificate Programs", href: "/capacity-building/certificate-programs" },
+      { label: "Diploma Programs", href: "/capacity-building/diploma-programs" },
+      { label: "Executive & Corporate Programs", href: "/capacity-building/executive-corporate-programs" },
     ],
   },
+  { label: "AI in Sustainability", href: "/ai-in-sustainability" },
   {
-    label: "Training",
+    label: "Partnerships",
     submenu: [
-      { label: "Certificate", href: "/programs#training-cert" },
-      { label: "Diploma", href: "/programs#training-cert" },
-      { label: "Executive & Corporate", href: "/programs#training-exec" },
+      { label: "Our Partners", href: "/partnerships/our-partners" },
+      { label: "For Partners", href: "/partnerships/for-partners" },
     ],
   },
-  { label: "AI Sustainability", href: "/#ai" },
   {
     label: "Team",
     submenu: [
-      { label: "Management", href: "/#about" },
-      { label: "Advisory Board", href: "/#advisory-board" },
+      { label: "Management", href: "/team/management" },
+      { label: "Advisory Board", href: "/team/advisory-board" },
     ],
   },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const Navbar: React.FC = () => {
@@ -164,15 +168,17 @@ export const Navbar: React.FC = () => {
   };
 
   const isItemActive = (item: NavItem) => {
+    let active = false;
     if (item.href) {
       const hash = item.href.split("#")[1];
       if (hash) {
-        return pathname === "/" && activeHash === `#${hash}`;
+        active = pathname === "/" && activeHash === `#${hash}`;
+      } else {
+        active = pathname === item.href;
       }
-      return pathname === item.href;
     }
-    if (item.submenu) {
-      return item.submenu.some((sub) => {
+    if (!active && item.submenu) {
+      active = item.submenu.some((sub) => {
         const pathPart = sub.href.split("#")[0];
         const hashPart = sub.href.split("#")[1];
         const pathMatches = pathname === pathPart || (pathPart === "/" && pathname === "/");
@@ -180,7 +186,7 @@ export const Navbar: React.FC = () => {
         return pathMatches && hashMatches;
       });
     }
-    return false;
+    return active;
   };
 
   const getLinkClass = (isActive: boolean) => {
@@ -277,23 +283,44 @@ export const Navbar: React.FC = () => {
 
               return (
                 <li key={idx} className="relative group py-2">
-                  <button
-                    className={`relative py-2 text-sm font-semibold transition-colors duration-300 flex items-center gap-1 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75] ${
-                      isActive ? "text-[#1D9E75]" : "text-t-2 hover:text-[#1D9E75]"
-                    }`}
-                  >
-                    <span>{item.label}</span>
-                    <svg
-                      className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180 text-current"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
+                  {item.href ? (
+                    <Link
+                      href={item.href}
+                      className={`relative py-2 text-sm font-semibold transition-colors duration-300 flex items-center gap-1 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75] ${
+                        isActive ? "text-[#1D9E75]" : "text-t-2 hover:text-[#1D9E75]"
+                      }`}
                     >
-                      <polyline points="6 9 12 15 18 9" />
-                    </svg>
-                    <span className={getUnderlineClass(isActive)} />
-                  </button>
+                      <span>{item.label}</span>
+                      <svg
+                        className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180 text-current"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                      >
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
+                      <span className={getUnderlineClass(isActive)} />
+                    </Link>
+                  ) : (
+                    <button
+                      className={`relative py-2 text-sm font-semibold transition-colors duration-300 flex items-center gap-1 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75] ${
+                        isActive ? "text-[#1D9E75]" : "text-t-2 hover:text-[#1D9E75]"
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                      <svg
+                        className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180 text-current"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                      >
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
+                      <span className={getUnderlineClass(isActive)} />
+                    </button>
+                  )}
 
                   {/* Dropdown Menu */}
                   <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto z-50">

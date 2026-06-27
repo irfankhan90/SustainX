@@ -389,15 +389,15 @@ export const SOLUTIONS: Record<string, SolutionData> = {
       }
     ]
   },
-  "turnkey-solution": {
-    slug: "turnkey-solution",
-    badge: "TURNKEY SOLUTIONS",
-    heroTitle: "Complete Turnkey Energy Solutions from",
+  "turnkey-solution-epc": {
+    slug: "turnkey-solution-epc",
+    badge: "TURNKEY SOLUTION & EPC",
+    heroTitle: "Complete Turnkey Energy Solutions & EPC from",
     heroHighlight: "Concept to Commissioning",
     description: "We provide fully engineered, procured, and constructed clean energy installations, taking full ownership of your project scope from engineering drafts to grid connection and handover.",
     image: "/sustainx_epc.png",
     overview: "SustainX provides end-to-end EPC (Engineering, Procurement, Construction) turnkey solutions. We handle the entire project cycle—from preliminary civil and electrical designs to high-efficiency module sourcing, site assembly, and grid commissioning. Clients receive a fully operational, grid-connected renewable asset with a single point of contract accountability.",
-    metaTitle: "Turnkey Solutions — Renewable Energy EPC | SustainX",
+    metaTitle: "Turnkey Solutions & EPC — Renewable Energy EPC | SustainX",
     metaDesc: "End-to-end solar and microgrid EPC solutions. Discover our turnkey engineering, sourcing, and commissioning models.",
     keywords: "turnkey renewable energy, solar EPC contractor, microgrid construction, grid tie system assembly",
     whyChooseUs: [

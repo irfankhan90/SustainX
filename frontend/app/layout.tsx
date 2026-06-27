@@ -1,5 +1,19 @@
 import type { Metadata } from "next";
+import { DM_Sans, Sora } from "next/font/google";
 import "./globals.css";
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+  variable: "--font-dm-sans",
+});
+
+const sora = Sora({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-sora",
+});
+
 
 export const metadata: Metadata = {
   title: "GlobalPact SustainX — Empowering the Global Energy Transition",
@@ -70,7 +84,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className="font-sans"
+      className={`${dmSans.variable} ${sora.variable}`}
     >
       <head>
         <script

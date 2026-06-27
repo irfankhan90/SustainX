@@ -14,7 +14,7 @@ export const RegisterVisual: React.FC = () => {
         const change = (Math.random() - 0.5) * 15;
         return Math.round(Math.max(1220, Math.min(1340, prev + change)));
       });
-    }, 150);
+    }, 300);
     return () => clearInterval(interval);
   }, []);
 

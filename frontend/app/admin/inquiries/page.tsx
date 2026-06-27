@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Inquiry {
@@ -167,7 +168,7 @@ export default function AdminInquiriesPage() {
       <header className="bg-white border-b border-[#D0E8DE]/70 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 select-none cursor-pointer">
-            <img src="/logo.jpg" alt="Logo" className="h-9 w-auto object-contain" />
+            <Image src="/logo.jpg" alt="Logo" width={36} height={36} style={{ height: "auto" }} className="h-9 w-auto object-contain" />
             <div className="font-syne text-[18px] font-extrabold text-[#0A1628]">
               GlobalPact <span className="text-[#0F8B6D] font-extrabold">SustainX</span>
             </div>

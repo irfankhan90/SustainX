@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button } from "./ui/Button";
 import SectionHeader from "./ui/SectionHeader";
 
@@ -48,9 +48,26 @@ const features = [
 export const AISection: React.FC = () => {
   const [gridOutput, setGridOutput] = useState(412.8);
   const [co2Saved, setCo2Saved] = useState(1842.6);
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
 
   // Simple live numbers updater to make the dashboard feel active and real-time
   useEffect(() => {
+    if (!isVisible) return;
+
     const interval = setInterval(() => {
       setGridOutput((prev) => {
         const change = (Math.random() - 0.5) * 5;
@@ -62,10 +79,10 @@ export const AISection: React.FC = () => {
       });
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isVisible]);
 
   return (
-    <section className="bg-surface-DEFAULT text-t-DEFAULT py-24 relative overflow-hidden border-t border-b border-bdr-DEFAULT" id="ai">
+    <section ref={containerRef} className="bg-surface-DEFAULT text-t-DEFAULT py-24 relative overflow-hidden border-t border-b border-bdr-DEFAULT" id="ai">
       
       {/* Dynamic Keyframe Animations Embedded */}
       <style jsx global>{`

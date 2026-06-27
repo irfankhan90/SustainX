@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Sora:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -16,24 +15,25 @@
   --color-surface-muted: #E6F3EE;
   
   --breakpoint-xs: 375px;
-
+ 
   --color-ink-DEFAULT: #0B1612;
   --color-ink-2: #1C2E27;
   --color-ink-3: #0A1628;
-
+ 
   --color-t-DEFAULT: #0B1612;
   --color-t-2: #3A5549;
   --color-t-3: #6B8C80;
   --color-t-4: #A8C4BA;
-
+ 
   --color-bdr-DEFAULT: #D0E8DE;
   --color-bdr-2: #B5D9CB;
-
+ 
   --shadow-sh: 0 2px 8px rgba(11,22,18,.07), 0 1px 2px rgba(11,22,18,.04);
   --shadow-sh2: 0 8px 32px rgba(11,22,18,.10), 0 2px 8px rgba(11,22,18,.05);
+ 
+  --font-sans: var(--font-dm-sans), system-ui, -apple-system, sans-serif;
+  --font-syne: var(--font-sora), system-ui, -apple-system, sans-serif;
 
-  --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
-  --font-syne: "Sora", system-ui, -apple-system, sans-serif;
 
   --animate-float-1: float-1 6s ease-in-out infinite;
   --animate-float-2: float-2 6s 2s ease-in-out infinite;

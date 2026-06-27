@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { SolutionData } from "@/lib/data/solutions";
 
@@ -183,6 +184,7 @@ const renderIcon = (name: string, className = "w-5 h-5") => {
 
 export const SolutionDetailClient: React.FC<SolutionDetailClientProps> = ({ solution }) => {
   const [counts, setCounts] = useState<number[]>(solution.stats.map(() => 0));
+  const statsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const parseNumber = (str: string) => {
@@ -193,23 +195,44 @@ export const SolutionDetailClient: React.FC<SolutionDetailClientProps> = ({ solu
 
     const targetVals = solution.stats.map((s) => parseNumber(s.value));
     const stepRatio = 0.08;
-    const interval = setInterval(() => {
-      setCounts((prev) => {
-        const next = prev.map((curr, idx) => {
-          const target = targetVals[idx];
-          if (curr >= target) return target;
-          const diff = target - curr;
-          const step = Math.max(1, Math.round(diff * stepRatio));
-          return Math.min(target, curr + step);
-        });
-        if (next.every((val, idx) => val === targetVals[idx])) {
-          clearInterval(interval);
-        }
-        return next;
-      });
-    }, 45);
+    let interval: NodeJS.Timeout;
 
-    return () => clearInterval(interval);
+    const startCounter = () => {
+      interval = setInterval(() => {
+        setCounts((prev) => {
+          const next = prev.map((curr, idx) => {
+            const target = targetVals[idx];
+            if (curr >= target) return target;
+            const diff = target - curr;
+            const step = Math.max(1, Math.round(diff * stepRatio));
+            return Math.min(target, curr + step);
+          });
+          if (next.every((val, idx) => val === targetVals[idx])) {
+            clearInterval(interval);
+          }
+          return next;
+        });
+      }, 45);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          startCounter();
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+      if (interval) clearInterval(interval);
+    };
   }, [solution]);
 
   return (
@@ -284,15 +307,13 @@ export const SolutionDetailClient: React.FC<SolutionDetailClientProps> = ({ solu
             {/* Right Illustration Column */}
             <div className="lg:col-span-6 flex items-center justify-end relative">
               <div className="w-full max-w-[500px] h-[340px] sm:h-[420px] lg:h-[480px] rounded-l-[320px] overflow-hidden relative shadow-lg bg-surface-2">
-                <img
-                  src={solution.image}
+                <Image
+                  src={solution.image || "/sustainx_landscape.png"}
                   alt={solution.slug.replace("-", " ")}
-                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.03]"
-                  loading="eager"
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = "/sustainx_landscape.png";
-                  }}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-700 hover:scale-[1.03]"
                 />
               </div>
             </div>
@@ -506,7 +527,7 @@ export const SolutionDetailClient: React.FC<SolutionDetailClientProps> = ({ solu
       </section>
 
       {/* --- SUCCESS METRICS --- */}
-      <section className="py-20 bg-[#085041] text-white relative overflow-hidden select-none">
+      <section ref={statsRef} className="py-20 bg-[#085041] text-white relative overflow-hidden select-none">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(93,202,165,0.06)_0%,transparent_60%)] pointer-events-none" />
         
         <div className="container relative z-10">

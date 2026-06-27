@@ -454,11 +454,12 @@ export const HeroSection: React.FC = () => {
                             </p>
                           </div>
                           <div className="w-full h-[84px] overflow-hidden rounded-b-2xl relative border-t border-bdr-DEFAULT mt-auto group-hover:border-brand-g/20 transition-colors duration-300">
-                            <img 
+                            <Image 
                               src={PILLARS[0].image} 
                               alt={PILLARS[0].title} 
-                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                              loading="lazy"
+                              fill
+                              sizes="(max-width: 640px) 50vw, 25vw"
+                              className="object-cover transition-transform duration-700 group-hover:scale-105"
                             />
                           </div>
                         </div>
@@ -484,11 +485,12 @@ export const HeroSection: React.FC = () => {
                             </p>
                           </div>
                           <div className="w-full h-[84px] overflow-hidden rounded-b-2xl relative border-t border-bdr-DEFAULT mt-auto group-hover:border-brand-g/20 transition-colors duration-300">
-                            <img 
+                            <Image 
                               src={PILLARS[2].image} 
                               alt={PILLARS[2].title} 
-                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                              loading="lazy"
+                              fill
+                              sizes="(max-width: 640px) 50vw, 25vw"
+                              className="object-cover transition-transform duration-700 group-hover:scale-105"
                             />
                           </div>
                         </div>
@@ -517,11 +519,12 @@ export const HeroSection: React.FC = () => {
                             </p>
                           </div>
                           <div className="w-full h-[84px] overflow-hidden rounded-b-2xl relative border-t border-bdr-DEFAULT mt-auto group-hover:border-brand-g/20 transition-colors duration-300">
-                            <img 
+                            <Image 
                               src={PILLARS[1].image} 
                               alt={PILLARS[1].title} 
-                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                              loading="lazy"
+                              fill
+                              sizes="(max-width: 640px) 50vw, 25vw"
+                              className="object-cover transition-transform duration-700 group-hover:scale-105"
                             />
                           </div>
                         </div>
@@ -547,27 +550,26 @@ export const HeroSection: React.FC = () => {
                             </p>
                           </div>
                           <div className="w-full h-[84px] overflow-hidden rounded-b-2xl relative border-t border-bdr-DEFAULT mt-auto group-hover:border-brand-g/20 transition-colors duration-300">
-                            <img 
+                            <Image 
                               src={PILLARS[3].image} 
                               alt={PILLARS[3].title} 
-                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                              loading="lazy"
+                              fill
+                              sizes="(max-width: 640px) 50vw, 25vw"
+                              className="object-cover transition-transform duration-700 group-hover:scale-105"
                             />
                           </div>
                         </div>
                       </div>
                     </div>
                   ) : (
-                    <div className="w-full h-full bg-white border border-bdr-DEFAULT rounded-[24px] overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.035)] hover:shadow-sh2 hover:border-brand-g/20 transition-all duration-300 group cursor-grab active:cursor-grabbing">
-                      <img
-                        src={activeSlide.image}
+                    <div className="w-full h-full bg-white border border-bdr-DEFAULT rounded-[24px] overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.035)] hover:shadow-sh2 hover:border-brand-g/20 transition-all duration-300 group cursor-grab active:cursor-grabbing relative">
+                      <Image
+                        src={activeSlide.image || "/sustainx_landscape.png"}
                         alt={activeSlide.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                        loading="eager"
-                        onError={(e) => {
-                          e.currentTarget.onerror = null;
-                          e.currentTarget.src = "/sustainx_landscape.png";
-                        }}
+                        fill
+                        priority
+                        sizes="(max-width: 1024px) 100vw, 55vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent pointer-events-none" />
                     </div>
@@ -615,11 +617,12 @@ export const HeroSection: React.FC = () => {
                         </p>
                       </div>
                       <div className="w-full h-[64px] overflow-hidden rounded-b-2xl relative border-t border-bdr-DEFAULT mt-auto shrink-0">
-                        <img 
+                        <Image 
                           src={pillar.image} 
                           alt={pillar.title} 
-                          className="w-full h-full object-cover transition-transform duration-700"
-                          loading="lazy"
+                          fill
+                          sizes="(max-width: 640px) 50vw, 25vw"
+                          className="object-cover transition-transform duration-700"
                         />
                       </div>
                     </div>

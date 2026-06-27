@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export const Footer: React.FC = () => {
   return (
@@ -11,9 +12,12 @@ export const Footer: React.FC = () => {
           {/* Logo & Info column */}
           <div className="lg:col-span-2">
             <Link href="/#home" className="inline-flex items-center gap-[12px] mb-3.5">
-              <img 
+              <Image 
                 src="/logo.jpg" 
                 alt="GlobalPact SustainX Logo" 
+                width={48}
+                height={48}
+                style={{ height: "auto" }}
                 className="h-[48px] w-auto object-contain flex-shrink-0" 
               />
               <div className="font-syne text-[17px] font-bold text-white tracking-tight leading-none">

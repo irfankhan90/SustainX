@@ -1,13 +1,17 @@
 import React from "react";
+import Image from "next/image";
 
 export const BannerSection: React.FC = () => {
   return (
     <section className="relative w-full min-h-[280px] sm:min-h-[350px] lg:min-h-[380px] xl:min-h-[420px] py-12 flex items-center bg-ink-DEFAULT overflow-hidden">
       {/* Cinematic Panoramic Background Image */}
-      <img 
+      <Image 
         src="/sustainx_landscape.png" 
         alt="SustainX Real-World Renewable Energy Impact Solar Farm and Wind Turbines" 
-        className="absolute inset-0 w-full h-full object-cover object-center select-none pointer-events-none transform scale-102"
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-center select-none pointer-events-none transform scale-102"
       />
       
       {/* Dark Overlay Gradient for Readability */}

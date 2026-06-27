@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -89,9 +90,12 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
         {/* Logo Header - Entrance Anim 1 (branding size increased 10-15%, gap & alignment optimized, unnecessary spacing removed) */}
         <header className="mb-5 anim-1">
           <Link href="/" className="inline-flex items-center gap-[14px]">
-            <img
+            <Image
               src="/logo.jpg"
               alt="GlobalPact SustainX Logo"
+              width={64}
+              height={64}
+              style={{ height: "auto" }}
               className="h-[48px] sm:h-[64px] w-auto object-contain flex-shrink-0"
             />
             <div className="font-syne text-[18px] sm:text-[20px] font-bold text-t-DEFAULT tracking-tight leading-none">

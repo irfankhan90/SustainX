@@ -27,10 +27,10 @@ const navItems: NavItem[] = [
   {
     label: "Solutions",
     submenu: [
-      { label: "Strategic Advisory", href: "/#pillars" },
-      { label: "Project Management", href: "/#pillars" },
-      { label: "Turnkey Solution", href: "/#pillars" },
-      { label: "Capacity Building", href: "/#capacity-building" },
+      { label: "Strategic Advisory", href: "/solutions/strategic-advisory" },
+      { label: "Project Management", href: "/solutions/project-management" },
+      { label: "Turnkey Solution", href: "/solutions/turnkey-solution" },
+      { label: "Capacity Building", href: "/solutions/capacity-building" },
     ],
   },
   {
@@ -300,7 +300,7 @@ export const Navbar: React.FC = () => {
                     <ul className="w-56 bg-white border border-[#D0E8DE]/45 rounded-2xl shadow-[0_12px_40px_-15px_rgba(8,80,65,0.15)] py-2.5 list-none m-0">
                       {item.submenu?.map((sub, sIdx) => {
                         const isSubActive =
-                          pathname === sub.href.split("#")[0] || (sub.href.split("#")[0] === "/" && pathname === "/") &&
+                          (pathname === sub.href.split("#")[0] || (sub.href.split("#")[0] === "/" && pathname === "/")) &&
                           (activeHash === `#${sub.href.split("#")[1]}` || (!sub.href.split("#")[1] && activeHash === "#home"));
 
                         return (
@@ -544,7 +544,7 @@ export const Navbar: React.FC = () => {
                   <ul className="flex flex-col gap-1.5 list-none m-0 pl-6 pr-2 py-1">
                     {item.submenu?.map((sub, sIdx) => {
                       const isSubActive =
-                        pathname === sub.href.split("#")[0] || (sub.href.split("#")[0] === "/" && pathname === "/") &&
+                        (pathname === sub.href.split("#")[0] || (sub.href.split("#")[0] === "/" && pathname === "/")) &&
                         (activeHash === `#${sub.href.split("#")[1]}` || (!sub.href.split("#")[1] && activeHash === "#home"));
                         
                       return (

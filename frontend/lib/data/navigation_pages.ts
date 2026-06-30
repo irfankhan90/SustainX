@@ -167,29 +167,6 @@ export const NAVIGATION_PAGES: Record<string, PageData> = {
   },
 
   // --- CAPACITY BUILDING PAGES ---
-  "certificate-programs": {
-    slug: "certificate-programs",
-    category: "Capacity Building",
-    badge: "EDUCATION PORTAL",
-    heroTitle: "Foundational & Advanced Energy",
-    heroHighlight: "Professional Certificates",
-    description: "Rigorous hybrid modules spanning Solar PV engineering, wind resource analysis, and ESG reporting formats for technical specialists.",
-    image: "/sustainx_training.png",
-    overview: "Our professional certificate programs provide engineers, project designers, and consultants with the practical capabilities required to run clean energy assets. Students get hands-on experience using industry-standard software (PVsyst, HOMER) and simulator modules.",
-    features: [
-      { title: "Solar Engineering", desc: "PVsyst layout design, battery sizing, and cabling optimization.", iconName: "strategic-insight" },
-      { title: "ESG Disclosures", desc: "Hands-on reporting exercises complying with regional laws.", iconName: "esg-excellence" },
-      { title: "Wind Resource Assessment", desc: "Analyzing weather vectors and choosing optimal turbine structures.", iconName: "risk-opportunity" }
-    ],
-    stats: [
-      { value: "5", label: "Active Certificates" },
-      { value: "2,500+", label: "Engineers Certified" },
-      { value: "85%", label: "Employment Uptrend" }
-    ],
-    metaTitle: "Renewable Energy Certificates — Upskilling | SustainX",
-    metaDesc: "Boost your credentials with certified solar PV engineering and ESG reporting tracks from SustainX.",
-    keywords: "solar energy certificate, pvsyst engineering program, esg auditor certification, renewable engineering"
-  },
   "diploma-programs": {
     slug: "diploma-programs",
     category: "Capacity Building",

@@ -1,25 +1,24 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import ContactSection from "@/components/ContactSection";
-import OfficesSection from "@/components/OfficesSection";
+import CapacityBuildingOverview from "@/components/CapacityBuildingOverview";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Contact Us — Customer & Project Support | SustainX",
-  description: "Get in touch with SustainX. Connect with our engineering, advisory, or partner desks.",
+  title: "Upskilling & Capacity Building — Clean Energy Training | SustainX",
+  description: "Empower your engineering teams with verified certifications, simulation modeling tools, and advanced design models.",
   alternates: {
-    canonical: "/contact",
+    canonical: "/capacity-building",
   },
   openGraph: {
-    title: "Contact Us — Customer & Project Support | SustainX",
-    description: "Get in touch with SustainX. Connect with our engineering, advisory, or partner desks.",
+    title: "Upskilling & Capacity Building — Clean Energy Training | SustainX",
+    description: "Empower your engineering teams with verified certifications, simulation modeling tools, and advanced design models.",
     type: "website",
-    url: "https://frontend-gamma-blond-69.vercel.app/contact",
+    url: "https://frontend-gamma-blond-69.vercel.app/capacity-building",
   },
 };
 
-export default function ContactPage() {
+export default function CapacityBuildingPage() {
   return (
     <>
       <Navbar />
@@ -28,11 +27,10 @@ export default function ContactPage() {
           <nav className="flex items-center gap-2 text-[11px] font-bold text-[#6B8C80] mb-8 select-none" aria-label="Breadcrumb">
             <Link href="/" className="hover:text-[#1D9E75] transition-colors">Home</Link>
             <span className="text-[#A8C4BA] text-[10px]">&gt;</span>
-            <span className="text-[#1D9E75] font-bold">Contact</span>
+            <span className="text-[#1D9E75] font-bold">Capacity Building</span>
           </nav>
         </div>
-        <ContactSection />
-        <OfficesSection />
+        <CapacityBuildingOverview />
       </main>
       <Footer />
     </>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { PILLARS as sharedPillars } from "@/lib/data/pillars";
@@ -113,16 +113,18 @@ const SLIDES: Slide[] = [
     mobileDescription: "Equip engineering teams with verified certifications and PVsyst design models.",
     image: PILLARS[3].image,
     ctaText: "Join the Ecosystem",
-    ctaLink: "/programs"
+    ctaLink: "/capacity-building"
   }
 ];
 
 const slideVariants = {
   enter: {
-    opacity: 0
+    opacity: 0,
+    translateZ: 0
   },
   center: {
     opacity: 1,
+    translateZ: 0,
     transition: {
       opacity: { duration: 0.35 },
       staggerChildren: 0.08,
@@ -131,6 +133,7 @@ const slideVariants = {
   },
   exit: {
     opacity: 0,
+    translateZ: 0,
     transition: {
       opacity: { duration: 0.25 }
     }
@@ -146,11 +149,13 @@ const childVariants = {
 const imageVariants = {
   enter: {
     opacity: 0,
-    scale: 0.98
+    scale: 0.98,
+    translateZ: 0
   },
   center: {
     opacity: 1,
     scale: 1,
+    translateZ: 0,
     transition: {
       opacity: { duration: 0.35 },
       scale: { duration: 0.35 }
@@ -159,6 +164,7 @@ const imageVariants = {
   exit: {
     opacity: 0,
     scale: 0.98,
+    translateZ: 0,
     transition: {
       opacity: { duration: 0.25 },
       scale: { duration: 0.25 }
@@ -170,39 +176,38 @@ export const HeroSection: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [progress, setProgress] = useState(0);
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [resetKey, setResetKey] = useState(0);
+  const touchStartXRef = useRef<number | null>(null);
 
   const SLIDE_DURATION = 5500; // 5.5 seconds autoplay
-  const lastActiveIndexRef = useRef(activeIndex);
-  const lastResetKeyRef = useRef(resetKey);
 
-  const triggerReset = () => {
-    setResetKey((prev) => prev + 1);
-    setProgress(0);
-  };
-
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setDirection(1);
     setActiveIndex((prev) => (prev + 1) % SLIDES.length);
-    triggerReset();
-  };
+    setResetKey((prev) => prev + 1);
+  }, []);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     setDirection(-1);
     setActiveIndex((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
-    triggerReset();
-  };
+    setResetKey((prev) => prev + 1);
+  }, []);
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStartX(e.touches[0].clientX);
-  };
+  const selectSlide = useCallback((idx: number) => {
+    if (idx === activeIndex) return;
+    setDirection(idx > activeIndex ? 1 : -1);
+    setActiveIndex(idx);
+    setResetKey((prev) => prev + 1);
+  }, [activeIndex]);
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX === null) return;
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (touchStartXRef.current === null) return;
     const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX - touchEndX;
+    const diff = touchStartXRef.current - touchEndX;
 
     // Swipe left (next) or right (prev) with 50px threshold
     if (diff > 50) {
@@ -210,40 +215,19 @@ export const HeroSection: React.FC = () => {
     } else if (diff < -50) {
       handlePrev();
     }
-    setTouchStartX(null);
-  };
+    touchStartXRef.current = null;
+  }, [handleNext, handlePrev]);
 
-  // Unified autoplay logic with ref checks to prevent asynchronous state races
+  // Autoplay handler: clears old timeout and starts a new one on slide reset or play toggle
   useEffect(() => {
     if (!isPlaying) return;
 
-    let currentProgress = progress;
-    if (lastActiveIndexRef.current !== activeIndex || lastResetKeyRef.current !== resetKey) {
-      currentProgress = 0;
-      setProgress(0);
-      lastActiveIndexRef.current = activeIndex;
-      lastResetKeyRef.current = resetKey;
-    }
+    const timer = setTimeout(() => {
+      handleNext();
+    }, SLIDE_DURATION);
 
-    const startTime = Date.now() - (currentProgress / 100) * SLIDE_DURATION;
-
-    let interval: NodeJS.Timeout;
-    interval = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const newProgress = Math.min(100, (elapsed / SLIDE_DURATION) * 100);
-
-      if (newProgress >= 100) {
-        clearInterval(interval);
-        setProgress(0);
-        setDirection(1);
-        setActiveIndex((prev) => (prev + 1) % SLIDES.length);
-      } else {
-        setProgress(newProgress);
-      }
-    }, 50);
-
-    return () => clearInterval(interval);
-  }, [isPlaying, activeIndex, resetKey]);
+    return () => clearTimeout(timer);
+  }, [isPlaying, activeIndex, resetKey, handleNext]);
 
   const activeSlide = SLIDES[activeIndex];
 
@@ -257,6 +241,43 @@ export const HeroSection: React.FC = () => {
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
+      {/* GPU Accelerated CSS Progress Animation styles */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes progress-grow {
+          from { width: 0%; }
+          to { width: 100%; }
+        }
+        .animate-progress-bar {
+          animation: progress-grow ${SLIDE_DURATION}ms linear forwards;
+        }
+      `}} />
+
+      {/* Hidden preloading division for slider images to prevent visual rendering flickers */}
+      <div className="hidden" aria-hidden="true">
+        {SLIDES.map((slide, idx) => (
+          slide.image && (
+            <Image
+              key={`preload-slide-${idx}`}
+              src={slide.image}
+              alt="preload"
+              width={10}
+              height={10}
+              priority
+            />
+          )
+        ))}
+        {PILLARS.map((pillar, idx) => (
+          <Image
+            key={`preload-pillar-${idx}`}
+            src={pillar.image}
+            alt="preload-pillar"
+            width={10}
+            height={10}
+            priority
+          />
+        ))}
+      </div>
+
       {/* Background Soft Green Radial Glow Elements */}
       <div className="absolute top-[20%] left-[10%] w-[350px] h-[350px] bg-brand-g/5 blur-[100px] rounded-full pointer-events-none z-0" />
       <div className="absolute top-[30%] right-[10%] w-[400px] h-[400px] bg-brand-gxd/5 blur-[120px] rounded-full pointer-events-none z-0" />
@@ -294,12 +315,13 @@ export const HeroSection: React.FC = () => {
                   initial="enter"
                   animate="center"
                   exit="exit"
+                  style={{ willChange: "transform, opacity" }}
                   className="w-full flex flex-col items-start"
                 >
                   {/* Brand Logo & Pill Badge */}
                   <motion.div 
                     variants={childVariants} 
-                    className="flex flex-col sm:flex-row items-start sm:items-center gap-3.5 mb-6"
+                    className="flex flex-col sm:flex-row items-start sm:items-center gap-3.5 mb-7 pt-4 lg:pt-6"
                   >
                     <Image 
                       src="/logo.jpg" 
@@ -326,7 +348,7 @@ export const HeroSection: React.FC = () => {
                   {/* High contrast paragraph */}
                   <motion.p 
                     variants={childVariants} 
-                    className="font-sans text-[14px] sm:text-[15px] text-t-2 leading-[1.78] font-normal max-w-none sm:max-w-[580px] mb-8"
+                    className="font-sans text-[14px] sm:text-[15px] text-t-2 leading-[1.78] font-normal max-w-none sm:max-w-[580px] mb-9"
                   >
                     <span className="hidden sm:inline">{activeSlide.description}</span>
                     <span className="inline sm:hidden">{activeSlide.mobileDescription || activeSlide.description}</span>
@@ -386,21 +408,18 @@ export const HeroSection: React.FC = () => {
                 {SLIDES.map((_, idx) => (
                   <button
                     key={idx}
-                    onClick={() => {
-                      setDirection(idx > activeIndex ? 1 : -1);
-                      setActiveIndex(idx);
-                      triggerReset();
-                    }}
+                    onClick={() => selectSlide(idx)}
                     className="relative py-2.5 bg-transparent cursor-pointer focus:outline-none group focus-visible:outline-none"
                     aria-label={`Go to slide ${idx + 1}`}
                   >
                     <div className="h-1.5 bg-brand-g/15 group-hover:bg-brand-g/30 rounded-full overflow-hidden transition-all duration-300 w-10 sm:w-11 relative">
                       {activeIndex === idx && (
-                        <motion.div
-                          className="absolute left-0 top-0 bottom-0 bg-brand-g"
-                          initial={{ width: "0%" }}
-                          animate={{ width: `${progress}%` }}
-                          transition={{ ease: "linear", duration: 0.05 }}
+                        <div
+                          key={`${activeIndex}-${resetKey}-${isPlaying}`}
+                          className="absolute left-0 top-0 bottom-0 bg-brand-g animate-progress-bar"
+                          style={{
+                            animationPlayState: isPlaying ? "running" : "paused"
+                          }}
                         />
                       )}
                     </div>
@@ -415,7 +434,11 @@ export const HeroSection: React.FC = () => {
           <div className="w-full lg:w-[55%] pt-2 lg:pt-0">
             {/* Desktop/Tablet View Wrapper */}
             <div 
-              className="hidden sm:block relative w-full sm:h-[420px] lg:h-[460px] rounded-[24px] overflow-hidden shadow-sh border border-bdr-DEFAULT"
+              className={`hidden sm:block relative w-full sm:h-[420px] lg:h-[460px] ${
+                activeSlide.type === "overview" 
+                  ? "" 
+                  : "rounded-[24px] overflow-hidden shadow-sh border border-bdr-DEFAULT bg-white"
+              }`}
               onMouseEnter={() => setIsPlaying(false)}
               onMouseLeave={() => setIsPlaying(true)}
             >
@@ -427,19 +450,16 @@ export const HeroSection: React.FC = () => {
                   initial="enter"
                   animate="center"
                   exit="exit"
+                  style={{ willChange: "transform, opacity" }}
                   className="absolute inset-0 w-full h-full"
                 >
                   {activeSlide.type === "overview" ? (
-                    <div className="grid grid-cols-2 gap-4 items-start w-full h-full p-4 bg-surface-2/30">
+                    <div className="grid grid-cols-2 gap-5 items-start w-full h-full p-2">
                       {/* Column 1: Cards 1 and 3 */}
                       <div className="flex flex-col gap-4">
                         {/* Card 1 */}
                         <div 
-                          onClick={() => {
-                            setDirection(1);
-                            setActiveIndex(1);
-                            triggerReset();
-                          }}
+                          onClick={() => selectSlide(1)}
                           className="bg-white border border-bdr-DEFAULT rounded-[20px] overflow-hidden flex flex-col h-[200px] shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-sh hover:border-brand-g/25 group cursor-pointer"
                         >
                           <div className="p-3.5 pb-0 flex-grow">
@@ -466,11 +486,7 @@ export const HeroSection: React.FC = () => {
 
                         {/* Card 3 */}
                         <div 
-                          onClick={() => {
-                            setDirection(1);
-                            setActiveIndex(3);
-                            triggerReset();
-                          }}
+                          onClick={() => selectSlide(3)}
                           className="bg-white border border-bdr-DEFAULT rounded-[20px] overflow-hidden flex flex-col h-[200px] shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-sh hover:border-brand-g/25 group cursor-pointer"
                         >
                           <div className="p-3.5 pb-0 flex-grow">
@@ -500,11 +516,7 @@ export const HeroSection: React.FC = () => {
                       <div className="flex flex-col gap-4">
                         {/* Card 2 */}
                         <div 
-                          onClick={() => {
-                            setDirection(1);
-                            setActiveIndex(2);
-                            triggerReset();
-                          }}
+                          onClick={() => selectSlide(2)}
                           className="bg-white border border-bdr-DEFAULT rounded-[20px] overflow-hidden flex flex-col h-[200px] shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-sh hover:border-brand-g/25 group cursor-pointer"
                         >
                           <div className="p-3.5 pb-0 flex-grow">
@@ -531,11 +543,7 @@ export const HeroSection: React.FC = () => {
 
                         {/* Card 4 */}
                         <div 
-                          onClick={() => {
-                            setDirection(1);
-                            setActiveIndex(4);
-                            triggerReset();
-                          }}
+                          onClick={() => selectSlide(4)}
                           className="bg-white border border-bdr-DEFAULT rounded-[20px] overflow-hidden flex flex-col h-[200px] shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-sh hover:border-brand-g/25 group cursor-pointer"
                         >
                           <div className="p-3.5 pb-0 flex-grow">
@@ -586,11 +594,7 @@ export const HeroSection: React.FC = () => {
                   return (
                     <div
                       key={pillar.title}
-                      onClick={() => {
-                        setDirection(1);
-                        setActiveIndex(idx + 1);
-                        triggerReset();
-                      }}
+                      onClick={() => selectSlide(idx + 1)}
                       className={`max-[374px]:w-[240px] max-[374px]:shrink-0 max-[374px]:snap-center bg-white border rounded-[20px] overflow-hidden flex flex-col h-[180px] transition-all duration-300 ${
                         isCurrentActive
                           ? "border-brand-g ring-2 ring-brand-g/20 shadow-md"
@@ -618,11 +622,11 @@ export const HeroSection: React.FC = () => {
                       </div>
                       <div className="w-full h-[64px] overflow-hidden rounded-b-2xl relative border-t border-bdr-DEFAULT mt-auto shrink-0">
                         <Image 
-                          src={pillar.image} 
-                          alt={pillar.title} 
-                          fill
-                          sizes="(max-width: 640px) 50vw, 25vw"
-                          className="object-cover transition-transform duration-700"
+                           src={pillar.image} 
+                           alt={pillar.title} 
+                           fill
+                           sizes="(max-width: 640px) 50vw, 25vw"
+                           className="object-cover transition-transform duration-700"
                         />
                       </div>
                     </div>
@@ -660,21 +664,18 @@ export const HeroSection: React.FC = () => {
                   {SLIDES.map((_, idx) => (
                     <button
                       key={idx}
-                      onClick={() => {
-                        setDirection(idx > activeIndex ? 1 : -1);
-                        setActiveIndex(idx);
-                        triggerReset();
-                      }}
+                      onClick={() => selectSlide(idx)}
                       className="relative py-2 bg-transparent cursor-pointer focus:outline-none"
                       aria-label={`Go to slide ${idx + 1}`}
                     >
                       <div className="h-1 bg-brand-g/15 rounded-full overflow-hidden w-7 relative">
                         {activeIndex === idx && (
-                          <motion.div
-                            className="absolute left-0 top-0 bottom-0 bg-brand-g"
-                            initial={{ width: "0%" }}
-                            animate={{ width: `${progress}%` }}
-                            transition={{ ease: "linear", duration: 0.05 }}
+                          <div
+                            key={`${activeIndex}-${resetKey}-${isPlaying}`}
+                            className="absolute left-0 top-0 bottom-0 bg-brand-g animate-progress-bar"
+                            style={{
+                              animationPlayState: isPlaying ? "running" : "paused"
+                            }}
                           />
                         )}
                       </div>

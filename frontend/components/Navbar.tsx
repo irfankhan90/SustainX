@@ -34,13 +34,14 @@ const navItems: NavItem[] = [
       { label: "Strategic Advisory", href: "/solutions/strategic-advisory" },
       { label: "Project Management", href: "/solutions/project-management" },
       { label: "Turnkey Solution & EPC", href: "/solutions/turnkey-solution-epc" },
-      { label: "Capacity Building", href: "/solutions/capacity-building" },
+      { label: "Capacity Building", href: "/capacity-building" },
     ],
   },
   {
     label: "Capacity Building",
+    href: "/capacity-building",
     submenu: [
-      { label: "Certificate Programs", href: "/capacity-building/certificate-programs" },
+      { label: "Certificate Programs", href: "/capacity-building" },
       { label: "Diploma Programs", href: "/capacity-building/diploma-programs" },
       { label: "Executive & Corporate Programs", href: "/capacity-building/executive-corporate-programs" },
     ],

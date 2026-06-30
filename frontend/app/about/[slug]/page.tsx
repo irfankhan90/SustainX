@@ -4,6 +4,8 @@ import { NAVIGATION_PAGES } from "@/lib/data/navigation_pages";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import NavPageClient from "@/components/NavPageClient";
+import FeaturesSection from "@/components/FeaturesSection";
+import Link from "next/link";
 
 interface RouteParams {
   params: Promise<{ slug: string }>;
@@ -48,6 +50,49 @@ export default async function AboutSubpage({ params }: RouteParams) {
   if (!VALID_SLUGS.includes(slug)) {
     notFound();
   }
+
+  if (slug === "platform-features") {
+    return (
+      <>
+        <Navbar />
+        <main className="pt-[88px] sm:pt-[112px] bg-white min-h-screen" id="main-content">
+          <div className="container pt-8 select-none">
+            <nav className="flex items-center gap-2 text-[11px] font-bold text-[#6B8C80] mb-8 select-none" aria-label="Breadcrumb">
+              <Link href="/" className="hover:text-[#1D9E75] transition-colors">Home</Link>
+              <span className="text-[#A8C4BA] text-[10px]">&gt;</span>
+              <span className="hover:text-[#1D9E75] cursor-pointer">About</span>
+              <span className="text-[#A8C4BA] text-[10px]">&gt;</span>
+              <span className="text-[#1D9E75] font-bold">Platform Features</span>
+            </nav>
+          </div>
+          <FeaturesSection showOnly="features" />
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
+  if (slug === "delivery-model") {
+    return (
+      <>
+        <Navbar />
+        <main className="pt-[88px] sm:pt-[112px] bg-white min-h-screen" id="main-content">
+          <div className="container pt-8 select-none">
+            <nav className="flex items-center gap-2 text-[11px] font-bold text-[#6B8C80] mb-8 select-none" aria-label="Breadcrumb">
+              <Link href="/" className="hover:text-[#1D9E75] transition-colors">Home</Link>
+              <span className="text-[#A8C4BA] text-[10px]">&gt;</span>
+              <span className="hover:text-[#1D9E75] cursor-pointer">About</span>
+              <span className="text-[#A8C4BA] text-[10px]">&gt;</span>
+              <span className="text-[#1D9E75] font-bold">Delivery Model</span>
+            </nav>
+          </div>
+          <FeaturesSection showOnly="delivery-model" />
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
   const page = NAVIGATION_PAGES[slug];
   if (!page) {
     notFound();

@@ -87,7 +87,7 @@ const deliveryMethods = [
     title: "Hybrid Learning",
     desc: "Online + In-person workshops for maximum flexibility",
     icon: (
-      <svg viewBox="0 0 24 24" className="w-[22px].h-[22px] fill-none stroke-white stroke-2">
+      <svg viewBox="0 0 24 24" className="w-[22px] h-[22px] fill-none stroke-white stroke-2">
         <rect x="2" y="3" width="20" height="14" rx="2" />
         <line x1="8" y1="21" x2="16" y2="21" />
       </svg>
@@ -140,71 +140,79 @@ const deliveryMethods = [
   },
 ];
 
-export const FeaturesSection: React.FC = () => {
+interface FeaturesSectionProps {
+  showOnly?: "features" | "delivery-model";
+}
+
+export const FeaturesSection: React.FC<FeaturesSectionProps> = ({ showOnly }) => {
   return (
     <>
       {/* FEATURES GRID */}
-      <section className="py-24 scroll-mt-[var(--navbar-height)]" id="features">
-        <div className="container">
-          <SectionHeader
-            label="Platform Features"
-            heading="Everything your team needs to lead the energy transition"
-            description="From certified programs to AI-powered ESG dashboards — one platform for the entire clean energy journey."
-          />
+      {(!showOnly || showOnly === "features") && (
+        <section className="py-24 scroll-mt-[var(--navbar-height)]" id="features">
+          <div className="container">
+            <SectionHeader
+              label="Platform Features"
+              heading="Everything your team needs to lead the energy transition"
+              description="From certified programs to AI-powered ESG dashboards — one platform for the entire clean energy journey."
+            />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[1px] bg-bdr-DEFAULT border border-bdr-DEFAULT rounded-2xl overflow-hidden">
-            {features.map((feature) => (
-              <div
-                key={feature.id}
-                className="bg-white p-9 group transition-colors duration-250 hover:bg-brand-gxl"
-              >
-                <div className="w-12 h-12 bg-brand-gxl text-brand-g rounded-xl flex items-center justify-center mb-5 transition-colors duration-250 group-hover:bg-brand-g group-hover:text-white fill-none stroke-brand-g group-hover:stroke-white stroke-2 stroke-linecap-round stroke-linejoin-round">
-                  {feature.icon}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[1px] bg-bdr-DEFAULT border border-bdr-DEFAULT rounded-2xl overflow-hidden">
+              {features.map((feature) => (
+                <div
+                  key={feature.id}
+                  className="bg-white p-9 group transition-colors duration-250 hover:bg-brand-gxl"
+                >
+                  <div className="w-12 h-12 bg-brand-gxl text-brand-g rounded-xl flex items-center justify-center mb-5 transition-colors duration-250 group-hover:bg-brand-g group-hover:text-white fill-none stroke-brand-g group-hover:stroke-white stroke-2 stroke-linecap-round stroke-linejoin-round">
+                    {feature.icon}
+                  </div>
+                  <h3 className="font-syne text-[17px] font-bold text-t-DEFAULT mb-2">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm text-t-3 leading-[1.6]">
+                    {feature.desc}
+                  </p>
+                  <div className="inline-block mt-3.5 px-2.5 py-[3px] bg-brand-gxl text-brand-gd rounded-md text-xs font-semibold">
+                    {feature.tag}
+                  </div>
                 </div>
-                <h3 className="font-syne text-[17px] font-bold text-t-DEFAULT mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-sm text-t-3 leading-[1.6]">
-                  {feature.desc}
-                </p>
-                <div className="inline-block mt-3.5 px-2.5 py-[3px] bg-brand-gxl text-brand-gd rounded-md text-xs font-semibold">
-                  {feature.tag}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* DELIVERY MODEL */}
-      <section id="delivery-model" className="py-24 bg-white border-t border-b border-bdr-DEFAULT">
-        <div className="container">
-          <SectionHeader
-            label="Delivery Model"
-            heading="Applied learning ecosystem for real-world execution"
-            description="Theory + Practical Application + Industry Reality = Applied Competency & Accelerated Career Advancement"
-          />
+      {(!showOnly || showOnly === "delivery-model") && (
+        <section id="delivery-model" className="py-24 bg-white border-t border-b border-bdr-DEFAULT">
+          <div className="container">
+            <SectionHeader
+              label="Delivery Model"
+              heading="Applied learning ecosystem for real-world execution"
+              description="Theory + Practical Application + Industry Reality = Applied Competency & Accelerated Career Advancement"
+            />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mt-10">
-            {deliveryMethods.map((method) => (
-              <div
-                key={method.id}
-                className="bg-brand-gxl border border-bdr-2 rounded-xl p-5 text-center transition-all hover:shadow-sh"
-              >
-                <div className="w-11 h-11 bg-brand-g rounded-xl flex items-center justify-center mx-auto mb-3 shrink-0">
-                  {method.icon}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mt-10">
+              {deliveryMethods.map((method) => (
+                <div
+                  key={method.id}
+                  className="bg-brand-gxl border border-bdr-2 rounded-xl p-5 text-center transition-all hover:shadow-sh"
+                >
+                  <div className="w-11 h-11 bg-brand-g rounded-xl flex items-center justify-center mx-auto mb-3 shrink-0">
+                    {method.icon}
+                  </div>
+                  <h3 className="font-syne text-[13px] font-bold text-brand-gd mb-1">
+                    {method.title}
+                  </h3>
+                  <p className="text-[11px] text-t-3 leading-relaxed">
+                    {method.desc}
+                  </p>
                 </div>
-                <h3 className="font-syne text-[13px] font-bold text-brand-gd mb-1">
-                  {method.title}
-                </h3>
-                <p className="text-[11px] text-t-3 leading-relaxed">
-                  {method.desc}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </>
   );
 };

@@ -9,7 +9,7 @@ interface RouteParams {
   params: Promise<{ slug: string }>;
 }
 
-const VALID_SLUGS = ["certificate-programs", "diploma-programs", "executive-corporate-programs"];
+const VALID_SLUGS = ["diploma-programs", "executive-corporate-programs"];
 
 export async function generateStaticParams() {
   return VALID_SLUGS.map((slug) => ({

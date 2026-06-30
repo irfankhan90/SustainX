@@ -95,13 +95,13 @@ export const CapacityBuildingOverview: React.FC = () => {
 
             <div className="flex gap-4 items-center">
               <Link
-                href="/programs"
+                href="/capacity-building"
                 className="h-11 px-5 inline-flex items-center justify-center text-xs font-bold text-white rounded-lg bg-brand-gxd hover:bg-brand-gd shadow-md transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2"
               >
                 Join the Ecosystem
               </Link>
               <Link
-                href="/programs"
+                href="/capacity-building"
                 className="h-11 px-5 inline-flex items-center justify-center text-xs font-semibold text-brand-g hover:text-brand-gd transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g"
               >
                 Explore Program Tracks &rarr;

@@ -10,7 +10,7 @@ const team = [
     id: "umar-siddiqui",
     name: "Mr. Umar Siddiqui",
     title: "Managing Director",
-    avatar: "/umar_siddiqui.jpg",
+    avatar: "/umar_siddiqui.png",
     colorClass: "bg-ink-DEFAULT",
     bio: "Global Entrepreneur & Social Reformist. Managed Fortune 500 software teams. Board member at Singapore's Global Source Media & Technology Investments. Founder of Anti-Corruption Academy & Idea of India Foundation. Promoter of WorldHub City, Navi Mumbai.",
   },

@@ -8,6 +8,15 @@ export const submitInquiry = async (req: Request, res: Response, next: NextFunct
 
   const { full_name, organization, email, phone, inquiry_type, message } = req.body;
   
+  const getClientIp = (req: Request): string => {
+    const xForwardedFor = req.headers['x-forwarded-for'];
+    if (typeof xForwardedFor === 'string') {
+      return xForwardedFor.split(',')[0].trim();
+    }
+    return req.ip || req.socket.remoteAddress || '';
+  };
+  const ipAddress = getClientIp(req);
+
   let inquiry;
   try {
     inquiry = await createInquiry({
@@ -16,7 +25,8 @@ export const submitInquiry = async (req: Request, res: Response, next: NextFunct
       email: email.trim(),
       phone: phone.trim(),
       inquiry_type: inquiry_type.trim(),
-      message: message.trim()
+      message: message.trim(),
+      ip_address: ipAddress
     });
     console.log(`[Database Save Successful] Inquiry ID: ${inquiry.id}`);
   } catch (err: any) {
@@ -39,7 +49,8 @@ export const submitInquiry = async (req: Request, res: Response, next: NextFunct
       email: inquiry.email,
       phone: inquiry.phone,
       inquiryType: inquiry.inquiry_type,
-      message: inquiry.message
+      message: inquiry.message,
+      ipAddress: inquiry.ip_address
     });
     console.log("[Email Send Successful] Email delivery completed successfully.");
   } catch (err: any) {

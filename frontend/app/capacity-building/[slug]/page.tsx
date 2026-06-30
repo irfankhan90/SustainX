@@ -3,13 +3,16 @@ import { notFound } from "next/navigation";
 import { NAVIGATION_PAGES } from "@/lib/data/navigation_pages";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import NavPageClient from "@/components/NavPageClient";
+import CertificatePrograms from "@/components/programs/CertificatePrograms";
+import DiplomaPrograms from "@/components/programs/DiplomaPrograms";
+import ExecutivePrograms from "@/components/programs/ExecutivePrograms";
+import Link from "next/link";
 
 interface RouteParams {
   params: Promise<{ slug: string }>;
 }
 
-const VALID_SLUGS = ["diploma-programs", "executive-corporate-programs"];
+const VALID_SLUGS = ["certificate-programs", "diploma-programs", "executive-corporate-programs"];
 
 export async function generateStaticParams() {
   return VALID_SLUGS.map((slug) => ({
@@ -24,6 +27,16 @@ export async function generateMetadata({ params }: RouteParams): Promise<Metadat
   }
   const page = NAVIGATION_PAGES[slug];
   if (!page) {
+    // Certificate-programs doesn't have a record in NAVIGATION_PAGES now, so we return general values
+    if (slug === "certificate-programs") {
+      return {
+        title: "Renewable Energy Certificates — Upskilling | SustainX",
+        description: "Boost your credentials with certified solar PV engineering and ESG reporting tracks from SustainX.",
+        alternates: {
+          canonical: "/capacity-building/certificate-programs",
+        },
+      };
+    }
     return {};
   }
 
@@ -48,18 +61,69 @@ export default async function CapacityBuildingSubpage({ params }: RouteParams) {
   if (!VALID_SLUGS.includes(slug)) {
     notFound();
   }
-  const page = NAVIGATION_PAGES[slug];
-  if (!page) {
-    notFound();
+
+  if (slug === "certificate-programs") {
+    return (
+      <>
+        <Navbar />
+        <main className="pt-[88px] sm:pt-[112px] bg-white min-h-screen" id="main-content">
+          <div className="container pt-8 select-none">
+            <nav className="flex items-center gap-2 text-[11px] font-bold text-[#6B8C80] mb-8 select-none" aria-label="Breadcrumb">
+              <Link href="/" className="hover:text-[#1D9E75] transition-colors">Home</Link>
+              <span className="text-[#A8C4BA] text-[10px]">&gt;</span>
+              <Link href="/capacity-building" className="hover:text-[#1D9E75] transition-colors">Capacity Building</Link>
+              <span className="text-[#A8C4BA] text-[10px]">&gt;</span>
+              <span className="text-[#1D9E75] font-bold">Certificate Programs</span>
+            </nav>
+          </div>
+          <CertificatePrograms />
+        </main>
+        <Footer />
+      </>
+    );
   }
 
-  return (
-    <>
-      <Navbar />
-      <main className="pt-[88px] sm:pt-[112px] bg-white min-h-screen" id="main-content">
-        <NavPageClient page={page} />
-      </main>
-      <Footer />
-    </>
-  );
+  if (slug === "diploma-programs") {
+    return (
+      <>
+        <Navbar />
+        <main className="pt-[88px] sm:pt-[112px] bg-white min-h-screen" id="main-content">
+          <div className="container pt-8 select-none">
+            <nav className="flex items-center gap-2 text-[11px] font-bold text-[#6B8C80] mb-8 select-none" aria-label="Breadcrumb">
+              <Link href="/" className="hover:text-[#1D9E75] transition-colors">Home</Link>
+              <span className="text-[#A8C4BA] text-[10px]">&gt;</span>
+              <Link href="/capacity-building" className="hover:text-[#1D9E75] transition-colors">Capacity Building</Link>
+              <span className="text-[#A8C4BA] text-[10px]">&gt;</span>
+              <span className="text-[#1D9E75] font-bold">Diploma Programs</span>
+            </nav>
+          </div>
+          <DiplomaPrograms />
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
+  if (slug === "executive-corporate-programs") {
+    return (
+      <>
+        <Navbar />
+        <main className="pt-[88px] sm:pt-[112px] bg-white min-h-screen" id="main-content">
+          <div className="container pt-8 select-none">
+            <nav className="flex items-center gap-2 text-[11px] font-bold text-[#6B8C80] mb-8 select-none" aria-label="Breadcrumb">
+              <Link href="/" className="hover:text-[#1D9E75] transition-colors">Home</Link>
+              <span className="text-[#A8C4BA] text-[10px]">&gt;</span>
+              <Link href="/capacity-building" className="hover:text-[#1D9E75] transition-colors">Capacity Building</Link>
+              <span className="text-[#A8C4BA] text-[10px]">&gt;</span>
+              <span className="text-[#1D9E75] font-bold">Executive & Corporate Programs</span>
+            </nav>
+          </div>
+          <ExecutivePrograms />
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
+  notFound();
 }

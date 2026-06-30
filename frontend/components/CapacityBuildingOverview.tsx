@@ -93,18 +93,24 @@ export const CapacityBuildingOverview: React.FC = () => {
               </li>
             </ul>
 
-            <div className="flex gap-4 items-center">
+            <div className="flex flex-col sm:flex-row gap-3 mt-2">
               <Link
-                href="/capacity-building"
-                className="h-11 px-5 inline-flex items-center justify-center text-xs font-bold text-white rounded-lg bg-brand-gxd hover:bg-brand-gd shadow-md transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2"
+                href="/capacity-building/certificate-programs"
+                className="h-11 px-5 inline-flex items-center justify-center text-xs font-bold text-white rounded-lg bg-brand-gxd hover:bg-brand-gd shadow-md transition-all text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2"
               >
-                Join the Ecosystem
+                Certificate Programs
               </Link>
               <Link
-                href="/capacity-building"
-                className="h-11 px-5 inline-flex items-center justify-center text-xs font-semibold text-brand-g hover:text-brand-gd transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g"
+                href="/capacity-building/diploma-programs"
+                className="h-11 px-5 inline-flex items-center justify-center text-xs font-bold text-white rounded-lg bg-brand-g hover:bg-brand-gd shadow-md transition-all text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2"
               >
-                Explore Program Tracks &rarr;
+                Diploma Programs
+              </Link>
+              <Link
+                href="/capacity-building/executive-corporate-programs"
+                className="h-11 px-5 inline-flex items-center justify-center text-xs font-bold text-t-DEFAULT border border-bdr-DEFAULT rounded-lg bg-white hover:bg-brand-gxl shadow-md transition-all text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-g focus-visible:ring-offset-2"
+              >
+                Executive & Corporate Programs
               </Link>
             </div>
           </div>

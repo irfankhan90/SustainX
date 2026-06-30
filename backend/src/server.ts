@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth";
+import adminRoutes from "./routes/admin";
 import inquiryRoutes from "./routes/inquiry";
 import contactRoutes from "./routes/contact";
 import { authenticateJWT, AuthenticatedRequest } from "./middleware/auth";
@@ -42,6 +43,7 @@ app.get("/health", (req, res) => {
 
 // API Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
 app.use("/api/inquiries", inquiryRoutes);
 app.use("/api/contacts", contactRoutes);
 

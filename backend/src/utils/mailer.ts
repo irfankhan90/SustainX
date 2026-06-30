@@ -124,10 +124,11 @@ interface AdminNotificationParams {
   phone: string;
   inquiryType: string;
   message: string;
+  ipAddress?: string;
 }
 
 export const sendAdminNotificationEmail = async (params: AdminNotificationParams) => {
-  const { fullName, organization, email, phone, inquiryType, message } = params;
+  const { fullName, organization, email, phone, inquiryType, message, ipAddress } = params;
 
   const host = process.env.SMTP_HOST;
   const port = process.env.SMTP_PORT;
@@ -149,6 +150,7 @@ export const sendAdminNotificationEmail = async (params: AdminNotificationParams
         <strong>Mobile Number:</strong> ${phone}<br />
         <strong>Inquiry Type:</strong> ${inquiryType}<br />
         <strong>Submission Date:</strong> ${new Date().toLocaleString()}<br />
+        ${ipAddress ? `<strong>IP Address:</strong> ${ipAddress}<br />` : ""}
       </p>
       <div style="background-color: #F8FAF9; border: 1px solid #D0E8DE; padding: 16px; border-radius: 8px; margin-top: 20px;">
         <div style="font-weight: bold; font-size: 12px; color: #6B8C80; text-transform: uppercase; margin-bottom: 8px;">Message:</div>
@@ -244,12 +246,14 @@ export const sendContactConfirmationEmail = async (email: string, fullName: stri
 interface ContactAdminNotificationParams {
   fullName: string;
   email: string;
-  subject: string;
+  phone: string;
+  inquiryType: string;
   message: string;
+  ipAddress?: string;
 }
 
 export const sendContactAdminNotificationEmail = async (params: ContactAdminNotificationParams) => {
-  const { fullName, email, subject, message } = params;
+  const { fullName, email, phone, inquiryType, message, ipAddress } = params;
 
   const host = process.env.SMTP_HOST;
   const port = process.env.SMTP_PORT;
@@ -258,24 +262,31 @@ export const sendContactAdminNotificationEmail = async (params: ContactAdminNoti
   const from = process.env.SMTP_FROM || "no-reply@sustainx.com";
   const to = process.env.ADMIN_EMAIL || "er.irfan0987@gmail.com";
 
-  const emailSubject = `New Contact Us Message: ${subject}`;
+  const emailSubject = `New Inquiry Received: ${inquiryType}`;
+  const timestamp = new Date().toLocaleString();
   
   const emailHtml = `
     <div style="font-family: 'DM Sans', Arial, sans-serif; max-width: 600px; margin: auto; padding: 32px; border: 1px solid #D0E8DE; border-radius: 16px; background-color: #ffffff; color: #0B1612;">
-      <h2 style="color: #1D9E75; font-family: 'Sora', sans-serif;">New Contact Inquiry Received</h2>
+      <h2 style="color: #1D9E75; font-family: 'Sora', sans-serif;">New Inquiry Received</h2>
       <hr style="border: 0; border-top: 1px solid #E6F3EE; margin: 20px 0;" />
-      <p style="font-size: 15px; color: #1C2E27; line-height: 1.8;">
-        <strong>Sender Name:</strong> ${fullName}<br />
-        <strong>Email Address:</strong> ${email}<br />
-        <strong>Subject:</strong> ${subject}<br />
-        <strong>Submission Date:</strong> ${new Date().toLocaleString()}<br />
+      <p style="font-size: 15px; color: #1C2E27; line-height: 1.8; margin: 0 0 16px 0;">
+        <strong>Full Name:</strong> ${fullName}<br />
+        <strong>Email:</strong> ${email}<br />
+        <strong>Mobile Number:</strong> ${phone}<br />
+        <strong>Inquiry Type:</strong> ${inquiryType}<br />
+        ${ipAddress ? `<strong>IP Address:</strong> ${ipAddress}<br />` : ""}
       </p>
       <div style="background-color: #F8FAF9; border: 1px solid #D0E8DE; padding: 16px; border-radius: 8px; margin-top: 20px;">
         <div style="font-weight: bold; font-size: 12px; color: #6B8C80; text-transform: uppercase; margin-bottom: 8px;">Message:</div>
         <div style="font-size: 14px; line-height: 1.6; color: #1C2E27; white-space: pre-wrap;">${message}</div>
       </div>
+      <p style="font-size: 12px; color: #6B8C80; margin-top: 20px; border-top: 1px solid #E6F3EE; pt-16px;">
+        <strong>Submitted On:</strong> ${timestamp}
+      </p>
     </div>
   `;
+
+  const emailText = `New Inquiry Received\n\nFull Name: ${fullName}\nEmail: ${email}\nMobile Number: ${phone}\nInquiry Type: ${inquiryType}\nMessage: ${message}\n\nSubmitted On: ${timestamp}${ipAddress ? `\nIP Address: ${ipAddress}` : ''}`;
 
   if (host && port && user && pass) {
     try {
@@ -288,6 +299,7 @@ export const sendContactAdminNotificationEmail = async (params: ContactAdminNoti
         from,
         to,
         subject: emailSubject,
+        text: emailText,
         html: emailHtml,
       });
       console.log(`[Mailer] Contact admin notification email sent successfully to ${to}`);

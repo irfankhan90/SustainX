@@ -8,18 +8,20 @@ const isProduction = process.env.NODE_ENV === "production";
 
 let poolConfig: PoolConfig = {};
 
-if (process.env.DATABASE_URL) {
+const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+
+if (connectionString) {
   poolConfig = {
-    connectionString: process.env.DATABASE_URL,
+    connectionString,
     ssl: isProduction ? { rejectUnauthorized: false } : false,
   };
 } else {
   poolConfig = {
-    host: process.env.DB_HOST || "localhost",
-    port: parseInt(process.env.DB_PORT || "5432", 10),
-    user: process.env.DB_USER || "postgres",
-    password: process.env.DB_PASSWORD || "postgres",
-    database: process.env.DB_NAME || "sustainx",
+    host: process.env.DB_HOST || process.env.POSTGRES_HOST || "localhost",
+    port: parseInt(process.env.DB_PORT || process.env.POSTGRES_PORT || "5432", 10),
+    user: process.env.DB_USER || process.env.POSTGRES_USER || "postgres",
+    password: process.env.DB_PASSWORD || process.env.POSTGRES_PASSWORD || "postgres",
+    database: process.env.DB_NAME || process.env.POSTGRES_DATABASE || "sustainx",
     ssl: isProduction ? { rejectUnauthorized: false } : false,
   };
 }

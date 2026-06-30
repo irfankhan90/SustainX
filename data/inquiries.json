@@ -19,5 +19,17 @@
     "status": "New",
     "created_at": "2026-06-23T08:52:50.133Z",
     "updated_at": "2026-06-23T08:52:50.133Z"
+  },
+  {
+    "id": 3,
+    "full_name": "Integration Test User",
+    "organization": "",
+    "email": "test@sustainx.com",
+    "phone": "+91 99999 88888",
+    "inquiry_type": "Renewable Energy & EPC",
+    "message": "This is a detailed mock message with at least ten characters to satisfy validation.",
+    "status": "New",
+    "created_at": "2026-06-29T12:40:58.206Z",
+    "updated_at": "2026-06-29T12:40:58.206Z"
   }
 ]

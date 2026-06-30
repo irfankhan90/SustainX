@@ -100,6 +100,10 @@ export const validateInquiry = (req: Request, res: Response, next: NextFunction)
     "Request Strategic Advisory",
     "Discuss a Project Opportunity",
     "Access Energy Trading Services",
+    "Strategic Advisory",
+    "Project Management",
+    "Renewable Energy & EPC",
+    "Capacity Building & Training",
     "Other"
   ];
 
@@ -125,8 +129,14 @@ export const validateContact = (req: Request, res: Response, next: NextFunction)
   if (req.body.emailAddress !== undefined) {
     req.body.email = req.body.emailAddress;
   }
+  if (req.body.mobileNumber !== undefined) {
+    req.body.phone = req.body.mobileNumber;
+  }
+  if (req.body.inquiryType !== undefined) {
+    req.body.inquiry_type = req.body.inquiryType;
+  }
 
-  const { full_name, email, subject, message } = req.body;
+  const { full_name, email, phone, inquiry_type, message } = req.body;
 
   if (!full_name || !full_name.trim()) {
     console.error("[Validation Failed] Full Name is required.");
@@ -144,9 +154,28 @@ export const validateContact = (req: Request, res: Response, next: NextFunction)
     return res.status(400).json({ success: false, message: "Invalid email format." });
   }
 
-  if (!subject || !subject.trim()) {
-    console.error("[Validation Failed] Subject is required.");
-    return res.status(400).json({ success: false, message: "Subject is required." });
+  if (!phone || !phone.trim()) {
+    console.error("[Validation Failed] Mobile Number is required.");
+    return res.status(400).json({ success: false, message: "Mobile Number is required." });
+  }
+
+  const phoneRegex = /^\+?[0-9\s\-()]{7,25}$/;
+  if (!phoneRegex.test(phone.trim())) {
+    console.error("[Validation Failed] Invalid mobile number format.");
+    return res.status(400).json({ success: false, message: "Invalid mobile number format." });
+  }
+
+  const validContactInquiryTypes = [
+    "Strategic Advisory",
+    "Project Management",
+    "Renewable Energy & EPC",
+    "Capacity Building & Training",
+    "Other"
+  ];
+
+  if (!inquiry_type || !validContactInquiryTypes.includes(inquiry_type.trim())) {
+    console.error("[Validation Failed] Invalid inquiry type selected.");
+    return res.status(400).json({ success: false, message: "Invalid inquiry type selected." });
   }
 
   if (!message || !message.trim()) {

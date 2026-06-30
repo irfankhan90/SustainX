@@ -1,12 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
+const inquiryTypes = [
+  "Strategic Advisory",
+  "Project Management",
+  "Renewable Energy & EPC",
+  "Capacity Building & Training",
+  "Other"
+];
 
 export const ContactSection: React.FC = () => {
   const [fullName, setFullName] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
-  const [subject, setSubject] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("+91 ");
+  const [inquiryType, setInquiryType] = useState("");
   const [message, setMessage] = useState("");
 
   // Validation States
@@ -17,6 +26,20 @@ export const ContactSection: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown on click outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside, { passive: true });
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   // Real-time validation function
   const validateField = (name: string, value: string) => {
@@ -31,11 +54,15 @@ export const ContactSection: React.FC = () => {
       } else if (!/\S+@\S+\.\S+/.test(value)) {
         errorMsg = "Please enter a valid email address";
       }
-    } else if (name === "subject") {
-      if (!value.trim()) {
-        errorMsg = "Subject is required";
-      } else if (value.trim().length < 4) {
-        errorMsg = "Subject must be at least 4 characters long";
+    } else if (name === "mobileNumber") {
+      if (!value.trim() || value.trim() === "+91") {
+        errorMsg = "Mobile number is required";
+      } else if (!/^\+?[0-9\s\-()]{7,25}$/.test(value.trim())) {
+        errorMsg = "Please enter a valid mobile number";
+      }
+    } else if (name === "inquiryType") {
+      if (!value) {
+        errorMsg = "Please select an inquiry type";
       }
     } else if (name === "message") {
       if (!value.trim()) {
@@ -56,7 +83,11 @@ export const ContactSection: React.FC = () => {
   const handleChange = (name: string, value: string) => {
     if (name === "fullName") setFullName(value);
     else if (name === "emailAddress") setEmailAddress(value);
-    else if (name === "subject") setSubject(value);
+    else if (name === "mobileNumber") {
+      // Allow country code to remain and format nicely
+      setMobileNumber(value);
+    }
+    else if (name === "inquiryType") setInquiryType(value);
     else if (name === "message") setMessage(value);
 
     if (touched[name]) {
@@ -69,21 +100,24 @@ export const ContactSection: React.FC = () => {
     setSubmitError("");
 
     // Mark all as touched
-    const newTouched = { fullName: true, emailAddress: true, subject: true, message: true };
+    const newTouched = { fullName: true, emailAddress: true, mobileNumber: true, inquiryType: true, message: true };
     setTouched(newTouched);
 
     // Validate all
     validateField("fullName", fullName);
     validateField("emailAddress", emailAddress);
-    validateField("subject", subject);
+    validateField("mobileNumber", mobileNumber);
+    validateField("inquiryType", inquiryType);
     validateField("message", message);
 
     const hasErrors =
       !fullName.trim() ||
       !emailAddress.trim() ||
       !/\S+@\S+\.\S+/.test(emailAddress) ||
-      !subject.trim() ||
-      subject.trim().length < 4 ||
+      !mobileNumber.trim() ||
+      mobileNumber.trim() === "+91" ||
+      !/^\+?[0-9\s\-()]{7,25}$/.test(mobileNumber.trim()) ||
+      !inquiryType ||
       !message.trim() ||
       message.trim().length < 10;
 
@@ -101,7 +135,8 @@ export const ContactSection: React.FC = () => {
         body: JSON.stringify({
           fullName,
           emailAddress,
-          subject,
+          mobileNumber,
+          inquiryType,
           message,
         }),
       });
@@ -113,7 +148,8 @@ export const ContactSection: React.FC = () => {
         // Reset form
         setFullName("");
         setEmailAddress("");
-        setSubject("");
+        setMobileNumber("+91 ");
+        setInquiryType("");
         setMessage("");
         setTouched({});
         setErrors({});
@@ -261,28 +297,134 @@ export const ContactSection: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Subject */}
-                    <div className="flex flex-col gap-1.5">
-                      <label htmlFor="contactSubject" className="text-xs font-bold text-t-DEFAULT uppercase tracking-wider">
-                        Subject
-                      </label>
-                      <input
-                        id="contactSubject"
-                        type="text"
-                        className={`w-full h-12 px-4 rounded-xl border bg-transparent text-sm text-t-DEFAULT transition-all duration-200 outline-none ${
-                          touched.subject && errors.subject
-                            ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
-                            : "border-bdr-DEFAULT focus:border-brand-g focus:ring-1 focus:ring-brand-g"
-                        }`}
-                        placeholder="Inquiry topic or project area..."
-                        value={subject}
-                        onChange={(e) => handleChange("subject", e.target.value)}
-                        onBlur={(e) => handleBlur("subject", e.target.value)}
-                        disabled={isLoading}
-                      />
-                      {touched.subject && errors.subject && (
-                        <span className="text-[11px] text-red-500 font-semibold mt-0.5">{errors.subject}</span>
-                      )}
+                    {/* Mobile Number & Inquiry Type */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                      {/* Mobile Number */}
+                      <div className="flex flex-col gap-1.5">
+                        <label htmlFor="contactMobile" className="text-xs font-bold text-t-DEFAULT uppercase tracking-wider">
+                          Mobile Number
+                        </label>
+                        <input
+                          id="contactMobile"
+                          type="tel"
+                          className={`w-full h-12 px-4 rounded-xl border bg-transparent text-sm text-t-DEFAULT transition-all duration-200 outline-none ${
+                            touched.mobileNumber && errors.mobileNumber
+                              ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
+                              : "border-bdr-DEFAULT focus:border-brand-g focus:ring-1 focus:ring-brand-g"
+                          }`}
+                          placeholder="+91 98765 43210"
+                          value={mobileNumber}
+                          onChange={(e) => handleChange("mobileNumber", e.target.value)}
+                          onBlur={(e) => handleBlur("mobileNumber", e.target.value)}
+                          disabled={isLoading}
+                        />
+                        {touched.mobileNumber && errors.mobileNumber && (
+                          <span className="text-[11px] text-red-500 font-semibold mt-0.5">{errors.mobileNumber}</span>
+                        )}
+                      </div>
+
+                      {/* Inquiry Type */}
+                      <div className="flex flex-col gap-1.5 relative" ref={dropdownRef}>
+                        <label className="text-xs font-bold text-t-DEFAULT uppercase tracking-wider">
+                          Inquiry Type
+                        </label>
+                        
+                        {/* Desktop Custom Dropdown */}
+                        <div className="hidden md:block w-full">
+                          <button
+                            type="button"
+                            onClick={() => !isLoading && setIsOpen(!isOpen)}
+                            className={`w-full h-12 px-4 rounded-xl border bg-transparent text-left text-sm flex items-center justify-between transition-colors focus:border-brand-g focus:ring-1 focus:ring-brand-g cursor-pointer ${
+                              touched.inquiryType && errors.inquiryType ? "border-red-500" : "border-bdr-DEFAULT"
+                            }`}
+                            disabled={isLoading}
+                          >
+                            <span className={inquiryType ? "text-t-DEFAULT font-normal" : "text-t-3"}>
+                              {inquiryType || "Select Inquiry Type"}
+                            </span>
+                            <svg
+                              viewBox="0 0 24 24"
+                              className={`w-4 h-4 text-t-2 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                          </button>
+                          
+                          <AnimatePresence>
+                            {isOpen && (
+                              <motion.ul
+                                className="absolute left-0 right-0 z-50 mt-1 bg-white border border-bdr-DEFAULT rounded-xl shadow-sh2 max-h-60 overflow-y-auto py-1.5 focus:outline-none"
+                                initial={{ opacity: 0, y: -8 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -8 }}
+                                transition={{ duration: 0.15 }}
+                              >
+                                {inquiryTypes.map((type) => (
+                                  <li key={type}>
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setInquiryType(type);
+                                        setIsOpen(false);
+                                        handleChange("inquiryType", type);
+                                      }}
+                                      className={`w-full px-4 py-2.5 text-left text-sm transition-colors cursor-pointer flex items-center justify-between ${
+                                        inquiryType === type
+                                          ? "bg-brand-gxl text-brand-g font-semibold"
+                                          : "text-t-DEFAULT hover:bg-brand-gxl/20"
+                                      }`}
+                                    >
+                                      <span>{type}</span>
+                                      {inquiryType === type && (
+                                        <svg viewBox="0 0 24 24" className="w-4 h-4 fill-none stroke-current stroke-[2.5]">
+                                          <polyline points="20 6 9 17 4 12" />
+                                        </svg>
+                                      )}
+                                    </button>
+                                  </li>
+                                ))}
+                              </motion.ul>
+                            )}
+                          </AnimatePresence>
+                        </div>
+
+                        {/* Mobile Native Selector */}
+                        <div className="block md:hidden w-full relative">
+                          <select
+                            id="inquiryTypeMobile"
+                            className={`w-full h-12 px-4 rounded-xl border bg-transparent text-sm appearance-none focus:border-brand-g focus:ring-1 focus:ring-brand-g ${
+                              touched.inquiryType && errors.inquiryType ? "border-red-500" : "border-bdr-DEFAULT"
+                            } ${inquiryType ? "text-t-DEFAULT" : "text-t-3"}`}
+                            value={inquiryType}
+                            onChange={(e) => {
+                              setInquiryType(e.target.value);
+                              handleChange("inquiryType", e.target.value);
+                            }}
+                            disabled={isLoading}
+                          >
+                            <option value="" className="text-t-3">Select Inquiry Type</option>
+                            {inquiryTypes.map((type) => (
+                              <option key={type} value={type} className="text-black">
+                                {type}
+                              </option>
+                            ))}
+                          </select>
+                          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                            <svg viewBox="0 0 24 24" className="w-4 h-4 text-t-2" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                              <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                          </div>
+                        </div>
+
+                        {touched.inquiryType && errors.inquiryType && (
+                          <span className="text-[11px] text-red-500 font-semibold mt-0.5">{errors.inquiryType}</span>
+                        )}
+                      </div>
                     </div>
 
                     {/* Message */}
@@ -298,7 +440,7 @@ export const ContactSection: React.FC = () => {
                             ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500"
                             : "border-bdr-DEFAULT focus:border-brand-g focus:ring-1 focus:ring-brand-g"
                         }`}
-                        placeholder="How can we support you?"
+                        placeholder="Tell us about your requirements, project, or inquiry..."
                         value={message}
                         onChange={(e) => handleChange("message", e.target.value)}
                         onBlur={(e) => handleBlur("message", e.target.value)}

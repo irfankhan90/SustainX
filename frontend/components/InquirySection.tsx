@@ -124,7 +124,7 @@ export const InquirySection: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://sustain-x-two.vercel.app";
       const response = await fetch(`${apiUrl}/api/inquiries`, {
         method: "POST",
         headers: {

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import AuthLayout from "@/components/auth/AuthLayout";
 import InputField from "@/components/auth/InputField";
@@ -11,6 +11,21 @@ import AuthButton from "@/components/auth/AuthButton";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("sustainx_user");
+    const storedToken = localStorage.getItem("sustainx_token");
+    if (storedUser && storedToken) {
+      try {
+        const user = JSON.parse(storedUser);
+        if (user.role === "ADMIN") {
+          window.location.href = "/admin/dashboard";
+        }
+      } catch (err) {
+        console.error("Error reading session on login page", err);
+      }
+    }
+  }, []);
 
   // Error states
   const [emailError, setEmailError] = useState("");
@@ -56,7 +71,7 @@ export default function LoginPage() {
     setFormError("");
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://sustain-x-two.vercel.app";
       const response = await fetch(`${apiUrl}/api/auth/login`, {
         method: "POST",
         headers: {
@@ -72,7 +87,11 @@ export default function LoginPage() {
         localStorage.setItem("sustainx_user", JSON.stringify(result.data.user));
         setIsSuccess(true);
         setTimeout(() => {
-          window.location.href = "/";
+          if (result.data.user.role === "ADMIN") {
+            window.location.href = "/admin/dashboard";
+          } else {
+            window.location.href = "/";
+          }
         }, 1000);
       } else {
         setFormError(result.message || "Invalid email or password. Please try again.");

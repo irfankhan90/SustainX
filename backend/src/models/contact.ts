@@ -52,7 +52,7 @@ const saveFallbackContacts = (contacts: Contact[]) => {
 export const createContact = async (params: ContactCreationParams): Promise<Contact> => {
   const { full_name, email, subject, message } = params;
   
-  if (process.env.DATABASE_URL || process.env.DB_HOST) {
+  if (process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.DB_HOST) {
     try {
       const result = await query(
         `INSERT INTO contacts (full_name, email, subject, message, status) 
@@ -92,7 +92,7 @@ export const createContact = async (params: ContactCreationParams): Promise<Cont
 };
 
 export const getContacts = async (): Promise<Contact[]> => {
-  if (process.env.DATABASE_URL || process.env.DB_HOST) {
+  if (process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.DB_HOST) {
     try {
       const result = await query(
         "SELECT * FROM contacts ORDER BY created_at DESC"

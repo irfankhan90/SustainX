@@ -91,3 +91,58 @@ HTML CONTENT:
     </div>
   
 ===================================
+
+===================================
+TIMESTAMP: 2026-06-29T12:40:58.210Z
+TO: test@sustainx.com
+SUBJECT: Thank You for Contacting GlobalPact SustainX
+HTML CONTENT:
+
+    <div style="font-family: 'DM Sans', Arial, sans-serif; max-width: 600px; margin: auto; padding: 32px; border: 1px solid #D0E8DE; border-radius: 16px; background-color: #ffffff; color: #0B1612;">
+      <h2 style="color: #0F8B6D; font-family: 'Sora', sans-serif;">GlobalPact SustainX</h2>
+      <hr style="border: 0; border-top: 1px solid #E6F3EE; margin: 20px 0;" />
+      <p style="font-size: 15px; line-height: 1.6; color: #1C2E27; margin-bottom: 12px;">
+        Thank you for reaching out to GlobalPact SustainX.
+      </p>
+      <p style="font-size: 15px; line-height: 1.6; color: #1C2E27; margin-bottom: 12px;">
+        Your inquiry has been successfully received and forwarded to our team.
+      </p>
+      <p style="font-size: 15px; line-height: 1.6; color: #1C2E27; margin-bottom: 12px;">
+        We appreciate your interest and will review your request shortly.
+      </p>
+      <p style="font-size: 15px; line-height: 1.6; color: #1C2E27; margin-bottom: 24px;">
+        Our team will contact you if further information is required.
+      </p>
+      <p style="font-size: 15px; line-height: 1.6; color: #1C2E27; font-weight: bold; margin-top: 20px;">
+        Regards,<br />
+        GlobalPact SustainX
+      </p>
+    </div>
+  
+===================================
+
+===================================
+TIMESTAMP: 2026-06-29T12:41:40.377Z
+TO: er.irfan0987@gmail.com
+SUBJECT: New Inquiry Received: Renewable Energy & EPC
+HTML CONTENT:
+
+    <div style="font-family: 'DM Sans', Arial, sans-serif; max-width: 600px; margin: auto; padding: 32px; border: 1px solid #D0E8DE; border-radius: 16px; background-color: #ffffff; color: #0B1612;">
+      <h2 style="color: #1D9E75; font-family: 'Sora', sans-serif;">New Inquiry Received</h2>
+      <hr style="border: 0; border-top: 1px solid #E6F3EE; margin: 20px 0;" />
+      <p style="font-size: 15px; color: #1C2E27; line-height: 1.8; margin: 0 0 16px 0;">
+        <strong>Full Name:</strong> Integration Test User<br />
+        <strong>Email:</strong> test@sustainx.com<br />
+        <strong>Mobile Number:</strong> +91 99999 88888<br />
+        <strong>Inquiry Type:</strong> Renewable Energy & EPC<br />
+      </p>
+      <div style="background-color: #F8FAF9; border: 1px solid #D0E8DE; padding: 16px; border-radius: 8px; margin-top: 20px;">
+        <div style="font-weight: bold; font-size: 12px; color: #6B8C80; text-transform: uppercase; margin-bottom: 8px;">Message:</div>
+        <div style="font-size: 14px; line-height: 1.6; color: #1C2E27; white-space: pre-wrap;">This is a detailed mock message with at least ten characters to satisfy validation.</div>
+      </div>
+      <p style="font-size: 12px; color: #6B8C80; margin-top: 20px; border-top: 1px solid #E6F3EE; pt-16px;">
+        <strong>Submitted On:</strong> 29/6/2026, 6:11:40 pm
+      </p>
+    </div>
+  
+===================================

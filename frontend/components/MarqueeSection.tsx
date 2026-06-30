@@ -61,7 +61,11 @@ export const MarqueeSection: React.FC = () => {
   const displayPartners = [...PARTNERS, ...PARTNERS, ...PARTNERS, ...PARTNERS];
 
   return (
-    <div className="py-8 border-t border-b border-bdr-DEFAULT bg-surface-DEFAULT overflow-hidden select-none">
+    <div 
+      id="trusted-partners"
+      className="py-8 border-t border-b border-bdr-DEFAULT bg-surface-DEFAULT overflow-hidden select-none"
+      style={{ scrollMarginTop: "calc(var(--navbar-height) + 24px)" }}
+    >
       <div className="text-center text-[10px] sm:text-[11px] font-bold text-t-3 tracking-[0.2em] uppercase mb-6">
         Trusted by Industry Leaders & Experts
       </div>

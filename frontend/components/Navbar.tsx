@@ -41,7 +41,7 @@ const navItems: NavItem[] = [
     label: "Capacity Building",
     href: "/capacity-building",
     submenu: [
-      { label: "Certificate Programs", href: "/capacity-building" },
+      { label: "Certificate Programs", href: "/capacity-building/certificate-programs" },
       { label: "Diploma Programs", href: "/capacity-building/diploma-programs" },
       { label: "Executive & Corporate Programs", href: "/capacity-building/executive-corporate-programs" },
     ],
@@ -50,7 +50,7 @@ const navItems: NavItem[] = [
   {
     label: "Partnerships",
     submenu: [
-      { label: "Our Partners", href: "/partnerships/our-partners" },
+      { label: "Our Partners", href: "/#trusted-partners" },
       { label: "For Partners", href: "/partnerships/for-partners" },
     ],
   },
@@ -191,14 +191,14 @@ export const Navbar: React.FC = () => {
   };
 
   const getLinkClass = (isActive: boolean) => {
-    return `relative py-2 text-sm font-semibold transition-colors duration-300 group cursor-pointer flex items-center gap-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75] ${
+    return `relative py-2 text-sm lg:text-[13px] xl:text-sm font-semibold transition-colors duration-300 group cursor-pointer flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75] whitespace-nowrap ${
       isActive ? "text-[#1D9E75]" : "text-t-2 hover:text-[#1D9E75]"
     }`;
   };
 
   const getUnderlineClass = (isActive: boolean) => {
-    return `absolute bottom-[-4px] left-0 w-full h-[2.5px] bg-[#1D9E75] rounded-full transition-transform duration-300 ease-out origin-left ${
-      isActive ? "scale-x-100 bg-[#1D9E75]" : "scale-x-0 group-hover:scale-x-100 group-focus-within:scale-x-100 bg-[#1D9E75]/70"
+    return `absolute bottom-[-4px] left-0 w-full h-[2px] bg-[#1D9E75] rounded-full transition-transform duration-300 ease-out origin-left ${
+      isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100 group-focus-within:scale-x-100"
     }`;
   };
 
@@ -227,243 +227,171 @@ export const Navbar: React.FC = () => {
 
       {/* Main Navigation Bar */}
       <nav
-        className={`w-full flex items-center transition-all duration-300 ${
+        className={`w-full flex items-center transition-all duration-300 bg-white ${
           isScrolled
-            ? "h-[68px] bg-white/95 backdrop-blur-[20px] border-b border-[#085041]/10 shadow-[0_12px_40px_-15px_rgba(8,80,65,0.12)]"
-            : "h-[88px] bg-white border-b border-[#085041]/5"
+            ? "h-[68px] lg:h-[80px] border-b border-[#E2ECE8] shadow-[0_4px_20px_rgba(11,22,18,0.04)]"
+            : "h-[72px] lg:h-[88px] border-b border-[#E2ECE8]/60"
         }`}
       >
-        <div className="w-full flex items-center justify-between gap-4 max-w-none mx-auto px-4 sm:px-6 md:px-8">
+        <div className="w-full max-w-[1440px] mx-auto px-8 h-full flex items-center justify-between">
           
-          {/* Brand Logo & Tagline */}
-          <Link 
-            href="#home" 
-            className="flex items-center gap-1.5 sm:gap-[12px] group shrink-0 select-none" 
-            onClick={handleLogoClick}
-          >
-            <Image
-              src="/logo.jpg"
-              alt="GlobalPact SustainX Logo"
-              width={72}
-              height={72}
-              priority
-              className={`object-contain transition-all duration-300 ${
-                isScrolled ? "h-[32px] sm:h-[40px] md:h-[54px]" : "h-[42px] sm:h-[50px] md:h-[72px]"
-              } w-auto flex-shrink-0`}
-            />
-            <div className="flex flex-col justify-center">
-              <div className="font-syne text-[15px] sm:text-[20px] font-extrabold text-t-DEFAULT tracking-tight leading-none">
-                GlobalPact <span className="text-[#1D9E75] font-extrabold">SustainX</span>
-              </div>
-              <div className="text-[7.5px] min-[375px]:text-[8.5px] sm:text-[10px] md:text-[11px] lg:hidden xl:block text-t-3 font-bold tracking-wide mt-1 transition-all duration-300 group-hover:text-[#1D9E75] whitespace-nowrap">
-                Empowering Sustainable Growth Worldwide
-              </div>
-            </div>
-          </Link>
-
-          {/* Desktop Navigation Links */}
-          <ul className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-8 list-none m-0 p-0">
-            {navItems.map((item, idx) => {
-              const hasSubmenu = !!item.submenu;
-              const isActive = isItemActive(item);
-
-              if (!hasSubmenu) {
-                return (
-                  <li key={idx}>
-                    <Link
-                      href={item.href || "#"}
-                      className={getLinkClass(isActive)}
-                      onClick={() => handleLinkClick(item.href || "#")}
-                    >
-                      <span>{item.label}</span>
-                      <span className={getUnderlineClass(isActive)} />
-                    </Link>
-                  </li>
-                );
-              }
-
-              return (
-                <li key={idx} className="relative group py-2">
-                  {item.href ? (
-                    <Link
-                      href={item.href}
-                      className={`relative py-2 text-sm font-semibold transition-colors duration-300 flex items-center gap-1 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75] ${
-                        isActive ? "text-[#1D9E75]" : "text-t-2 hover:text-[#1D9E75]"
-                      }`}
-                    >
-                      <span>{item.label}</span>
-                      <svg
-                        className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180 text-current"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                      >
-                        <polyline points="6 9 12 15 18 9" />
-                      </svg>
-                      <span className={getUnderlineClass(isActive)} />
-                    </Link>
-                  ) : (
-                    <button
-                      className={`relative py-2 text-sm font-semibold transition-colors duration-300 flex items-center gap-1 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75] ${
-                        isActive ? "text-[#1D9E75]" : "text-t-2 hover:text-[#1D9E75]"
-                      }`}
-                    >
-                      <span>{item.label}</span>
-                      <svg
-                        className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180 text-current"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                      >
-                        <polyline points="6 9 12 15 18 9" />
-                      </svg>
-                      <span className={getUnderlineClass(isActive)} />
-                    </button>
-                  )}
-
-                  {/* Dropdown Menu */}
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto z-50">
-                    <ul className="w-56 bg-white border border-[#D0E8DE]/45 rounded-2xl shadow-[0_12px_40px_-15px_rgba(8,80,65,0.15)] py-2.5 list-none m-0">
-                      {item.submenu?.map((sub, sIdx) => {
-                        const isSubActive =
-                          (pathname === sub.href.split("#")[0] || (sub.href.split("#")[0] === "/" && pathname === "/")) &&
-                          (activeHash === `#${sub.href.split("#")[1]}` || (!sub.href.split("#")[1] && activeHash === "#home"));
-
-                        return (
-                          <li key={sIdx}>
-                            <Link
-                              href={sub.href}
-                              onClick={() => handleLinkClick(sub.href)}
-                              className={`block px-5 py-2 text-[13px] font-semibold transition-colors duration-200 ${
-                                isSubActive
-                                  ? "text-[#1D9E75] bg-[#1D9E75]/5 font-bold"
-                                  : "text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/5"
-                              }`}
-                            >
-                              {sub.label}
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-
-          {/* Desktop Call to Actions */}
-          <div className="hidden lg:flex items-center gap-3 shrink-0 ml-auto relative z-30">
-            {/* Social Media Links */}
-            <div className="relative z-30 hidden xl:flex items-center gap-1.5 mr-2 border-r border-[#D0E8DE]/45 pr-3.5">
-              {/* LinkedIn */}
-              <a
-                href="https://www.linkedin.com/company/globalpactsustainx/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative z-40 pointer-events-auto w-8 h-8 rounded-lg flex items-center justify-center text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/8 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75]"
-                aria-label="GlobalPact SustainX on LinkedIn"
-              >
-                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                </svg>
-              </a>
-              {/* Facebook */}
-              <a
-                href="https://www.facebook.com/GlobalPactSustainX"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative z-40 pointer-events-auto w-8 h-8 rounded-lg flex items-center justify-center text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/8 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75]"
-                aria-label="GlobalPact SustainX on Facebook"
-              >
-                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current">
-                  <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
-                </svg>
-              </a>
-              {/* X / Twitter */}
-              <a
-                href="https://x.com/globalSustainx"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative z-40 pointer-events-auto w-8 h-8 rounded-lg flex items-center justify-center text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/8 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75]"
-                aria-label="GlobalPact SustainX on X (formerly Twitter)"
-              >
-                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                </svg>
-              </a>
-              {/* Instagram */}
-              <a
-                href="https://www.instagram.com/globalpactsustainx/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative z-40 pointer-events-auto w-8 h-8 rounded-lg flex items-center justify-center text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/8 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75]"
-                aria-label="GlobalPact SustainX on Instagram"
-              >
-                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-none stroke-current stroke-2 stroke-linecap-round stroke-linejoin-round">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-                </svg>
-              </a>
-            </div>
-            {/* Primary Consulting Action Button */}
-            {mounted && token && user ? (
-              <>
-                <span className="text-xs font-semibold text-t-2 select-none mr-2">
-                  Hello, {user.full_name.split(" ")[0]}
-                </span>
-                {user.role === "ADMIN" && (
-                  <Link
-                    href="/admin/inquiries"
-                    className="h-10 px-4 flex items-center justify-center text-xs font-bold text-brand-gd border border-brand-gl/40 rounded-lg bg-[#E1F5EE]/40 hover:bg-[#E1F5EE] transition-all cursor-pointer mr-1 focus-visible:outline-none"
-                  >
-                    Dashboard
-                  </Link>
-                )}
-                <button
-                  onClick={handleSignOut}
-                  className="h-10 px-4 flex items-center justify-center text-xs font-bold text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-all cursor-pointer focus-visible:outline-none"
-                >
-                  Sign Out
-                </button>
-              </>
-            ) : (
-              mounted && (
-                <Link
-                  href="/login"
-                  className="h-10 px-4 flex items-center justify-center text-xs font-bold text-[#1D9E75] border border-[#1D9E75]/30 rounded-lg hover:bg-[#E1F5EE]/20 transition-all cursor-pointer mr-1 focus-visible:outline-none"
-                >
-                  Sign In
-                </Link>
-              )
-            )}
-            <Link
-              href="#partnership-inquiry"
-              className="h-10 px-5 flex items-center justify-center text-sm font-bold text-white rounded-lg bg-[#1D9E75] hover:bg-[#157C5C] shadow-[0_4px_12px_rgba(29,158,117,0.15)] hover:shadow-[0_8px_20px_rgba(29,158,117,0.25)] hover:-translate-y-[2px] active:translate-y-0 active:scale-[0.98] transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] focus-visible:ring-offset-2"
+          {/* Logo Section (Far Left) */}
+          <div className="h-full flex items-center justify-start shrink-0">
+            <Link 
+              href="#home" 
+              className="flex items-center gap-2.5 sm:gap-3 group shrink-0 select-none cursor-pointer" 
+              onClick={handleLogoClick}
             >
-              Partner With Us
+              <Image
+                src="/logo.jpg"
+                alt="GlobalPact SustainX Logo"
+                width={52}
+                height={52}
+                priority
+                className={`object-contain transition-all duration-300 ${
+                  isScrolled ? "h-10 w-10 lg:h-[44px] lg:w-[44px]" : "h-[44px] w-[44px] lg:h-[52px] lg:w-[52px]"
+                } flex-shrink-0 rounded-md`}
+              />
+              <div className="flex flex-col justify-center min-w-0">
+                <div className="font-syne text-[15px] sm:text-[18px] font-extrabold text-t-DEFAULT tracking-tight leading-none">
+                  GlobalPact <span className="text-[#1D9E75] font-extrabold">SustainX</span>
+                </div>
+                <div className="text-[8.5px] sm:text-[9.5px] lg:hidden 2xl:block text-t-3 font-bold tracking-wide mt-1 transition-all duration-300 group-hover:text-[#1D9E75] whitespace-nowrap">
+                  Empowering Sustainable Growth Worldwide
+                </div>
+              </div>
             </Link>
           </div>
 
-          {/* Hamburger Menu Toggle (Mobile) */}
-          <button
-            onClick={() => setIsOpen(true)}
-            className="flex lg:hidden w-12 h-12 items-center justify-center cursor-pointer select-none rounded-lg hover:bg-[#E1F5EE]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] focus-visible:ring-offset-2 transition-colors duration-250 animate-fade-in"
-            aria-label="Open menu"
-          >
-            <svg 
-              className="w-6 h-6 text-t-DEFAULT transition-transform duration-300" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor" 
-              strokeWidth={2.5}
+          {/* Center Navigation Section (Perfect alignment and natural expansion) */}
+          <div className="hidden lg:flex items-center justify-center flex-1 h-full lg:ml-6 lg:mr-6 xl:ml-10 xl:mr-10">
+            <ul className="flex items-center lg:gap-3.5 xl:gap-6 2xl:gap-8 list-none m-0 p-0 h-full">
+              {navItems.map((item, idx) => {
+                const hasSubmenu = !!item.submenu;
+                const isActive = isItemActive(item);
+
+                if (!hasSubmenu) {
+                  return (
+                    <li key={idx} className="flex items-center h-full">
+                      <Link
+                        href={item.href || "#"}
+                        className={getLinkClass(isActive)}
+                        onClick={() => handleLinkClick(item.href || "#")}
+                      >
+                        <span>{item.label}</span>
+                        <span className={getUnderlineClass(isActive)} />
+                      </Link>
+                    </li>
+                  );
+                }
+
+                return (
+                  <li key={idx} className="relative group h-full flex items-center">
+                    {item.href ? (
+                      <Link
+                        href={item.href}
+                        className={getLinkClass(isActive)}
+                      >
+                        <span>{item.label}</span>
+                        <svg
+                          className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180 text-current flex-shrink-0"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                        >
+                          <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                        <span className={getUnderlineClass(isActive)} />
+                      </Link>
+                    ) : (
+                      <button
+                        className={getLinkClass(isActive)}
+                      >
+                        <span>{item.label}</span>
+                        <svg
+                          className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180 text-current flex-shrink-0"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                        >
+                          <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                        <span className={getUnderlineClass(isActive)} />
+                      </button>
+                    )}
+
+                    {/* Dropdown Menu */}
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto z-50">
+                      <ul className="w-56 bg-white border border-[#E2ECE8] rounded-2xl shadow-[0_12px_32px_rgba(11,22,18,0.08)] py-2.5 list-none m-0">
+                        {item.submenu?.map((sub, sIdx) => {
+                          const isSubActive =
+                            (pathname === sub.href.split("#")[0] || (sub.href.split("#")[0] === "/" && pathname === "/")) &&
+                            (activeHash === `#${sub.href.split("#")[1]}` || (!sub.href.split("#")[1] && activeHash === "#home"));
+
+                          return (
+                            <li key={sIdx}>
+                              <Link
+                                href={sub.href}
+                                onClick={() => handleLinkClick(sub.href)}
+                                className={`block px-5 py-2.5 text-[13px] font-semibold transition-colors duration-200 ${
+                                  isSubActive
+                                    ? "text-[#1D9E75] bg-[#1D9E75]/5 font-bold"
+                                    : "text-t-2 hover:text-[#1D9E75] hover:bg-[#E1F5EE]/30"
+                                }`}
+                              >
+                                {sub.label}
+                              </Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+
+          {/* Right Side Actions / Hamburger */}
+          <div className="h-full flex items-center justify-end shrink-0">
+            {/* Desktop Action Buttons */}
+            <div className="hidden lg:flex items-center lg:gap-4 xl:gap-5 shrink-0">
+              {mounted && (
+                <Link
+                  href="/login"
+                  className="h-10 px-4 flex items-center justify-center text-sm font-semibold text-[#1D9E75] border border-[#1D9E75]/30 rounded-lg hover:bg-[#E1F5EE]/20 transition-all cursor-pointer focus-visible:outline-none whitespace-nowrap"
+                >
+                  Sign In
+                </Link>
+              )}
+              <Link
+                href="#partnership-inquiry"
+                className="h-10 px-6 flex items-center justify-center text-sm font-bold text-white rounded-lg bg-[#1D9E75] hover:bg-[#157C5C] shadow-[0_4px_12px_rgba(29,158,117,0.15)] hover:shadow-[0_8px_20px_rgba(29,158,117,0.25)] hover:-translate-y-[2px] active:translate-y-0 active:scale-[0.98] transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] focus-visible:ring-offset-2 whitespace-nowrap"
+              >
+                Partner With Us
+              </Link>
+            </div>
+
+            {/* Hamburger Menu Toggle (Mobile) */}
+            <button
+              onClick={() => setIsOpen(true)}
+              className="flex lg:hidden w-11 h-11 items-center justify-center cursor-pointer select-none rounded-lg hover:bg-[#E1F5EE]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] focus-visible:ring-offset-2 transition-colors duration-250 animate-fade-in"
+              aria-label="Open menu"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
+              <svg 
+                className="w-6 h-6 text-t-DEFAULT transition-transform duration-300" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor" 
+                strokeWidth={2.5}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+
         </div>
       </nav>
 
@@ -600,37 +528,14 @@ export const Navbar: React.FC = () => {
 
         {/* Mobile Action Buttons */}
         <div className="flex flex-col gap-4 border-t border-[#D0E8DE]/45 pt-6 mt-auto">
-          {mounted && token && user ? (
-            <>
-              <div className="text-xs font-semibold text-t-2 text-center mb-1 select-none">
-                Hello, {user.full_name}
-              </div>
-              {user.role === "ADMIN" && (
-                <Link
-                  href="/admin/inquiries"
-                  onClick={() => setIsOpen(false)}
-                  className="w-full h-11 flex items-center justify-center text-sm font-bold text-brand-gd border border-brand-gl/40 rounded-lg bg-[#E1F5EE]/40 hover:bg-[#E1F5EE] transition-all"
-                >
-                  Admin Dashboard
-                </Link>
-              )}
-              <button
-                onClick={handleSignOut}
-                className="w-full h-11 flex items-center justify-center text-sm font-bold text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-all cursor-pointer"
-              >
-                Sign Out
-              </button>
-            </>
-          ) : (
-            mounted && (
-              <Link
-                href="/login"
-                onClick={() => setIsOpen(false)}
-                className="w-full h-11 flex items-center justify-center text-sm font-bold text-[#1D9E75] border border-[#1D9E75]/30 rounded-lg hover:bg-[#E1F5EE]/20 transition-all"
-              >
-                Sign In
-              </Link>
-            )
+          {mounted && (
+            <Link
+              href="/login"
+              onClick={() => setIsOpen(false)}
+              className="w-full h-11 flex items-center justify-center text-sm font-bold text-[#1D9E75] border border-[#1D9E75]/30 rounded-lg hover:bg-[#E1F5EE]/20 transition-all"
+            >
+              Sign In
+            </Link>
           )}
           <Link
             href="#partnership-inquiry"
@@ -639,59 +544,6 @@ export const Navbar: React.FC = () => {
           >
             Partner With Us
           </Link>
-          {/* Mobile Social Media Links */}
-          <div className="relative z-25 flex items-center justify-center gap-4 pt-4 border-t border-[#D0E8DE]/30 mt-2">
-            {/* LinkedIn */}
-            <a
-              href="https://www.linkedin.com/company/globalpactsustainx/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative z-30 pointer-events-auto w-11 h-11 rounded-lg border border-[#D0E8DE]/45 flex items-center justify-center text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/8 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75]"
-              aria-label="GlobalPact SustainX on LinkedIn"
-            >
-              <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] fill-current">
-                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-              </svg>
-            </a>
-            {/* Facebook */}
-            <a
-              href="https://www.facebook.com/GlobalPactSustainX"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative z-30 pointer-events-auto w-11 h-11 rounded-lg border border-[#D0E8DE]/45 flex items-center justify-center text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/8 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75]"
-              aria-label="GlobalPact SustainX on Facebook"
-            >
-              <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] fill-current">
-                <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
-              </svg>
-            </a>
-            {/* X / Twitter */}
-            <a
-              href="https://x.com/globalSustainx"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative z-30 pointer-events-auto w-11 h-11 rounded-lg border border-[#D0E8DE]/45 flex items-center justify-center text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/8 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75]"
-              aria-label="GlobalPact SustainX on X (formerly Twitter)"
-            >
-              <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] fill-current">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
-            </a>
-            {/* Instagram */}
-            <a
-              href="https://www.instagram.com/globalpactsustainx/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative z-30 pointer-events-auto w-11 h-11 rounded-lg border border-[#D0E8DE]/45 flex items-center justify-center text-t-2 hover:text-[#1D9E75] hover:bg-[#1D9E75]/8 hover:scale-105 active:scale-95 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75]"
-              aria-label="GlobalPact SustainX on Instagram"
-            >
-              <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] fill-none stroke-current stroke-2 stroke-linecap-round stroke-linejoin-round">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-              </svg>
-            </a>
-          </div>
         </div>
       </div>
     </header>

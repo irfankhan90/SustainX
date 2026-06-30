@@ -5,6 +5,9 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import NavPageClient from "@/components/NavPageClient";
 import FeaturesSection from "@/components/FeaturesSection";
+import AboutUsPage from "@/components/about/AboutUsPage";
+import VisionPage from "@/components/about/VisionPage";
+import MissionPage from "@/components/about/MissionPage";
 import Link from "next/link";
 
 interface RouteParams {
@@ -49,6 +52,69 @@ export default async function AboutSubpage({ params }: RouteParams) {
   const { slug } = await params;
   if (!VALID_SLUGS.includes(slug)) {
     notFound();
+  }
+
+  if (slug === "about-us") {
+    return (
+      <>
+        <Navbar />
+        <main className="pt-[88px] sm:pt-[112px] bg-white min-h-screen" id="main-content">
+          <div className="container pt-8 select-none">
+            <nav className="flex items-center gap-2 text-[11px] font-bold text-[#6B8C80] mb-8 select-none" aria-label="Breadcrumb">
+              <Link href="/" className="hover:text-[#1D9E75] transition-colors">Home</Link>
+              <span className="text-[#A8C4BA] text-[10px]">&gt;</span>
+              <span className="hover:text-[#1D9E75] cursor-pointer">About</span>
+              <span className="text-[#A8C4BA] text-[10px]">&gt;</span>
+              <span className="text-[#1D9E75] font-bold">About Us</span>
+            </nav>
+          </div>
+          <AboutUsPage />
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
+  if (slug === "vision") {
+    return (
+      <>
+        <Navbar />
+        <main className="pt-[88px] sm:pt-[112px] bg-white min-h-screen" id="main-content">
+          <div className="container pt-8 select-none">
+            <nav className="flex items-center gap-2 text-[11px] font-bold text-[#6B8C80] mb-8 select-none" aria-label="Breadcrumb">
+              <Link href="/" className="hover:text-[#1D9E75] transition-colors">Home</Link>
+              <span className="text-[#A8C4BA] text-[10px]">&gt;</span>
+              <span className="hover:text-[#1D9E75] cursor-pointer">About</span>
+              <span className="text-[#A8C4BA] text-[10px]">&gt;</span>
+              <span className="text-[#1D9E75] font-bold">Vision</span>
+            </nav>
+          </div>
+          <VisionPage />
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
+  if (slug === "mission") {
+    return (
+      <>
+        <Navbar />
+        <main className="pt-[88px] sm:pt-[112px] bg-white min-h-screen" id="main-content">
+          <div className="container pt-8 select-none">
+            <nav className="flex items-center gap-2 text-[11px] font-bold text-[#6B8C80] mb-8 select-none" aria-label="Breadcrumb">
+              <Link href="/" className="hover:text-[#1D9E75] transition-colors">Home</Link>
+              <span className="text-[#A8C4BA] text-[10px]">&gt;</span>
+              <span className="hover:text-[#1D9E75] cursor-pointer">About</span>
+              <span className="text-[#A8C4BA] text-[10px]">&gt;</span>
+              <span className="text-[#1D9E75] font-bold">Mission</span>
+            </nav>
+          </div>
+          <MissionPage />
+        </main>
+        <Footer />
+      </>
+    );
   }
 
   if (slug === "platform-features") {

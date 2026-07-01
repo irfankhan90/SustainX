@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect, useRef } from "react";
 import SectionHeader from "@/components/ui/SectionHeader";
 
 const features = [
@@ -140,6 +142,51 @@ const deliveryMethods = [
   },
 ];
 
+const FeatureCard: React.FC<{ feature: typeof features[0] }> = ({ feature }) => {
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    setCoords({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      className="relative bg-white p-6 sm:p-7 group transition-colors duration-250 hover:bg-[#F2FAF7] overflow-hidden select-none cursor-default"
+    >
+      {/* Spotlight Glow Background Effect */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        style={{
+          background: `radial-gradient(320px circle at ${coords.x}px ${coords.y}px, rgba(29, 158, 117, 0.08), transparent 80%)`,
+        }}
+      />
+      
+      <div className="relative z-10">
+        <div className="w-10 h-10 bg-brand-gxl text-brand-g rounded-xl flex items-center justify-center mb-3.5 transition-colors duration-250 group-hover:bg-brand-g group-hover:text-white fill-none stroke-brand-g group-hover:stroke-white stroke-2 stroke-linecap-round stroke-linejoin-round">
+          {feature.icon}
+        </div>
+        <h3 className="font-syne text-[15.5px] sm:text-[16px] font-bold text-t-DEFAULT mb-1.5">
+          {feature.title}
+        </h3>
+        <p className="text-[13px] sm:text-[13.5px] text-t-3 leading-[1.55]">
+          {feature.desc}
+        </p>
+        <div className="inline-block mt-3 px-2 py-[2.5px] bg-[#E1F5EE]/60 text-brand-gd rounded-md text-[11px] font-semibold transition-colors duration-300 group-hover:bg-white/80">
+          {feature.tag}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 interface FeaturesSectionProps {
   showOnly?: "features" | "delivery-model";
 }
@@ -159,23 +206,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({ showOnly }) =>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[1px] bg-bdr-DEFAULT border border-bdr-DEFAULT rounded-2xl overflow-hidden">
               {features.map((feature) => (
-                <div
-                  key={feature.id}
-                  className="bg-white p-9 group transition-colors duration-250 hover:bg-brand-gxl"
-                >
-                  <div className="w-12 h-12 bg-brand-gxl text-brand-g rounded-xl flex items-center justify-center mb-5 transition-colors duration-250 group-hover:bg-brand-g group-hover:text-white fill-none stroke-brand-g group-hover:stroke-white stroke-2 stroke-linecap-round stroke-linejoin-round">
-                    {feature.icon}
-                  </div>
-                  <h3 className="font-syne text-[17px] font-bold text-t-DEFAULT mb-2">
-                    {feature.title}
-                  </h3>
-                  <p className="text-sm text-t-3 leading-[1.6]">
-                    {feature.desc}
-                  </p>
-                  <div className="inline-block mt-3.5 px-2.5 py-[3px] bg-brand-gxl text-brand-gd rounded-md text-xs font-semibold">
-                    {feature.tag}
-                  </div>
-                </div>
+                <FeatureCard key={feature.id} feature={feature} />
               ))}
             </div>
           </div>

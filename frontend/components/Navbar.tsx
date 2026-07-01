@@ -191,7 +191,7 @@ export const Navbar: React.FC = () => {
   };
 
   const getLinkClass = (isActive: boolean) => {
-    return `relative py-2 text-sm lg:text-[13px] xl:text-sm font-semibold transition-colors duration-300 group cursor-pointer flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75] whitespace-nowrap ${
+    return `relative py-2 text-sm lg:text-[12px] xl:text-[13px] 2xl:text-sm font-semibold transition-colors duration-300 group cursor-pointer flex items-center gap-1 lg:gap-0.5 xl:gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#1D9E75] whitespace-nowrap ${
       isActive ? "text-[#1D9E75]" : "text-t-2 hover:text-[#1D9E75]"
     }`;
   };
@@ -233,7 +233,7 @@ export const Navbar: React.FC = () => {
             : "h-[72px] lg:h-[88px] border-b border-[#E2ECE8]/60"
         }`}
       >
-        <div className="w-full max-w-[1440px] mx-auto px-8 h-full flex items-center justify-between">
+        <div className="w-full max-w-[1440px] mx-auto px-4 lg:px-6 xl:px-8 h-full flex items-center justify-between">
           
           {/* Logo Section (Far Left) */}
           <div className="h-full flex items-center justify-start shrink-0">
@@ -253,7 +253,7 @@ export const Navbar: React.FC = () => {
                 } flex-shrink-0 rounded-md`}
               />
               <div className="flex flex-col justify-center min-w-0">
-                <div className="font-syne text-[15px] sm:text-[18px] font-extrabold text-t-DEFAULT tracking-tight leading-none">
+                <div className="font-syne text-[15px] lg:text-[16px] xl:text-[18px] font-extrabold text-t-DEFAULT tracking-tight leading-none">
                   GlobalPact <span className="text-[#1D9E75] font-extrabold">SustainX</span>
                 </div>
                 <div className="text-[8.5px] sm:text-[9.5px] lg:hidden 2xl:block text-t-3 font-bold tracking-wide mt-1 transition-all duration-300 group-hover:text-[#1D9E75] whitespace-nowrap">
@@ -264,8 +264,8 @@ export const Navbar: React.FC = () => {
           </div>
 
           {/* Center Navigation Section (Perfect alignment and natural expansion) */}
-          <div className="hidden lg:flex items-center justify-center flex-1 h-full lg:ml-6 lg:mr-6 xl:ml-10 xl:mr-10">
-            <ul className="flex items-center lg:gap-3.5 xl:gap-6 2xl:gap-8 list-none m-0 p-0 h-full">
+          <div className="hidden lg:flex items-center justify-center flex-1 h-full lg:ml-3 lg:mr-3 xl:ml-6 xl:mr-6 2xl:ml-10 2xl:mr-10">
+            <ul className="flex items-center lg:gap-1.5 xl:gap-4.5 2xl:gap-8 list-none m-0 p-0 h-full">
               {navItems.map((item, idx) => {
                 const hasSubmenu = !!item.submenu;
                 const isActive = isItemActive(item);
@@ -357,18 +357,18 @@ export const Navbar: React.FC = () => {
           {/* Right Side Actions / Hamburger */}
           <div className="h-full flex items-center justify-end shrink-0">
             {/* Desktop Action Buttons */}
-            <div className="hidden lg:flex items-center lg:gap-4 xl:gap-5 shrink-0">
+            <div className="hidden lg:flex items-center lg:gap-2.5 xl:gap-4.5 shrink-0">
               {mounted && (
                 <Link
                   href="/login"
-                  className="h-10 px-4 flex items-center justify-center text-sm font-semibold text-[#1D9E75] border border-[#1D9E75]/30 rounded-lg hover:bg-[#E1F5EE]/20 transition-all cursor-pointer focus-visible:outline-none whitespace-nowrap"
+                  className="h-10 px-3 xl:px-4 flex items-center justify-center text-sm font-semibold text-[#1D9E75] border border-[#1D9E75]/30 rounded-lg hover:bg-[#E1F5EE]/20 transition-all cursor-pointer focus-visible:outline-none whitespace-nowrap"
                 >
                   Sign In
                 </Link>
               )}
               <Link
                 href="#partnership-inquiry"
-                className="h-10 px-6 flex items-center justify-center text-sm font-bold text-white rounded-lg bg-[#1D9E75] hover:bg-[#157C5C] shadow-[0_4px_12px_rgba(29,158,117,0.15)] hover:shadow-[0_8px_20px_rgba(29,158,117,0.25)] hover:-translate-y-[2px] active:translate-y-0 active:scale-[0.98] transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] focus-visible:ring-offset-2 whitespace-nowrap"
+                className="h-10 px-4 xl:px-6 flex items-center justify-center text-sm font-bold text-white rounded-lg bg-[#1D9E75] hover:bg-[#157C5C] shadow-[0_4px_12px_rgba(29,158,117,0.15)] hover:shadow-[0_8px_20px_rgba(29,158,117,0.25)] hover:-translate-y-[2px] active:translate-y-0 active:scale-[0.98] transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9E75] focus-visible:ring-offset-2 whitespace-nowrap"
               >
                 Partner With Us
               </Link>

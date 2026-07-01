@@ -1,4 +1,59 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect, useRef } from "react";
+
+interface CountUpNumberProps {
+  target: number;
+  duration?: number;
+}
+
+const CountUpNumber: React.FC<CountUpNumberProps> = ({ target, duration = 1500 }) => {
+  const [count, setCount] = useState(0);
+  const elementRef = useRef<HTMLSpanElement>(null);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          let startTime: number | null = null;
+
+          const animate = (timestamp: number) => {
+            if (!startTime) startTime = timestamp;
+            const progress = timestamp - startTime;
+            const percentage = Math.min(progress / duration, 1);
+            
+            // Ease out quad formula for smooth decelerating animation
+            const easePercentage = percentage * (2 - percentage);
+            setCount(Math.floor(easePercentage * target));
+
+            if (percentage < 1) {
+              requestAnimationFrame(animate);
+            } else {
+              setCount(target);
+            }
+          };
+
+          requestAnimationFrame(animate);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [target, duration]);
+
+  return <span ref={elementRef}>{count}</span>;
+};
 
 const STATS = [
   {
@@ -51,24 +106,29 @@ export const StatsSection: React.FC = () => {
         {/* Horizontal Stats Bar Card */}
         <div className="bg-white border border-bdr-DEFAULT rounded-[22px] shadow-[0_10px_30px_rgba(0,0,0,0.03)] p-5 lg:py-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-0 items-center justify-between">
-            {STATS.map((stat) => (
-              <div
-                key={stat.id}
-                className="flex items-center gap-3.5 lg:px-6 border-bdr-DEFAULT lg:border-r last:border-r-0"
-              >
-                <div className="w-10 h-10 rounded-full bg-surface-muted flex items-center justify-center shrink-0">
-                  {stat.icon}
-                </div>
-                <div>
-                  <div className="font-syne text-[22px] lg:text-[26px] font-extrabold text-brand-g leading-none mb-0.5">
-                    {stat.value}
+            {STATS.map((stat) => {
+              const numericValue = parseInt(stat.value, 10);
+              const suffix = stat.value.replace(String(numericValue), "");
+              
+              return (
+                <div
+                  key={stat.id}
+                  className="flex items-center gap-3.5 lg:px-6 border-bdr-DEFAULT lg:border-r last:border-r-0"
+                >
+                  <div className="w-10 h-10 rounded-full bg-surface-muted flex items-center justify-center shrink-0">
+                    {stat.icon}
                   </div>
-                  <div className="font-sans text-[12px] lg:text-[13px] font-semibold text-t-2 leading-tight">
-                    {stat.label}
+                  <div>
+                    <div className="font-syne text-[22px] lg:text-[26px] font-extrabold text-brand-g leading-none mb-0.5">
+                      <CountUpNumber target={numericValue} />{suffix}
+                    </div>
+                    <div className="font-sans text-[12px] lg:text-[13px] font-semibold text-t-2 leading-tight">
+                      {stat.label}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 

@@ -18,7 +18,7 @@ const team = [
     id: "saad-alam",
     name: "Dr. Saad Alam",
     title: "President",
-    avatar: "SA",
+    avatar: "/saad_alam.png",
     colorClass: "bg-brand-g",
     bio: "Strategist at AI, Renewable Energy & EV intersection. PhD from USA. 10+ years at Chrysler, Ford & GM leading AI-enabled EV infrastructure. Founded CARET at AMU. Advisor to Fortune 500s & Government bodies on energy economics and workforce readiness beyond 2030.",
   },

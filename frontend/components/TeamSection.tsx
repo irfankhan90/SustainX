@@ -26,7 +26,7 @@ const team = [
     id: "ma-mufazzal",
     name: "Dr. M.A. Mufazzal",
     title: "Chief Consultant",
-    avatar: "MM",
+    avatar: "/ma_mufazzal.png",
     colorClass: "bg-brand-gd",
     bio: "PhD in Corporate Communication. Specializes in strategies aligning with UN SDGs 7 and 13. Speaker at the United Nations General Assembly (2014) on global citizenship and sustainable development. Advisor to Anti-Corruption Academy & Idea of India Foundation.",
   },
@@ -80,13 +80,15 @@ export const TeamSection: React.FC = () => {
             >
               {/* Profile Image / Avatar container */}
               <div className="relative w-[140px] h-[140px] md:w-[160px] md:h-[160px] rounded-full mx-auto mb-8 border-4 border-white shadow-[0_12px_30px_rgba(0,0,0,0.12),_0_0_15px_rgba(29,158,117,0.25)] overflow-hidden transition-transform duration-300 ease-in-out group-hover:scale-[1.03]">
-                {member.id === "umar-siddiqui" ? (
+                {member.avatar.startsWith("/") ? (
                   <Image
                     src={member.avatar}
                     alt={`${member.name} - ${member.title}`}
                     fill
                     sizes="(max-width: 768px) 140px, 160px"
-                    className="object-cover object-[center_28%] brightness-[1.03] contrast-[1.02]"
+                    className={`object-cover brightness-[1.03] contrast-[1.02] ${
+                      member.id === "ma-mufazzal" ? "object-[70%_25%]" : "object-[center_28%]"
+                    }`}
                     priority
                   />
                 ) : (

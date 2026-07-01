@@ -59,7 +59,7 @@ const SLIDES: Slide[] = [
   {
     type: "overview",
     title: "Overview",
-    badge: "WHO • WHAT • WHY SUSTAINX",
+    badge: "360° ENERGY TRANSITION ECOSYSTEM",
     headline: "GlobalPact SustainX: Bridging Strategy and Real-World Execution.",
     description: "GlobalPact SustainX is the clean energy transition execution partner. We bridge the strategy-execution gap by integrating Strategy, Project Management, Turnkey Solutions, and Capacity Building to deliver measurable, de-risked sustainability assets.",
     mobileHeadline: "GlobalPact SustainX: Bridging Strategy & Real-World Execution.",
@@ -318,21 +318,14 @@ export const HeroSection: React.FC = () => {
                   style={{ willChange: "transform, opacity" }}
                   className="w-full flex flex-col items-start"
                 >
-                  {/* Brand Logo & Pill Badge */}
+                  {/* Premium Pill Badge */}
                   <motion.div 
                     variants={childVariants} 
-                    className="flex flex-col sm:flex-row items-start sm:items-center gap-3.5 mb-7 pt-4 lg:pt-6"
+                    className="mb-7 pt-4 lg:pt-6"
                   >
-                    <Image 
-                      src="/logo.jpg" 
-                      alt="GlobalPact SustainX Logo" 
-                      width={40}
-                      height={40}
-                      className="h-10 w-auto object-contain flex-shrink-0"
-                    />
-                    <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-brand-gxl/40 border border-brand-g/15 rounded-full text-[10px] sm:text-[10.5px] font-bold text-brand-gd tracking-wider shadow-sm select-none">
-                      <span className="w-1.5 h-1.5 rounded-full bg-brand-g animate-pulse" />
-                      <span>{activeSlide.badge}</span>
+                    <div className="inline-flex items-center gap-2 px-[18px] sm:px-[20px] py-2 sm:py-2.5 bg-[#EAFBF5] border border-[#16a34a]/15 rounded-full text-[14px] sm:text-[15px] font-bold text-[#166534] tracking-[1px] shadow-sm select-none hover:shadow-md hover:-translate-y-[1px] transition-all duration-300 cursor-default">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#16a34a] shrink-0" />
+                      <span className="uppercase">{activeSlide.badge}</span>
                     </div>
                   </motion.div>
                   

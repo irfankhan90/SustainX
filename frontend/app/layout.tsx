@@ -53,7 +53,7 @@ const organizationSchema = {
   "@type": "Organization",
   "name": "GlobalPact SustainX",
   "url": "https://frontend-gamma-blond-69.vercel.app/",
-  "logo": "https://frontend-gamma-blond-69.vercel.app/logo.jpg",
+  "logo": "https://frontend-gamma-blond-69.vercel.app/assets/logo.png",
   "description": "GlobalPact SustainX is an AI-powered clean energy transition partner providing strategic advisory, project management, and turnkey solutions.",
   "contactPoint": {
     "@type": "ContactPoint",

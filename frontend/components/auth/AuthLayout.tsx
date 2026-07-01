@@ -91,7 +91,7 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
         <header className="mb-5 anim-1">
           <Link href="/" className="inline-flex items-center gap-[14px]">
             <Image
-              src="/logo.jpg"
+              src="/assets/logo.png"
               alt="GlobalPact SustainX Logo"
               width={64}
               height={64}

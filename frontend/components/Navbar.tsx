@@ -243,7 +243,7 @@ export const Navbar: React.FC = () => {
               onClick={handleLogoClick}
             >
               <Image
-                src="/logo.jpg"
+                src="/assets/logo.png"
                 alt="GlobalPact SustainX Logo"
                 width={52}
                 height={52}
@@ -412,7 +412,7 @@ export const Navbar: React.FC = () => {
         {/* Mobile Header (Logo & Brand & Tagline) */}
         <div className="absolute top-4 left-5 flex items-center gap-2 select-none">
           <Image
-            src="/logo.jpg"
+            src="/assets/logo.png"
             alt="GlobalPact SustainX Logo"
             width={40}
             height={40}

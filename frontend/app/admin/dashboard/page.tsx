@@ -249,7 +249,7 @@ export default function AdminDashboardPage() {
         <div className="h-20 border-b border-[#EEF4F1] flex items-center px-6">
           <Link href="/" className="flex items-center gap-2 select-none">
             <Image 
-              src="/logo.jpg" 
+              src="/assets/logo.png" 
               alt="Logo" 
               width={34} 
               height={34} 

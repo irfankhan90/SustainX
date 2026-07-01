@@ -14,7 +14,7 @@ export const Footer: React.FC = () => {
           <div className="col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2 flex flex-col justify-start">
             <Link href="/" className="inline-flex items-center gap-[12px] mb-4 hover:opacity-90 transition-opacity focus-visible:outline-2 focus-visible:outline-brand-g focus-visible:outline-offset-2 rounded-lg">
               <Image 
-                src="/logo.jpg" 
+                src="/assets/logo.png" 
                 alt="GlobalPact SustainX Logo" 
                 width={48}
                 height={48}

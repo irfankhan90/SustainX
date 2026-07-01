@@ -120,7 +120,7 @@ export default function AdminLoginPage() {
         <div className="flex justify-center mb-6">
           <Link href="/" className="flex items-center gap-2.5 select-none cursor-pointer">
             <Image 
-              src="/logo.jpg" 
+              src="/assets/logo.png" 
               alt="Logo" 
               width={42} 
               height={42} 

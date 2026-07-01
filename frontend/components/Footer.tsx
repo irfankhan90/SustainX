@@ -285,6 +285,7 @@ export const Footer: React.FC = () => {
             <p className="font-semibold text-white/85">© 2026 GlobalPact SustainX. All Rights Reserved.</p>
             <p className="text-white/50 text-[11px]">A GlobalPact Holdings Company.</p>
             <p className="text-brand-gl font-medium text-[11px]">Powering the Global Energy Transition.</p>
+            <p className="text-white/50 text-[11px]">Made in India with ❤️ by Indians</p>
           </div>
           <div className="flex flex-wrap gap-5 md:justify-end">
             <Link href="/privacy" className="text-white/30 hover:text-brand-gl transition-colors duration-200 focus-visible:text-brand-gl focus-visible:outline-none">

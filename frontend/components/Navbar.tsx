@@ -38,7 +38,7 @@ const navItems: NavItem[] = [
     ],
   },
   {
-    label: "Capacity Building",
+    label: "Centre of Excellence",
     href: "/capacity-building",
     submenu: [
       { label: "Certificate Programs", href: "/capacity-building/certificate-programs" },

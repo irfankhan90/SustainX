@@ -129,6 +129,26 @@ export const AISection: React.FC = () => {
         .pulse-node {
           animation: pulseGlow 2s ease-in-out infinite;
         }
+        .ai-header h2 {
+          font-size: 26px !important;
+          line-height: 1.15 !important;
+          letter-spacing: -0.025em !important;
+        }
+        @media (min-width: 640px) {
+          .ai-header h2 {
+            font-size: 32px !important;
+          }
+        }
+        @media (min-width: 1024px) {
+          .ai-header h2 {
+            font-size: 36px !important;
+          }
+        }
+        @media (min-width: 1280px) {
+          .ai-header h2 {
+            font-size: 38px !important;
+          }
+        }
       `}</style>
 
       {/* Decorative Orbs */}
@@ -152,7 +172,7 @@ export const AISection: React.FC = () => {
               description="Our advanced AI engine integrates live telemetry, weather forecast vectors, and grid requirements to automate carbon accounting, predict solar/wind output, and balance EV fleet load distributions."
               align="left"
               dot={true}
-              className="mb-8"
+              className="mb-6 ai-header"
             />
 
             {/* Features list */}
